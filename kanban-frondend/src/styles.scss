@@ -1,1 +1,35 @@
-/* You can add global styles to this file, and also import other style files */
+/*###############################
+###
+###     GLOBAL STYLES
+###     KANBAN FRONTEND + BACKEND PROJECT
+###     BASED ON: ANGULAR 17 + DJANGO
+###     AUTHOR: Benjamin Benenwitz
+###
+###
+***       ██████╗  ▀█
+***       ██╔══██╗ █▄
+***       ██████╦╝
+***       ██╔══██╗
+***       ██████╦╝
+***       ╚═════╝
+###
+###
+#################################*/
+
+/*
+### GLOBAL STYLES
+*/
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; display: flex; flex-direction: column; justify-content: center; align-items: center;}
+mat-form-field {width: 100%;}
+
+/*
+### GLOBAL COLORS
+*/
+$primary: #3498db;
+$secondary: #2ecc71;
+$accent:#fff;
+$text:#fff;
+$link:#fff;
+
+

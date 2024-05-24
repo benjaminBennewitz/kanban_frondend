@@ -1,0 +1,28 @@
+/*###############################
+###
+###     GLOBAL STYLES
+###     KANBAN FRONTEND + BACKEND PROJECT
+###     BASED ON: ANGULAR 17 + DJANGO
+###     AUTHOR: Benjamin Benenwitz
+###
+###
+***       ██████╗  ▀█
+***       ██╔══██╗ █▄
+***       ██████╦╝
+***       ██╔══██╗
+***       ██████╦╝
+***       ╚═════╝
+###
+###
+#################################*/
+
+
+.outer-wrapper--login{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+    min-width: 310px;
+    max-width: 900px;
+}
