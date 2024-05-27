@@ -1,6 +1,6 @@
 /*###############################
 ###
-###     GLOBAL STYLES
+###     COSTUM STYLES
 ###     KANBAN FRONTEND + BACKEND PROJECT
 ###     BASED ON: ANGULAR 17 + DJANGO
 ###     AUTHOR: Benjamin Benenwitz
@@ -16,6 +16,23 @@
 ###
 #################################*/
 
+/*
+### COSTUM STYLES
+*/
+@import '../../costum-styles/default-theme.scss';
+
+.main-wrapper{
+    background-color: $primary;
+    color: $secondary;
+
+    height: 100vh;
+    width: 100vw;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 .outer-wrapper--login{
     display: flex;

@@ -1,20 +1,25 @@
-<div class="outer-wrapper--login">
-    <h1>Login to Board</h1>
+<section class="main-wrapper">
+    <div class="outer-wrapper--login">
+        <h1>Login to Board</h1>
 
-    <mat-form-field>
-        <mat-label>Input</mat-label>
-        <input matInput>
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Select</mat-label>
-        <mat-select>
-            <mat-option value="one">First option</mat-option>
-            <mat-option value="two">Second option</mat-option>
-        </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Textarea</mat-label>
-        <textarea matInput></textarea>
-    </mat-form-field>
-    
-</div>
+        <mat-form-field>
+            <mat-label>Username</mat-label>
+            <input matInput>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Select theme</mat-label>
+            <mat-select [(value)]="selected">
+                <mat-option value="default-theme">Default</mat-option>
+                <mat-option value="light-theme">Light</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <p>You selected: {{selected}}</p>
+    </div>
+</section>

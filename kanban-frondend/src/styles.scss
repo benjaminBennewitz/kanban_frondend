@@ -16,6 +16,7 @@
 ###
 #################################*/
 
+@import 'app/costum-styles/default-theme.scss';
 /*
 ### GLOBAL STYLES
 */
@@ -24,12 +25,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; display: fl
 mat-form-field {width: 100%;}
 
 /*
-### GLOBAL COLORS
+### COSTUM CHANGES
 */
-$primary: #3498db;
-$secondary: #2ecc71;
-$accent:#fff;
-$text:#fff;
-$link:#fff;
-
-
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: $background !important;
+}
