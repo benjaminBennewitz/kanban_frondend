@@ -1,4 +1,4 @@
-<section class="main-wrapper">
+<section id="mainWrapper" class="main-wrapper">
     <div class="outer-wrapper--login">
         <h1>Login to Board</h1>
 
@@ -14,12 +14,11 @@
 
         <mat-form-field>
             <mat-label>Select theme</mat-label>
-            <mat-select [(value)]="selected">
+            <mat-select (selectionChange)="onThemeChange($event.value)">
                 <mat-option value="default-theme">Default</mat-option>
                 <mat-option value="light-theme">Light</mat-option>
+                <mat-option value="dark-theme">Dark</mat-option>
             </mat-select>
         </mat-form-field>
-
-        <p>You selected: {{selected}}</p>
     </div>
 </section>

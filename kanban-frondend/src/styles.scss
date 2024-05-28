@@ -21,12 +21,58 @@
 ### GLOBAL STYLES
 */
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; display: flex; flex-direction: column; justify-content: center; align-items: center;}
+body{ margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
 mat-form-field {width: 100%;}
+mat-sidenav-container{position: absolute;top:0;left:0}
+
+.mr-l-16{
+    margin-left: 16px;
+}
+
+.mr-t-16{
+    margin-top: 16px;
+}
+
+.mr-t-24{
+    margin-top: 24px;
+}
+
+.flex-c-c{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-btw-c{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 
 /*
 ### COSTUM CHANGES
 */
+
+/* STYLES FOR INPUTS */
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
     background-color: $background !important;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled)
+.mdc-text-field--focused .mdc-floating-label, 
+.mdc-text-field--filled:not(.mdc-text-field--disabled).mdc-text-field--focused 
+.mdc-floating-label--float-above{
+    color: $primary !important;
+}
+
+/* STYLES FOR SELECTBOX*/
+html{
+    --mat-select-focused-arrow-color: hsl(355, 100%, 58%) !important;
+    --mdc-filled-text-field-focus-active-indicator-color: hsl(355, 100%, 58%) !important;
+    --mat-option-selected-state-label-text-color: hsl(355, 100%, 58%) !important;
+}
+
+.mat-primary {
+    --mat-minimal-pseudo-checkbox-selected-checkmark-color: hsl(355, 100%, 58%) !important;
 }

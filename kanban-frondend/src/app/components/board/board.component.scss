@@ -1,6 +1,6 @@
 /*###############################
 ###
-###     GLOBAL STYLES
+###     BOARD STYLES
 ###     KANBAN FRONTEND + BACKEND PROJECT
 ###     BASED ON: ANGULAR 17 + DJANGO
 ###     AUTHOR: Benjamin Benenwitz
@@ -15,3 +15,169 @@
 ###
 ###
 #################################*/
+
+/*
+### COSTUM STYLES
+*/
+@import '../../costum-styles/default-theme.scss';
+@import '../../costum-styles/light-theme.scss';
+@import '../../costum-styles/dark-theme.scss';
+
+body{
+    overflow: hidden !important;
+}
+
+mat-toolbar{
+    background-color: $primary;
+    color: $secondary;
+}
+
+mat-toolbar-row{
+    justify-content: space-between;
+    align-items: center;
+}
+
+mat-icon{
+    color:$secondary;
+}
+
+.mat-drawer-container{
+    height: 100vh;
+}
+
+.menu-icon{
+    cursor: pointer;
+}
+
+.board-sidenav{
+    width: 300px;
+    background-color: $primary;
+    color: $secondary;
+}
+
+.logo-container{
+    border-bottom: 1px solid rgba($secondary,0.15);
+    padding:0 16px 0 16px;
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-items {
+    padding: 0;
+    margin: 0;
+
+    mat-icon {
+        margin-right: 16px;
+        transition: all 250ms ease;
+    }
+
+    li {
+        padding: 0 16px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: all 250ms ease;
+        &:hover {
+            background-color: $background;
+            color: $text;
+            mat-icon {
+                color: $text;
+            }
+        }
+        &:focus {
+            background-color: $secondary;
+            color: $text;
+            mat-icon {
+                color: $text;
+            }
+        }
+    }
+}
+
+.board-wrapper{
+    position: absolute;
+    top:150px;
+    left:0;
+    background-color: $background;
+    width: 100%;
+    height: calc(100vh - 150px);
+}
+
+.board-wrapper-col{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+
+    width: 100vw;
+    height:calc(100vh - 150px);
+}
+
+.board-card-wrapper{
+    height:600px;
+    max-height: 700px;
+    width: 400px;
+    margin-top: 32px;
+    overflow-y: auto;
+}
+
+.board-card-wrapper-empty{
+    background: linear-gradient(180deg, $secondary, $background);
+    border-radius: 20px;
+
+    height:500px;
+    max-height: 600px;
+  
+    padding-top: 16px;
+}
+
+.board-card{
+    background-color: $secondary;
+    color: $text;
+    border-radius: 20px;
+
+    height: 200px;
+    max-height: 220px;
+
+    margin-top: 24px;
+}
+
+.board-col-headline{
+    font-size: 24px;
+}
+
+.board-card-date{
+    color: $link;
+}
+
+.board-col-icons{
+    color:$text;
+    cursor: pointer;
+
+    &:nth-child(2) {
+        margin-left:24px;
+    }
+}
+
+.board-col-tools{
+    position: absolute;
+    bottom: 0;
+    right:8px;
+
+    mat-icon{
+        color: $link;
+        transition: all 250ms;
+        padding: 4px;
+
+        &:hover{
+            color:$primary;
+            background-color: $background;
+            border-radius: 100%;
+            transform: scale(1.1);
+            padding: 4px;
+        }
+    }
+}

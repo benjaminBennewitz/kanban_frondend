@@ -19,17 +19,17 @@
 /*
 ### GLOBAL COLORS
 */
-// Light Theme
-$primary-light: hsl(223, 44%, 80%);
-$secondary-light: hsl(0, 0%, 97%);
-$background-light: hsl(0, 0%, 89%);
-$text-light: hsl(240, 0%, 10%);
-$link-light: hsl(355, 100%, 58%);
-$accent-light: hsl(232, 72%, 21%);
+// dark Theme
+$primary-dark: hsl(240, 0%, 10%);
+$secondary-dark: hsl(194, 100%, 15%);
+$background-dark: hsl(0, 0%, 89%);
+$text-dark: hsl(0, 0%, 97%);
+$link-dark: hsl(355, 100%, 58%);
+$accent-dark: hsl(192, 83%, 26%);
 
-.main-wrapper-light{
-    background-color: $primary-light;
-    color: $text-light;
+.main-wrapper-dark{
+    background-color: $secondary-dark;
+    color: $text-dark;
 
     height: 100vh;
     width: 100vw;

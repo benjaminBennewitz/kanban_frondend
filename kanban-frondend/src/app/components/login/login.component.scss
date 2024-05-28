@@ -1,6 +1,6 @@
 /*###############################
 ###
-###     COSTUM STYLES
+###     LOGIN STYLES
 ###     KANBAN FRONTEND + BACKEND PROJECT
 ###     BASED ON: ANGULAR 17 + DJANGO
 ###     AUTHOR: Benjamin Benenwitz
@@ -20,8 +20,17 @@
 ### COSTUM STYLES
 */
 @import '../../costum-styles/default-theme.scss';
+@import '../../costum-styles/light-theme.scss';
+@import '../../costum-styles/dark-theme.scss';
 
-.main-wrapper{
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-wrapper {
     background-color: $primary;
     color: $secondary;
 
@@ -34,7 +43,7 @@
     align-items: center;
 }
 
-.outer-wrapper--login{
+.outer-wrapper--login {
     display: flex;
     flex-direction: column;
     justify-content: center;
