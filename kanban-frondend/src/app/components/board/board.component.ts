@@ -1,28 +1,74 @@
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component } from '@angular/core';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 
-/**
- * @title Drag&Drop connected sorting
- */
+interface Task {
+  title: string;
+  subtitle: string;
+  content: string;
+  date: string;
+}
+
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
-  styleUrl: './board.component.scss',
+  styleUrls: ['./board.component.scss'],
 })
 export class BoardComponent {
-  todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
+  urgent: Task[] = [];
 
-  done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
+  todo: Task[] = [
+    {
+      title: 'Start with Angular',
+      subtitle: 'Read documentation and differences',
+      content:
+        'Many new functions on Angular 18: Material 3, deferrable views and built-in controls flows are now officially stable and bring a number of improvements',
+      date: '01 Juni',
+    },
+    {
+      title: 'Start with Django',
+      subtitle: 'Install and prepare',
+      content: 'Install REST framework, set up venv, check requirements',
+      date: '25 Juni',
+    },
+  ];
+  inProgress: Task[] = [
+    {
+      title: 'Make Drag and Drop work',
+      subtitle: 'Check docs',
+      content: 'N/A',
+      date: '-',
+    },
+  ];
+  done: Task[] = [
+    {
+      title: 'Design Board',
+      subtitle: 'Make the Layout and css classes',
+      content: 'Pay attention to class naming',
+      date: '28 Mai',
+    },
+  ];
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<Task[]>) {
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
     } else {
+      if (!event.previousContainer.data || !event.container.data) {
+        console.error('Container data is undefined');
+        return;
+      }
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
-        event.currentIndex,
+        event.currentIndex
       );
     }
   }

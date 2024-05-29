@@ -17,6 +17,7 @@
 #################################*/
 
 @import 'app/costum-styles/default-theme.scss';
+
 /*
 ### GLOBAL STYLES
 */
@@ -25,6 +26,9 @@ body{ margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
 mat-form-field {width: 100%;}
 mat-sidenav-container{position: absolute;top:0;left:0}
 
+/*
+### COMMON STYLES
+*/
 .mr-l-16{
     margin-left: 16px;
 }
@@ -35,6 +39,14 @@ mat-sidenav-container{position: absolute;top:0;left:0}
 
 .mr-t-24{
     margin-top: 24px;
+}
+
+.pad-l-24{
+    padding-left:24px;
+}
+
+.pad-r-24{
+    padding-right:24px;
 }
 
 .flex-c-c{
@@ -75,4 +87,41 @@ html{
 
 .mat-primary {
     --mat-minimal-pseudo-checkbox-selected-checkmark-color: hsl(355, 100%, 58%) !important;
+}
+
+/* STYLES FOR SCROLLBARS*/
+*{
+    scrollbar-width: thin;
+    scrollbar-color: $accent $background;
+    border: none;
+}
+
+/* STYLES FOR DRAG n DROP*/
+.cdk-drag {
+    /* User-defined styles for drawing the card */
+    cursor: move;
+    transition: box-shadow 0.3s ease;
+    border-radius:20px;
+}
+
+.cdk-drag:hover {
+    /* Change the shadow when moving the mouse over */
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.25);
+}
+
+.cdk-drag:active {
+    /* Change the shadow when the element is actively dragged */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.50);
+}
+
+.cdk-drag-preview {
+   /* User-defined styles for the drag preview */
+    height:225px !important;
+    border-radius: 20px;
+    background-color: $link !important;
+}
+
+.cdk-drag-animating {
+    /* Custom styles for the element while it is animated */
+    transition: all 550ms;
 }

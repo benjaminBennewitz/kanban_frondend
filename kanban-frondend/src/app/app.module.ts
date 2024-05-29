@@ -23,9 +23,6 @@ import {MatCardModule} from '@angular/material/card';
 
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem,
   CdkDrag,
   CdkDropList,
 } from '@angular/cdk/drag-drop';

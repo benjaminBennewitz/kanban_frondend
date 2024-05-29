@@ -117,11 +117,18 @@ mat-icon{
 }
 
 .board-card-wrapper{
-    height:600px;
-    max-height: 700px;
+    height: calc(100% - 48px);
+    max-height: 960px;
     width: 400px;
     margin-top: 32px;
+    overflow-y: hidden;
+}
+
+.board-col-overflow{
     overflow-y: auto;
+    height: inherit;
+    max-height: inherit;
+    padding:8px;
 }
 
 .board-card-wrapper-empty{
@@ -132,6 +139,9 @@ mat-icon{
     max-height: 600px;
   
     padding-top: 16px;
+    margin-top: 24px;
+
+    transition: all 350ms;
 }
 
 .board-card{
@@ -179,5 +189,44 @@ mat-icon{
             transform: scale(1.1);
             padding: 4px;
         }
+    }
+}
+
+/* MEDIA QUERRYS*/
+@media (max-width: 600px) {
+    .board-wrapper{
+        overflow: auto;
+    }
+    .board-wrapper-col {
+        flex-direction: column;
+        align-items: center;
+        height: fit-content;
+    }
+    .board-card-wrapper-empty{
+        height: 150px;
+    }
+    .board-col-headline{
+        font-size: 16px;
+    }
+    .mat-mdc-card-title{
+        font-size: 14px;
+    }
+    .mat-mdc-card-subtitle, .mat-mdc-card-content{
+        font-size: 11px;
+    }
+    .board-card{
+        width: 300px;
+        height: fit-content;
+        padding:8px;
+    }
+    .board-card-wrapper{
+        max-width: 320px;
+    }
+    .board-media-row{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: flex-start;
+        gap:32px;
     }
 }
