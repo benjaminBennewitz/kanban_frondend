@@ -65,6 +65,19 @@ $accent-light: hsl(232, 72%, 21%);
     transition: all 550ms;
 }
 
+.board-heading-light{
+    color:$text-light;
+    transition: all 550ms;
+    & mat-icon{
+        color:$text-light;
+        cursor: pointer;
+    
+        &:nth-child(2) {
+            margin-left:24px;
+        }
+    }
+}
+
 .board-card-light{
     background-color: $secondary-light;
     color: $accent-light;
@@ -74,6 +87,22 @@ $accent-light: hsl(232, 72%, 21%);
     padding: 8px 8px 16px 8px;
 
     margin-top: 24px;
+    transition: all 550ms;
+}
+
+.board-card-wrapper-empty-light{
+    background: linear-gradient(180deg, $secondary-light, $background-light);
+    border-radius: 20px;
+    & .board-col-icons{
+        color:$text-light;
+    }
+
+    height:500px;
+    max-height: 600px;
+  
+    padding-top: 16px;
+    margin-top: 24px;
+
     transition: all 550ms;
 }
 

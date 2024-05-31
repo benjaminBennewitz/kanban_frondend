@@ -32,16 +32,16 @@
 
                 <!-- URGENT START-->
                 <div class="board-card-wrapper">
-                    <div class="flex-btw-c">
+                    <div class="flex-btw-c board-heading 1001">
                         <div class="board-col-headline pad-l-24">Urgent</div>
                         <div class="pad-r-24">
-                            <mat-icon class="board-col-icons">add</mat-icon>
-                            <mat-icon class="board-col-icons">more_horiz</mat-icon>
+                            <mat-icon>add</mat-icon>
+                            <mat-icon>more_horiz</mat-icon>
                         </div>
                     </div>
 
                     <div class="board-col-overflow">
-                        <div [ngClass]="{'board-card-wrapper-empty': urgent.length === 0}" cdkDropList
+                        <div [ngClass]="{'board-card-wrapper-empty': urgent.length === 0}" class="1003" cdkDropList
                             #urgentList="cdkDropList" [cdkDropListData]="urgent"
                             [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]"
                             (cdkDropListDropped)="drop($event)">
@@ -51,7 +51,7 @@
                             </div>
                             <div class="board-media-row">
                                 <div *ngFor="let item of urgent" cdkDrag>
-                                    <mat-card [attr.id]="'CardId-' + item.id" class="cards board-card" cdkDragPreview>
+                                    <mat-card [attr.id]="'CardId-' + item.id" class="1002 board-card" cdkDragPreview>
                                         <mat-card-header>
                                             <mat-card-title>{{item.title}}</mat-card-title>
                                             <mat-card-subtitle>{{item.subtitle}}</mat-card-subtitle>
@@ -74,15 +74,15 @@
                 <!-- URGENT END-->
                 <!-- TO DO START-->
                 <div class="board-card-wrapper">
-                    <div class="flex-btw-c">
+                    <div class="flex-btw-c board-heading 1001">
                         <div class="board-col-headline pad-l-24">To do</div>
                         <div class="pad-r-24">
-                            <mat-icon class="board-col-icons">add</mat-icon>
-                            <mat-icon class="board-col-icons">more_horiz</mat-icon>
+                            <mat-icon>add</mat-icon>
+                            <mat-icon>more_horiz</mat-icon>
                         </div>
                     </div>
                     <div class="board-col-overflow">
-                        <div [ngClass]="{'board-card-wrapper-empty': todo.length === 0}" cdkDropList
+                        <div [ngClass]="{'board-card-wrapper-empty': todo.length === 0}" class="1003" cdkDropList
                             #todoList="cdkDropList" [cdkDropListData]="todo"
                             [cdkDropListConnectedTo]="[urgentList, inProgressList, doneList]"
                             (cdkDropListDropped)="drop($event)">
@@ -92,7 +92,7 @@
                             </div>
                             <div class="board-media-row">
                                 <div *ngFor="let item of todo" cdkDrag>
-                                    <mat-card [attr.id]="'CardId-' + item.id" class="cards board-card" cdkDragPreview>
+                                    <mat-card [attr.id]="'CardId-' + item.id" class="1002 board-card" cdkDragPreview>
                                         <mat-card-header>
                                             <mat-card-title>{{item.title}}</mat-card-title>
                                             <mat-card-subtitle>{{item.subtitle}}</mat-card-subtitle>
@@ -114,15 +114,15 @@
                 <!-- TODO END-->
                 <!-- IN PROGRESS START-->
                 <div class="board-card-wrapper">
-                    <div class="flex-btw-c">
+                    <div class="flex-btw-c board-heading 1001">
                         <div class="board-col-headline pad-l-24">In progress</div>
                         <div class="pad-r-24">
-                            <mat-icon class="board-col-icons">add</mat-icon>
-                            <mat-icon class="board-col-icons">more_horiz</mat-icon>
+                            <mat-icon>add</mat-icon>
+                            <mat-icon>more_horiz</mat-icon>
                         </div>
                     </div>
                     <div class="board-col-overflow">
-                        <div [ngClass]="{'board-card-wrapper-empty': inProgress.length === 0}" cdkDropList
+                        <div [ngClass]="{'board-card-wrapper-empty': inProgress.length === 0}" class="1003" cdkDropList
                             #inProgressList="cdkDropList" [cdkDropListData]="inProgress"
                             [cdkDropListConnectedTo]="[urgentList, todoList, doneList]"
                             (cdkDropListDropped)="drop($event)">
@@ -132,7 +132,7 @@
                             </div>
                             <div class="board-media-row">
                                 <div *ngFor="let item of inProgress" cdkDrag>
-                                    <mat-card [attr.id]="'CardId-' + item.id" class="cards board-card" cdkDragPreview>
+                                    <mat-card [attr.id]="'CardId-' + item.id" class="1002 board-card" cdkDragPreview>
                                         <mat-card-header>
                                             <mat-card-title>{{item.title}}</mat-card-title>
                                             <mat-card-subtitle>{{item.subtitle}}</mat-card-subtitle>
@@ -154,15 +154,15 @@
                 <!-- IN PROGRESS END-->
                 <!-- DONE START-->
                 <div class="board-card-wrapper">
-                    <div class="flex-btw-c">
+                    <div class="flex-btw-c board-heading 1001">
                         <div class="board-col-headline pad-l-24">Done</div>
                         <div class="pad-r-24">
-                            <mat-icon class="board-col-icons">add</mat-icon>
-                            <mat-icon class="board-col-icons">more_horiz</mat-icon>
+                            <mat-icon>add</mat-icon>
+                            <mat-icon>more_horiz</mat-icon>
                         </div>
                     </div>
                     <div class="board-col-overflow">
-                        <div [ngClass]="{'board-card-wrapper-empty': done.length === 0}" cdkDropList
+                        <div [ngClass]="{'board-card-wrapper-empty': done.length === 0}" class="1003" cdkDropList
                             #doneList="cdkDropList" [cdkDropListData]="done"
                             [cdkDropListConnectedTo]="[urgentList, todoList, inProgressList]"
                             (cdkDropListDropped)="drop($event)">
@@ -172,7 +172,7 @@
                             </div>
                             <div class="board-media-row">
                                 <div *ngFor="let item of done" cdkDrag>
-                                    <mat-card [attr.id]="'CardId-' + item.id" class="cards board-card" cdkDragPreview>
+                                    <mat-card [attr.id]="'CardId-' + item.id" class="1002 board-card" cdkDragPreview>
                                         <mat-card-header>
                                             <mat-card-title>{{item.title}}</mat-card-title>
                                             <mat-card-subtitle>{{item.subtitle}}</mat-card-subtitle>

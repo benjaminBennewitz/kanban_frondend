@@ -22,7 +22,6 @@
 // dark Theme
 $primary-dark: hsl(240, 0%, 10%);
 $secondary-dark: hsl(194, 100%, 15%);
-$background-dark: hsl(0, 0%, 89%);
 $text-dark: hsl(0, 0%, 97%);
 $link-dark: hsl(355, 100%, 58%);
 $accent-dark: hsl(192, 83%, 26%);
@@ -66,6 +65,19 @@ $accent-dark: hsl(192, 83%, 26%);
     transition: all 550ms;
 }
 
+.board-heading-dark{
+    color:$text-dark;
+    transition: all 550ms;
+    & mat-icon{
+        color:$text-dark;
+        cursor: pointer;
+    
+        &:nth-child(2) {
+            margin-left:24px;
+        }
+    }
+}
+
 .board-card-dark{
     background-color: $secondary-dark;
     color: $text-dark;
@@ -76,6 +88,23 @@ $accent-dark: hsl(192, 83%, 26%);
     padding: 8px 8px 16px 8px;
 
     margin-top: 24px;
+    transition: all 550ms;
+}
+
+.board-card-wrapper-empty-dark{
+    background: linear-gradient(180deg, $secondary-dark, $primary-dark);
+    color:$text-dark;
+    & .board-col-icons{
+        color:$text-dark;
+    }
+    border-radius: 20px;
+
+    height:500px;
+    max-height: 600px;
+  
+    padding-top: 16px;
+    margin-top: 24px;
+
     transition: all 550ms;
 }
 
