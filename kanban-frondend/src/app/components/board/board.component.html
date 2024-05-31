@@ -4,7 +4,14 @@
 
         <ul class="menu-items">
             <li [routerLink]="['/']"><mat-icon>dashboard</mat-icon>Board</li>
-            <li [routerLink]="['/']"><mat-icon>settings</mat-icon>Settings</li>
+            <li>
+                <div class="flex-c-c"><mat-icon>settings</mat-icon><mat-label>Themes</mat-label></div>
+                <mat-select (selectionChange)="onThemeChange($event.value)">
+                    <mat-option value="default-theme">Default</mat-option>
+                    <mat-option value="light-theme">Light</mat-option>
+                    <mat-option value="dark-theme">Dark</mat-option>
+                </mat-select>
+            </li>
         </ul>
 
     </mat-drawer>

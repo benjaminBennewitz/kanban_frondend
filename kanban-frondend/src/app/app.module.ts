@@ -26,13 +26,15 @@ import {
   CdkDrag,
   CdkDropList,
 } from '@angular/cdk/drag-drop';
+import { ThemesComponent } from './services/themes/themes.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
     LoginComponent,
-    BoardComponent
+    BoardComponent,
+    ThemesComponent
   ],
   imports: [
     BrowserModule,

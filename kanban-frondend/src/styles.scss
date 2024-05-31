@@ -25,6 +25,7 @@ html, body { height: 100%; }
 body{ margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
 mat-form-field {width: 100%;}
 mat-sidenav-container{position: absolute;top:0;left:0}
+mat-drawer-content{ overflow-x: hidden !important;}
 
 /*
 ### COMMON STYLES

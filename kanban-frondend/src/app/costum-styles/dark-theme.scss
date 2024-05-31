@@ -1,6 +1,6 @@
 /*###############################
 ###
-###     GLOBAL COLORS
+###     DARK THEME COLORS
 ###     KANBAN FRONTEND + BACKEND PROJECT
 ###     BASED ON: ANGULAR 17 + DJANGO
 ###     AUTHOR: Benjamin Benenwitz
@@ -38,4 +38,6 @@ $accent-dark: hsl(192, 83%, 26%);
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    transition: all 550ms;
 }

@@ -1,6 +1,6 @@
 /*###############################
 ###
-###     GLOBAL COLORS
+###     LIGHT THEME COLORS
 ###     KANBAN FRONTEND + BACKEND PROJECT
 ###     BASED ON: ANGULAR 17 + DJANGO
 ###     AUTHOR: Benjamin Benenwitz
@@ -16,9 +16,6 @@
 ###
 #################################*/
 
-/*
-### GLOBAL COLORS
-*/
 // Light Theme
 $primary-light: hsl(223, 44%, 80%);
 $secondary-light: hsl(0, 0%, 97%);
@@ -27,6 +24,8 @@ $text-light: hsl(240, 0%, 10%);
 $link-light: hsl(355, 100%, 58%);
 $accent-light: hsl(232, 72%, 21%);
 
+
+/* LOGIN COMPONENT */
 .main-wrapper-light{
     background-color: $primary-light;
     color: $text-light;
@@ -38,4 +37,6 @@ $accent-light: hsl(232, 72%, 21%);
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    transition: all 550ms;
 }

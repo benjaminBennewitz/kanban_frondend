@@ -16,13 +16,26 @@
 ###
 #################################*/
 
-/*
-### GLOBAL COLORS
-*/
-// Dark Theme
+// DEFAULT Theme
 $primary: hsl(240, 0%, 10%);
 $secondary: hsl(0, 0%, 97%);
 $background: hsl(0, 0%, 89%);
 $text: hsl(240, 0%, 10%);
 $link: hsl(355, 100%, 58%);
 $accent: hsl(232, 72%, 21%);
+
+/* LOGIN COMPONENT */
+.main-wrapper {
+    background-color: $primary;
+    color: $secondary;
+
+    height: 100vh;
+    width: 100vw;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    transition: all 550ms;
+}

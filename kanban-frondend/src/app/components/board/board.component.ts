@@ -4,6 +4,7 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
+import { ThemesComponent } from '../../services/themes/themes.component';
 
 interface Task {
   title: string;
@@ -18,6 +19,13 @@ interface Task {
   styleUrls: ['./board.component.scss'],
 })
 export class BoardComponent {
+
+  constructor(private ThemesComponent: ThemesComponent) { }
+
+  onThemeChange(selectedTheme: string) {
+    this.ThemesComponent.onThemeChange(selectedTheme);
+  }
+
   urgent: Task[] = [];
 
   todo: Task[] = [

@@ -23,13 +23,12 @@
 @import '../../costum-styles/light-theme.scss';
 @import '../../costum-styles/dark-theme.scss';
 
-body{
-    overflow: hidden !important;
-}
-
 mat-toolbar{
     background-color: $primary;
     color: $secondary;
+    position: fixed;
+    top: 0;
+    z-index: 2;
 }
 
 mat-toolbar-row{
@@ -42,7 +41,8 @@ mat-icon{
 }
 
 .mat-drawer-container{
-    height: 100vh;
+    height: 100%;
+    width: 100%;
 }
 
 .menu-icon{
@@ -98,12 +98,14 @@ mat-icon{
 }
 
 .board-wrapper{
-    position: absolute;
-    top:150px;
+    position: relative;
+    top:120px;
     left:0;
     background-color: $background;
-    width: 100%;
-    height: calc(100vh - 150px);
+    min-width: 100vw;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
 }
 
 .board-wrapper-col{
@@ -111,13 +113,15 @@ mat-icon{
     flex-direction: row;
     justify-content: space-around;
     align-items: flex-start;
+    flex-wrap: wrap;
+
+    position: relative;
+    overflow: auto;
 
     width: 100vw;
-    height:calc(100vh - 150px);
 }
 
 .board-card-wrapper{
-    height: calc(100% - 48px);
     max-height: 960px;
     width: 400px;
     margin-top: 32px;
@@ -149,8 +153,8 @@ mat-icon{
     color: $text;
     border-radius: 20px;
 
-    height: 200px;
-    max-height: 220px;
+    height: fit-content;
+    padding: 8px 8px 16px 8px;
 
     margin-top: 24px;
 }
@@ -192,8 +196,14 @@ mat-icon{
     }
 }
 
+.mat-mdc-select{
+    color:$secondary !important;
+    margin-left: 16px;
+    font-style: italic;
+}
+
 /* MEDIA QUERRYS*/
-@media (max-width: 600px) {
+@media (max-width: 720px) {
     .board-wrapper{
         overflow: auto;
     }

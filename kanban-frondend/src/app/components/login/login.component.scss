@@ -23,6 +23,7 @@
 @import '../../costum-styles/light-theme.scss';
 @import '../../costum-styles/dark-theme.scss';
 
+
 body {
     display: flex;
     flex-direction: column;
@@ -41,6 +42,8 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    transition: all 550ms;
 }
 
 .outer-wrapper--login {
