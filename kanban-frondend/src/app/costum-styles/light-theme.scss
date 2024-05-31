@@ -40,3 +40,51 @@ $accent-light: hsl(232, 72%, 21%);
 
     transition: all 550ms;
 }
+
+/* BOARD COMPONENT */
+.board-bg-light{
+    background-color: $secondary;
+    transition: all 550ms;
+}
+
+.board-sidenav-light{
+    width: 300px;
+    background-color: $primary-light;
+    color: $text-light;
+
+    transition: all 550ms;
+}
+
+.board-toolbar-light{
+    background-color: $primary-light;
+    color: $secondary-light;
+    position: fixed;
+    top: 0;
+    z-index: 2;
+
+    transition: all 550ms;
+}
+
+.board-card-light{
+    background-color: $secondary-light;
+    color: $accent-light;
+    border-radius: 20px;
+
+    height: fit-content;
+    padding: 8px 8px 16px 8px;
+
+    margin-top: 24px;
+    transition: all 550ms;
+}
+
+.board-wrapper-light{
+    position: relative;
+    top:120px;
+    left:0;
+    background-color: $background-light;
+    min-width: 100vw;
+    min-height: calc(100vh - 120px);
+    margin: 0;
+    padding: 0;
+    transition: all 550ms;
+}

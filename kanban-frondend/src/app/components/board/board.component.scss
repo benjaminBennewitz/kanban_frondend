@@ -23,14 +23,6 @@
 @import '../../costum-styles/light-theme.scss';
 @import '../../costum-styles/dark-theme.scss';
 
-mat-toolbar{
-    background-color: $primary;
-    color: $secondary;
-    position: fixed;
-    top: 0;
-    z-index: 2;
-}
-
 mat-toolbar-row{
     justify-content: space-between;
     align-items: center;
@@ -40,9 +32,22 @@ mat-icon{
     color:$secondary;
 }
 
+.board-bg{
+    background-color: $secondary;
+    transition: all 550ms;
+}
+
 .mat-drawer-container{
     height: 100%;
     width: 100%;
+}
+
+.board-toolbar{
+    background-color: $primary;
+    color: $secondary;
+    position: fixed;
+    top: 0;
+    z-index: 2;
 }
 
 .menu-icon{
@@ -53,6 +58,8 @@ mat-icon{
     width: 300px;
     background-color: $primary;
     color: $secondary;
+
+    transition: all 550ms;
 }
 
 .logo-container{
@@ -103,7 +110,7 @@ mat-icon{
     left:0;
     background-color: $background;
     min-width: 100vw;
-    min-height: 100vh;
+    min-height: calc(100vh - 120px);
     margin: 0;
     padding: 0;
 }
@@ -119,6 +126,7 @@ mat-icon{
     overflow: auto;
 
     width: 100vw;
+    padding-bottom: 64px;
 }
 
 .board-card-wrapper{
@@ -200,6 +208,10 @@ mat-icon{
     color:$secondary !important;
     margin-left: 16px;
     font-style: italic;
+    font-size: 12px !important;
+}
+.mat-mdc-select:hover{
+    color:$text !important;
 }
 
 /* MEDIA QUERRYS*/

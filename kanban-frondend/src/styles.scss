@@ -25,7 +25,7 @@ html, body { height: 100%; }
 body{ margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
 mat-form-field {width: 100%;}
 mat-sidenav-container{position: absolute;top:0;left:0}
-mat-drawer-content{ overflow-x: hidden !important;}
+mat-drawer-content{ overflow-x: hidden !important}
 
 /*
 ### COMMON STYLES
@@ -82,6 +82,7 @@ mat-drawer-content{ overflow-x: hidden !important;}
 /* STYLES FOR SELECTBOX*/
 html{
     --mat-select-focused-arrow-color: hsl(355, 100%, 58%) !important;
+    --mat-minimal-pseudo-checkbox-selected-checkmark-color: hsl(355, 100%, 58%) !important;
     --mdc-filled-text-field-focus-active-indicator-color: hsl(355, 100%, 58%) !important;
     --mat-option-selected-state-label-text-color: hsl(355, 100%, 58%) !important;
 }

@@ -41,3 +41,52 @@ $accent-dark: hsl(192, 83%, 26%);
 
     transition: all 550ms;
 }
+
+/* BOARD COMPONENT */
+.board-bg-dark{
+    background-color: $secondary-dark;
+    transition: all 550ms;
+}
+
+.board-sidenav-dark{
+    width: 300px;
+    background-color: $primary-dark;
+    color: $text-dark;
+
+    transition: all 550ms;
+}
+
+.board-toolbar-dark{
+    background-color: $primary-dark;
+    color: $text-dark;
+    position: fixed;
+    top: 0;
+    z-index: 2;
+
+    transition: all 550ms;
+}
+
+.board-card-dark{
+    background-color: $secondary-dark;
+    color: $text-dark;
+    border:solid 3px $accent-dark;
+    border-radius: 20px;
+
+    height: fit-content;
+    padding: 8px 8px 16px 8px;
+
+    margin-top: 24px;
+    transition: all 550ms;
+}
+
+.board-wrapper-dark{
+    position: relative;
+    top:120px;
+    left:0;
+    background-color: $primary-dark;
+    min-width: 100vw;
+    min-height: calc(100vh - 120px);
+    margin: 0;
+    padding: 0;
+    transition: all 550ms;
+}

@@ -7,6 +7,7 @@ import {
 import { ThemesComponent } from '../../services/themes/themes.component';
 
 interface Task {
+  id:number;
   title: string;
   subtitle: string;
   content: string;
@@ -30,6 +31,7 @@ export class BoardComponent {
 
   todo: Task[] = [
     {
+      id: 1,
       title: 'Start with Angular',
       subtitle: 'Read documentation and differences',
       content:
@@ -37,6 +39,7 @@ export class BoardComponent {
       date: '01 Juni',
     },
     {
+      id: 2,
       title: 'Start with Django',
       subtitle: 'Install and prepare',
       content: 'Install REST framework, set up venv, check requirements',
@@ -45,6 +48,7 @@ export class BoardComponent {
   ];
   inProgress: Task[] = [
     {
+      id: 3,
       title: 'Make Drag and Drop work',
       subtitle: 'Check docs',
       content: 'N/A',
@@ -53,6 +57,7 @@ export class BoardComponent {
   ];
   done: Task[] = [
     {
+      id: 4,
       title: 'Design Board',
       subtitle: 'Make the Layout and css classes',
       content: 'Pay attention to class naming',

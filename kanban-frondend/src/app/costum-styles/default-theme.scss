@@ -39,3 +39,51 @@ $accent: hsl(232, 72%, 21%);
 
     transition: all 550ms;
 }
+
+/* BOARD COMPONENT */
+.board-bg{
+    background-color: $secondary;
+    transition: all 550ms;
+}
+
+.board-sidenav{
+    width: 300px;
+    background-color: $primary;
+    color: $secondary;
+
+    transition: all 550ms;
+}
+
+.board-toolbar{
+    background-color: $primary;
+    color: $text;
+    position: fixed;
+    top: 0;
+    z-index: 2;
+
+    transition: all 550ms;
+}
+
+.board-card{
+    background-color: $secondary;
+    color: $text;
+    border-radius: 20px;
+
+    height: fit-content;
+    padding: 8px 8px 16px 8px;
+
+    margin-top: 24px;
+    transition: all 550ms;
+}
+
+.board-wrapper{
+    position: relative;
+    top:120px;
+    left:0;
+    background-color: $background;
+    min-width: 100vw;
+    min-height: calc(100vh - 120px);
+    margin: 0;
+    padding: 0;
+    transition: all 550ms;
+}
