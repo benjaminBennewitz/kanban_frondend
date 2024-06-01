@@ -117,13 +117,12 @@ html{
 }
 
 .cdk-drag-preview {
-   /* User-defined styles for the drag preview */
-    height:225px !important;
+   //User-defined styles for the drag preview
+    height:fit-content !important;
     border-radius: 20px;
-    background-color: $link !important;
 }
 
-.cdk-drag-animating {
-    /* Custom styles for the element while it is animated */
+/*.cdk-drag-animating {
+    //Custom styles for the element while it is animated
     transition: all 550ms;
-}
+}*/

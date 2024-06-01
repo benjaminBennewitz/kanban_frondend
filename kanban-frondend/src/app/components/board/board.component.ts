@@ -20,6 +20,7 @@ interface Task {
   styleUrls: ['./board.component.scss'],
 })
 export class BoardComponent {
+  showFiller = false;
 
   constructor(private ThemesComponent: ThemesComponent) { }
 
