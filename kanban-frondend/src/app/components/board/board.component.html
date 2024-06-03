@@ -1,5 +1,5 @@
 <mat-drawer-container class="mat-drawer-container" autosize>
-
+    <!-- SIDENAV START -->
     <mat-drawer id="sideNav" #drawer class="board-sidenav" mode="over" [opened]="false">
         <div class="logo-container">B² TICKETEER</div>
         <ul class="menu-items">
@@ -7,14 +7,16 @@
             <li>
                 <div class="flex-c-c"><mat-icon>settings</mat-icon><mat-label>Themes</mat-label></div>
                 <mat-select (selectionChange)="onThemeChange($event.value)">
-                    <mat-option value="default-theme">Default</mat-option>
+                    <mat-option value="default">Default</mat-option>
                     <mat-option value="light-theme">Light</mat-option>
                     <mat-option value="dark-theme">Dark</mat-option>
                 </mat-select>
             </li>
         </ul>
     </mat-drawer>
+    <!-- SIDENAV END -->
 
+    <!-- HEADER START -->
     <div>
         <mat-toolbar id="navToolbar" class="board-toolbar">
             <mat-toolbar-row>
@@ -26,37 +28,41 @@
             </mat-toolbar-row>
         </mat-toolbar>
     </div>
+    <!-- HEADER END -->
 
     <!-- BOARD CONTENT START -->
     <div id="mainBoardBG" class="board-bg">
         <div id="boardBG" class="board-wrapper">
             <div class="board-wrapper-col">
-
                 <!-- URGENT START-->
                 <div class="board-card-wrapper">
                     <div class="flex-btw-c board-heading 1001">
                         <div class="board-col-headline pad-l-24">Urgent</div>
                         <div class="pad-r-24">
-                            <mat-icon>add</mat-icon>
-                            <mat-icon>more_horiz</mat-icon>
+                            <mat-icon>add</mat-icon><mat-icon>more_horiz</mat-icon>
                         </div>
                     </div>
-
                     <div class="board-col-overflow">
-                        <div [ngClass]="{'board-card-wrapper-empty': urgent.length === 0}" class="1003" cdkDropList
-                            #urgentList="cdkDropList" [cdkDropListData]="urgent"
+                        <div [ngClass]="{
+                                'board-card-wrapper-empty': urgent.length === 0 && currentTheme === 'default',
+                                'board-card-wrapper-empty-light': urgent.length === 0 && currentTheme === 'light-theme',
+                                'board-card-wrapper-empty-dark': urgent.length === 0 && currentTheme === 'dark-theme'}" 
+                            class="1003" cdkDropList #urgentList="cdkDropList" [cdkDropListData]="urgent"
                             [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]"
                             (cdkDropListDropped)="drop($event)">
                             <div class="flex-c-c" *ngIf="urgent.length === 0">
-                                <mat-icon class="board-col-icons">add</mat-icon>
-                                <div>Add Task</div>
+                                <mat-icon class="mr-t-16 board-col-icons">add</mat-icon>
+                                <div class="mr-t-16">Add Task</div>
                             </div>
                             <div class="board-media-row">
                                 <div *ngFor="let item of urgent" cdkDrag>
                                     <mat-card [attr.id]="'CardId-' + item.id" class="1002 board-card" cdkDragPreview>
                                         <mat-card-header>
-                                            <mat-card-title>{{item.title}}</mat-card-title>
-                                            <mat-card-subtitle>{{item.subtitle}}</mat-card-subtitle>
+                                            <div class="flex-col">
+                                                <mat-card-title>{{item.title}}</mat-card-title>
+                                                <mat-card-subtitle class="board-card-subtitle 1004">{{item.subtitle}}</mat-card-subtitle>
+                                                <div [ngClass]="getPriorityClass(item.prio)"></div>
+                                            </div>
                                         </mat-card-header>
                                         <mat-card-content>
                                             <p>{{item.content}}</p>
@@ -71,33 +77,38 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <!-- URGENT END-->
+
                 <!-- TO DO START-->
                 <div class="board-card-wrapper">
                     <div class="flex-btw-c board-heading 1001">
                         <div class="board-col-headline pad-l-24">To do</div>
                         <div class="pad-r-24">
-                            <mat-icon>add</mat-icon>
-                            <mat-icon>more_horiz</mat-icon>
+                            <mat-icon>add</mat-icon><mat-icon>more_horiz</mat-icon>
                         </div>
                     </div>
                     <div class="board-col-overflow">
-                        <div [ngClass]="{'board-card-wrapper-empty': todo.length === 0}" class="1003" cdkDropList
-                            #todoList="cdkDropList" [cdkDropListData]="todo"
+                        <div [ngClass]="{
+                                'board-card-wrapper-empty': todo.length === 0 && currentTheme === 'default',
+                                'board-card-wrapper-empty-light': todo.length === 0 && currentTheme === 'light-theme',
+                                'board-card-wrapper-empty-dark': todo.length === 0 && currentTheme === 'dark-theme'}" 
+                            class="1003" cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo"
                             [cdkDropListConnectedTo]="[urgentList, inProgressList, doneList]"
                             (cdkDropListDropped)="drop($event)">
                             <div class="flex-c-c" *ngIf="todo.length === 0">
-                                <mat-icon class="board-col-icons">add</mat-icon>
-                                <div>Add Task</div>
+                                <mat-icon class="mr-t-16 board-col-icons">add</mat-icon>
+                                <div class="mr-t-16">Add Task</div>
                             </div>
                             <div class="board-media-row">
                                 <div *ngFor="let item of todo" cdkDrag>
                                     <mat-card [attr.id]="'CardId-' + item.id" class="1002 board-card" cdkDragPreview>
                                         <mat-card-header>
-                                            <mat-card-title>{{item.title}}</mat-card-title>
-                                            <mat-card-subtitle>{{item.subtitle}}</mat-card-subtitle>
+                                            <div class="flex-col">
+                                                <mat-card-title>{{item.title}}</mat-card-title>
+                                                <mat-card-subtitle class="board-card-subtitle 1004">{{item.subtitle}}</mat-card-subtitle>
+                                                <div [ngClass]="getPriorityClass(item.prio)"></div>
+                                            </div>
                                         </mat-card-header>
                                         <mat-card-content>
                                             <p>{{item.content}}</p>
@@ -113,31 +124,37 @@
                         </div>
                     </div>
                 </div>
-                <!-- TODO END-->
+                <!-- TO DO END-->
+
                 <!-- IN PROGRESS START-->
                 <div class="board-card-wrapper">
                     <div class="flex-btw-c board-heading 1001">
                         <div class="board-col-headline pad-l-24">In progress</div>
                         <div class="pad-r-24">
-                            <mat-icon>add</mat-icon>
-                            <mat-icon>more_horiz</mat-icon>
+                            <mat-icon>add</mat-icon><mat-icon>more_horiz</mat-icon>
                         </div>
                     </div>
                     <div class="board-col-overflow">
-                        <div [ngClass]="{'board-card-wrapper-empty': inProgress.length === 0}" class="1003" cdkDropList
-                            #inProgressList="cdkDropList" [cdkDropListData]="inProgress"
+                        <div [ngClass]="{
+                                'board-card-wrapper-empty': inProgress.length === 0 && currentTheme === 'default',
+                                'board-card-wrapper-empty-light': inProgress.length === 0 && currentTheme === 'light-theme',
+                                'board-card-wrapper-empty-dark': inProgress.length === 0 && currentTheme === 'dark-theme'}"
+                            class="1003" cdkDropList #inProgressList="cdkDropList" [cdkDropListData]="inProgress"
                             [cdkDropListConnectedTo]="[urgentList, todoList, doneList]"
                             (cdkDropListDropped)="drop($event)">
                             <div class="flex-c-c" *ngIf="inProgress.length === 0">
-                                <mat-icon class="board-col-icons">add</mat-icon>
-                                <div>Add Task</div>
+                                <mat-icon class="mr-t-16 board-col-icons">add</mat-icon>
+                                <div class="mr-t-16">Add Task</div>
                             </div>
                             <div class="board-media-row">
                                 <div *ngFor="let item of inProgress" cdkDrag>
                                     <mat-card [attr.id]="'CardId-' + item.id" class="1002 board-card" cdkDragPreview>
                                         <mat-card-header>
-                                            <mat-card-title>{{item.title}}</mat-card-title>
-                                            <mat-card-subtitle>{{item.subtitle}}</mat-card-subtitle>
+                                            <div class="flex-col">
+                                                <mat-card-title>{{item.title}}</mat-card-title>
+                                                <mat-card-subtitle class="board-card-subtitle 1004">{{item.subtitle}}</mat-card-subtitle>
+                                                <div [ngClass]="getPriorityClass(item.prio)"></div>
+                                            </div>
                                         </mat-card-header>
                                         <mat-card-content>
                                             <p>{{item.content}}</p>
@@ -154,30 +171,36 @@
                     </div>
                 </div>
                 <!-- IN PROGRESS END-->
+
                 <!-- DONE START-->
                 <div class="board-card-wrapper">
                     <div class="flex-btw-c board-heading 1001">
                         <div class="board-col-headline pad-l-24">Done</div>
                         <div class="pad-r-24">
-                            <mat-icon>add</mat-icon>
-                            <mat-icon>more_horiz</mat-icon>
+                            <mat-icon>add</mat-icon><mat-icon>more_horiz</mat-icon>
                         </div>
                     </div>
                     <div class="board-col-overflow">
-                        <div [ngClass]="{'board-card-wrapper-empty': done.length === 0}" class="1003" cdkDropList
-                            #doneList="cdkDropList" [cdkDropListData]="done"
+                        <div [ngClass]="{
+                                'board-card-wrapper-empty': done.length === 0 && currentTheme === 'default',
+                                'board-card-wrapper-empty-light': done.length === 0 && currentTheme === 'light-theme',
+                                'board-card-wrapper-empty-dark': done.length === 0 && currentTheme === 'dark-theme'}" 
+                            class="1003" cdkDropList #doneList="cdkDropList" [cdkDropListData]="done"
                             [cdkDropListConnectedTo]="[urgentList, todoList, inProgressList]"
                             (cdkDropListDropped)="drop($event)">
                             <div class="flex-c-c" *ngIf="done.length === 0">
-                                <mat-icon class="board-col-icons">add</mat-icon>
-                                <div>Add Task</div>
+                                <mat-icon class="mr-t-16 board-col-icons">add</mat-icon>
+                                <div class="mr-t-16">Add Task</div>
                             </div>
                             <div class="board-media-row">
                                 <div *ngFor="let item of done" cdkDrag>
                                     <mat-card [attr.id]="'CardId-' + item.id" class="1002 board-card" cdkDragPreview>
                                         <mat-card-header>
-                                            <mat-card-title>{{item.title}}</mat-card-title>
-                                            <mat-card-subtitle>{{item.subtitle}}</mat-card-subtitle>
+                                            <div class="flex-col">
+                                                <mat-card-title>{{item.title}}</mat-card-title>
+                                                <mat-card-subtitle class="board-card-subtitle 1004">{{item.subtitle}}</mat-card-subtitle>
+                                                <div [ngClass]="getPriorityClass(item.prio)"></div>
+                                            </div>
                                         </mat-card-header>
                                         <mat-card-content>
                                             <p>{{item.content}}</p>
@@ -190,11 +213,10 @@
                                     </mat-card>
                                 </div>
                             </div>
+                          </div>
                         </div>
-                    </div>
-                </div><!-- DONE END-->
-            </div>
-        </div>
-    </div><!-- BOARD CONTENT START -->
-
-</mat-drawer-container>
+                  </div><!-- DONE END-->
+              </div>
+          </div>
+      </div><!-- BOARD CONTENT START -->
+  </mat-drawer-container>

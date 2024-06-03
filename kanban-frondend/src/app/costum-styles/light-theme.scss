@@ -64,6 +64,7 @@ $accent-light: hsl(232, 72%, 21%);
 }
 
 .board-heading-light{
+    margin-bottom: 16px;
     color:$text-light;
     transition: all 550ms;
     & mat-icon{
@@ -80,12 +81,17 @@ $accent-light: hsl(232, 72%, 21%);
     background-color: $secondary-light;
     color: $accent-light;
     border-radius: 20px;
+    width: 380px;
 
     height: fit-content;
     padding: 8px 8px 16px 8px;
 
-    margin-top: 24px;
     transition: all 550ms;
+}
+
+.board-card-subtitle-light{
+    color: $accent-light;
+    font-style: italic;
 }
 
 .board-card-wrapper-empty-light{
@@ -97,9 +103,6 @@ $accent-light: hsl(232, 72%, 21%);
 
     height:500px;
     max-height: 600px;
-  
-    padding-top: 16px;
-    margin-top: 24px;
 
     transition: all 550ms;
 }
@@ -110,8 +113,8 @@ $accent-light: hsl(232, 72%, 21%);
     left:0;
     background-color: $background-light;
     min-width: 100vw;
-    min-height: calc(100vh - 120px);
+    height: calc(100vh - 120px);
+    max-height: calc(100vh - 120px);
     margin: 0;
     padding: 0;
-    transition: all 550ms;
 }

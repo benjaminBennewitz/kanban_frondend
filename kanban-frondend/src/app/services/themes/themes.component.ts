@@ -1,4 +1,5 @@
 import { Component, Injectable, Renderer2 } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 interface ThemeConfig {
   mainWrapper: string;
@@ -9,17 +10,23 @@ interface ThemeConfig {
   mainBoardBG: string;
   emptyCards: string;
   headings: string;
+  subtitle: string;
 }
 
 @Injectable({
   providedIn: 'root',
 })
+
 @Component({
   selector: 'app-themes',
   templateUrl: './themes.component.html',
-  styleUrl: './themes.component.scss',
+  styleUrls: ['./themes.component.scss'],
 })
+
 export class ThemesComponent {
+  private currentThemeSubject = new BehaviorSubject<string>('default');
+  currentTheme$ = this.currentThemeSubject.asObservable();
+
   private themeClassMapping: { [key: string]: ThemeConfig } = {
     'light-theme': {
       mainWrapper: 'main-wrapper-light',
@@ -30,6 +37,7 @@ export class ThemesComponent {
       mainBoardBG: 'board-bg-light',
       emptyCards: 'board-card-wrapper-empty-light',
       headings: 'board-heading-light',
+      subtitle: 'board-card-subtitle-light',
     },
     'dark-theme': {
       mainWrapper: 'main-wrapper-dark',
@@ -40,6 +48,7 @@ export class ThemesComponent {
       mainBoardBG: 'board-bg-dark',
       emptyCards: 'board-card-wrapper-empty-dark',
       headings: 'board-heading-dark',
+      subtitle: 'board-card-subtitle-dark',
     },
     default: {
       mainWrapper: 'main-wrapper',
@@ -50,25 +59,30 @@ export class ThemesComponent {
       mainBoardBG: 'board-bg',
       emptyCards: 'board-card-wrapper-empty',
       headings: 'board-heading',
+      subtitle: 'board-card-subtitle',
     },
   };
 
-  constructor(private renderer: Renderer2) {}
+  constructor(private renderer: Renderer2) { }
 
   /**
    * Function called when theme is changed
    * @param selectedTheme
+   * @param containerStates
    */
-  onThemeChange(selectedTheme: string) {
+  onThemeChange(selectedTheme: string, containerStates: { id: string, isEmpty: boolean }[]) {
+    console.log('Selected Theme:', selectedTheme);
+    this.currentThemeSubject.next(selectedTheme);
+  
     const mainWrapper = document.getElementById('mainWrapper');
     const sideNav = document.getElementById('sideNav');
     const navToolbar = document.getElementById('navToolbar');
     const boardBG = document.getElementById('boardBG');
     const mainBoardBG = document.getElementById('mainBoardBG');
-
+    
     const headings = document.getElementsByClassName('1001');
     const cards = document.getElementsByClassName('1002');
-    const emptyCards = document.getElementsByClassName('1003');
+    const subtitle = document.getElementsByClassName('1004');
 
     if (mainWrapper) {
       this.removeOldClasses(mainWrapper);
@@ -105,13 +119,23 @@ export class ThemesComponent {
         this.addNewClassCards(card as HTMLElement, selectedTheme);
       });
     }
-    if (emptyCards) {
+    if (subtitle) {
       // Iterate through the HTMLCollection and apply classes to each element
-      Array.from(emptyCards).forEach((emptyCard: Element) => {
-        this.removeOldClasses(emptyCard as HTMLElement);
-        this.addNewClassEmptyCards(emptyCard as HTMLElement, selectedTheme);
+      Array.from(subtitle).forEach((title: Element) => {
+        this.removeOldClasses(title as HTMLElement);
+        this.addNewClassSubtitle(title as HTMLElement, selectedTheme);
       });
     }
+
+    containerStates.forEach(containerState => {
+      const container = document.getElementById(containerState.id);
+      if (container) {
+        this.removeOldClasses(container);
+        if (containerState.isEmpty) {
+          this.addNewClassEmptyCards(container, selectedTheme);
+        }
+      }
+    });
   }
 
   /**
@@ -150,7 +174,11 @@ export class ThemesComponent {
 
       'board-heading',
       'board-heading-light',
-      'board-heading-dark'
+      'board-heading-dark',
+
+      'board-card-subtitle',
+      'board-card-subtitle-light',
+      'board-card-subtitle-dark',
     );
   }
 
@@ -161,8 +189,7 @@ export class ThemesComponent {
    */
   private addNewClass(element: HTMLElement, selectedTheme: string) {
     const themeConfig =
-      this.themeClassMapping[selectedTheme] ||
-      this.themeClassMapping['default'];
+      this.themeClassMapping[selectedTheme] || this.themeClassMapping['default'];
     this.renderer.addClass(element, themeConfig.mainWrapper);
   }
 
@@ -173,8 +200,7 @@ export class ThemesComponent {
    */
   private addNewClassNav(element: HTMLElement, selectedTheme: string) {
     const themeConfig =
-      this.themeClassMapping[selectedTheme] ||
-      this.themeClassMapping['default'];
+      this.themeClassMapping[selectedTheme] || this.themeClassMapping['default'];
     this.renderer.addClass(element, themeConfig.sideNav);
   }
 
@@ -185,8 +211,7 @@ export class ThemesComponent {
    */
   private addNewClassBar(element: HTMLElement, selectedTheme: string) {
     const themeConfig =
-      this.themeClassMapping[selectedTheme] ||
-      this.themeClassMapping['default'];
+      this.themeClassMapping[selectedTheme] || this.themeClassMapping['default'];
     this.renderer.addClass(element, themeConfig.navToolbar);
   }
 
@@ -197,8 +222,7 @@ export class ThemesComponent {
    */
   private addNewClassCards(element: HTMLElement, selectedTheme: string) {
     const themeConfig =
-      this.themeClassMapping[selectedTheme] ||
-      this.themeClassMapping['default'];
+      this.themeClassMapping[selectedTheme] || this.themeClassMapping['default'];
     this.renderer.addClass(element, themeConfig.cards);
   }
 
@@ -209,8 +233,7 @@ export class ThemesComponent {
    */
   private addNewClassBg(element: HTMLElement, selectedTheme: string) {
     const themeConfig =
-      this.themeClassMapping[selectedTheme] ||
-      this.themeClassMapping['default'];
+      this.themeClassMapping[selectedTheme] || this.themeClassMapping['default'];
     this.renderer.addClass(element, themeConfig.boardBG);
   }
 
@@ -221,32 +244,40 @@ export class ThemesComponent {
    */
   private addNewClassMainBoardBG(element: HTMLElement, selectedTheme: string) {
     const themeConfig =
-      this.themeClassMapping[selectedTheme] ||
-      this.themeClassMapping['default'];
+      this.themeClassMapping[selectedTheme] || this.themeClassMapping['default'];
     this.renderer.addClass(element, themeConfig.mainBoardBG);
   }
 
   /**
-   * Function to set the right theme class by selection for cards
+   * Function to set the right theme class by selection for empty cards
    * @param element
    * @param selectedTheme
    */
   private addNewClassEmptyCards(element: HTMLElement, selectedTheme: string) {
     const themeConfig =
-      this.themeClassMapping[selectedTheme] ||
-      this.themeClassMapping['default'];
+      this.themeClassMapping[selectedTheme] || this.themeClassMapping['default'];
     this.renderer.addClass(element, themeConfig.emptyCards);
   }
 
   /**
-   * Function to set the right theme class by selection for cards
+   * Function to set the right theme class by selection for headings
    * @param element
    * @param selectedTheme
    */
   private addNewClassHeadings(element: HTMLElement, selectedTheme: string) {
     const themeConfig =
-      this.themeClassMapping[selectedTheme] ||
-      this.themeClassMapping['default'];
+      this.themeClassMapping[selectedTheme] || this.themeClassMapping['default'];
     this.renderer.addClass(element, themeConfig.headings);
   }
+
+    /**
+   * Function to set the right theme class by selection for headings
+   * @param element
+   * @param selectedTheme
+   */
+    private addNewClassSubtitle(element: HTMLElement, selectedTheme: string) {
+      const themeConfig =
+        this.themeClassMapping[selectedTheme] || this.themeClassMapping['default'];
+      this.renderer.addClass(element, themeConfig.subtitle);
+    }
 }

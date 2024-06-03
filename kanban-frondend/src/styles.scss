@@ -62,6 +62,11 @@ mat-drawer-content{ overflow-x: hidden !important}
     align-items: center;
 }
 
+.flex-col{
+    display: flex;
+    flex-direction: column;
+}
+
 
 /*
 ### COSTUM CHANGES
