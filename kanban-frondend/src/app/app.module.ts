@@ -53,7 +53,8 @@ import { ThemesComponent } from './services/themes/themes.component';
     CdkDrag,
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    ThemesComponent,
   ],
   bootstrap: [AppComponent]
 })

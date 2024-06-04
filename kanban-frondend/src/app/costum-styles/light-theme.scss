@@ -16,6 +16,8 @@
 ###
 #################################*/
 
+@import './animations.scss';
+
 // Light Theme
 $primary-light: hsl(223, 44%, 80%);
 $secondary-light: hsl(0, 0%, 97%);
@@ -97,14 +99,15 @@ $accent-light: hsl(232, 72%, 21%);
 .board-card-wrapper-empty-light{
     background: linear-gradient(180deg, $secondary-light, $background-light);
     border-radius: 20px;
-    & .board-col-icons{
-        color:$text-light;
+    & .board-col-icons, .mr-t-16{
+        color:$text;
+        cursor: pointer;
     }
 
     height:500px;
     max-height: 600px;
 
-    transition: all 550ms;
+    animation: bounce 2s 1;
 }
 
 .board-wrapper-light{

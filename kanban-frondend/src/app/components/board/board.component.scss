@@ -22,6 +22,7 @@
 @import '../../costum-styles/default-theme.scss';
 @import '../../costum-styles/light-theme.scss';
 @import '../../costum-styles/dark-theme.scss';
+@import '../../costum-styles/animations.scss';
 
 mat-toolbar-row{
     justify-content: space-between;
@@ -151,14 +152,17 @@ mat-icon{
 .board-card-wrapper-empty{
     background: linear-gradient(180deg, $secondary, $background);
     border-radius: 20px;
-    & .board-col-icons{
+    & .board-col-icons, .mr-t-16{
         color:$text;
+        cursor: pointer;
     }
 
     height:500px;
     max-height: 600px;
 
-    transition: all 550ms;
+    animation: bounce 2s 1;
+    animation-timing-function: ease;
+    animation-delay: 0s;
 }
 
 .board-card {
@@ -188,12 +192,6 @@ mat-icon{
 .board-card-subtitle{
     color: $text;
     font-style: italic;
-}
-
-.pos-abs{
-    position: absolute;
-    bottom:18px;
-    left: 16px;
 }
 
 .urgent{
@@ -255,6 +253,7 @@ mat-icon{
 .mat-mdc-select:hover{
     color:$text !important;
 }
+
 
 /* MEDIA QUERRYS*/
 @media (max-width: 720px) {

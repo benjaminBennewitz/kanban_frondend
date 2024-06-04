@@ -17,6 +17,7 @@
 #################################*/
 
 @import 'app/costum-styles/default-theme.scss';
+@import 'app/costum-styles/animations.scss';
 
 /*
 ### GLOBAL STYLES
@@ -125,9 +126,10 @@ html{
    //User-defined styles for the drag preview
     height:fit-content !important;
     border-radius: 20px;
+    opacity: 0.8;
 }
 
-/*.cdk-drag-animating {
+.cdk-drag-animating {
     //Custom styles for the element while it is animated
-    transition: all 550ms;
-}*/
+    transition: all 150ms;
+}

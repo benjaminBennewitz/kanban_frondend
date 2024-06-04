@@ -16,6 +16,8 @@
 ###
 #################################*/
 
+@import './animations.scss';
+
 /*
 ### GLOBAL COLORS
 */
@@ -98,15 +100,17 @@ $accent-dark: hsl(192, 83%, 26%);
 .board-card-wrapper-empty-dark{
     background: linear-gradient(180deg, $secondary-dark, $primary-dark);
     color:$text-dark;
-    & .board-col-icons{
+    & .board-col-icons, .mr-t-16{
         color:$text-dark;
+        cursor: pointer;
     }
+
     border-radius: 20px;
 
     height:500px;
     max-height: 600px;
 
-    transition: all 550ms;
+    animation: bounce 2s 1;
 }
 
 .board-wrapper-dark{

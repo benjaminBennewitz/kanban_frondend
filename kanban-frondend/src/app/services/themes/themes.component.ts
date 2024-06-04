@@ -5,12 +5,10 @@ interface ThemeConfig {
   mainWrapper: string;
   sideNav: string;
   navToolbar: string;
-  cards: string;
   boardBG: string;
   mainBoardBG: string;
   emptyCards: string;
   headings: string;
-  subtitle: string;
 }
 
 @Injectable({
@@ -32,34 +30,28 @@ export class ThemesComponent {
       mainWrapper: 'main-wrapper-light',
       sideNav: 'board-sidenav-light',
       navToolbar: 'board-toolbar-light',
-      cards: 'board-card-light',
       boardBG: 'board-wrapper-light',
       mainBoardBG: 'board-bg-light',
       emptyCards: 'board-card-wrapper-empty-light',
       headings: 'board-heading-light',
-      subtitle: 'board-card-subtitle-light',
     },
     'dark-theme': {
       mainWrapper: 'main-wrapper-dark',
       sideNav: 'board-sidenav-dark',
       navToolbar: 'board-toolbar-dark',
-      cards: 'board-card-dark',
       boardBG: 'board-wrapper-dark',
       mainBoardBG: 'board-bg-dark',
       emptyCards: 'board-card-wrapper-empty-dark',
       headings: 'board-heading-dark',
-      subtitle: 'board-card-subtitle-dark',
     },
     default: {
       mainWrapper: 'main-wrapper',
       sideNav: 'board-sidenav',
       navToolbar: 'board-toolbar',
-      cards: 'board-card',
       boardBG: 'board-wrapper',
       mainBoardBG: 'board-bg',
       emptyCards: 'board-card-wrapper-empty',
       headings: 'board-heading',
-      subtitle: 'board-card-subtitle',
     },
   };
 
@@ -81,8 +73,6 @@ export class ThemesComponent {
     const mainBoardBG = document.getElementById('mainBoardBG');
     
     const headings = document.getElementsByClassName('1001');
-    const cards = document.getElementsByClassName('1002');
-    const subtitle = document.getElementsByClassName('1004');
 
     if (mainWrapper) {
       this.removeOldClasses(mainWrapper);
@@ -110,20 +100,6 @@ export class ThemesComponent {
       Array.from(headings).forEach((heading: Element) => {
         this.removeOldClasses(heading as HTMLElement);
         this.addNewClassHeadings(heading as HTMLElement, selectedTheme);
-      });
-    }
-    if (cards) {
-      // Iterate through the HTMLCollection and apply classes to each element
-      Array.from(cards).forEach((card: Element) => {
-        this.removeOldClasses(card as HTMLElement);
-        this.addNewClassCards(card as HTMLElement, selectedTheme);
-      });
-    }
-    if (subtitle) {
-      // Iterate through the HTMLCollection and apply classes to each element
-      Array.from(subtitle).forEach((title: Element) => {
-        this.removeOldClasses(title as HTMLElement);
-        this.addNewClassSubtitle(title as HTMLElement, selectedTheme);
       });
     }
 
@@ -215,16 +191,6 @@ export class ThemesComponent {
     this.renderer.addClass(element, themeConfig.navToolbar);
   }
 
-  /**
-   * Function to set the right theme class by selection for cards
-   * @param element
-   * @param selectedTheme
-   */
-  private addNewClassCards(element: HTMLElement, selectedTheme: string) {
-    const themeConfig =
-      this.themeClassMapping[selectedTheme] || this.themeClassMapping['default'];
-    this.renderer.addClass(element, themeConfig.cards);
-  }
 
   /**
    * Function to set the right theme class by selection for navToolbar
@@ -269,15 +235,4 @@ export class ThemesComponent {
       this.themeClassMapping[selectedTheme] || this.themeClassMapping['default'];
     this.renderer.addClass(element, themeConfig.headings);
   }
-
-    /**
-   * Function to set the right theme class by selection for headings
-   * @param element
-   * @param selectedTheme
-   */
-    private addNewClassSubtitle(element: HTMLElement, selectedTheme: string) {
-      const themeConfig =
-        this.themeClassMapping[selectedTheme] || this.themeClassMapping['default'];
-      this.renderer.addClass(element, themeConfig.subtitle);
-    }
 }
