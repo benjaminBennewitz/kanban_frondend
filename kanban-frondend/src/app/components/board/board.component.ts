@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem,
-} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ThemesComponent } from '../../services/themes/themes.component';
 
 interface Task {
@@ -20,6 +16,7 @@ interface Task {
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
 })
+
 export class BoardComponent implements OnInit {
   showFiller = false;
   currentTheme: string = 'default';
@@ -27,19 +24,17 @@ export class BoardComponent implements OnInit {
   constructor(private themesComponent: ThemesComponent) {}
 
   ngOnInit() {
-    this.themesComponent.currentTheme$.subscribe(theme => {
+    this.themesComponent.currentTheme$.subscribe((theme) => {
       this.currentTheme = theme;
     });
   }
 
+  /**
+   * 
+   * @param selectedTheme 
+   */
   onThemeChange(selectedTheme: string) {
-    const containerStates = [
-      { id: 'urgentList', isEmpty: this.urgent.length === 0 },
-      { id: 'todoList', isEmpty: this.todo.length === 0 },
-      { id: 'inProgressList', isEmpty: this.inProgress.length === 0 },
-      { id: 'doneList', isEmpty: this.done.length === 0 },
-    ];
-    this.themesComponent.onThemeChange(selectedTheme, containerStates);
+    this.themesComponent.onThemeChange(selectedTheme);
   }
 
   urgent: Task[] = [];
@@ -52,7 +47,7 @@ export class BoardComponent implements OnInit {
       content:
         'Many new functions on Angular 18: Material 3, deferrable views and built-in controls flows are now officially stable and bring a number of improvements',
       date: '01 Juni',
-      prio:'urgent',
+      prio: 'urgent',
     },
     {
       id: 2,
@@ -60,7 +55,7 @@ export class BoardComponent implements OnInit {
       subtitle: 'Install and prepare',
       content: 'Install REST framework, set up venv, check requirements',
       date: '25 Juni',
-      prio:'medium',
+      prio: 'medium',
     },
     {
       id: 3,
@@ -68,7 +63,7 @@ export class BoardComponent implements OnInit {
       subtitle: 'Check all themes: light, dark and default',
       content: 'very fiddly thing to make work',
       date: '-',
-      prio:'low',
+      prio: 'low',
     },
   ];
 
@@ -79,7 +74,7 @@ export class BoardComponent implements OnInit {
       subtitle: 'Check docs',
       content: 'N/A',
       date: '-',
-      prio:'',
+      prio: '',
     },
     {
       id: 5,
@@ -87,7 +82,7 @@ export class BoardComponent implements OnInit {
       subtitle: 'Classes are wrong by drag n drop',
       content: 'Check functions and classes',
       date: '08 Juni',
-      prio:'low',
+      prio: 'low',
     },
   ];
 
@@ -98,7 +93,7 @@ export class BoardComponent implements OnInit {
       subtitle: 'Make the Layout and css classes',
       content: 'Pay attention to class naming',
       date: '28 Mai',
-      prio:'medium',
+      prio: 'medium',
     },
   ];
 
@@ -135,5 +130,4 @@ export class BoardComponent implements OnInit {
         return '';
     }
   }
-  
 }

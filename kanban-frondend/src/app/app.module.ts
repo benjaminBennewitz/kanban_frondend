@@ -34,7 +34,7 @@ import { ThemesComponent } from './services/themes/themes.component';
     AuthComponent,
     LoginComponent,
     BoardComponent,
-    ThemesComponent
+    ThemesComponent,
   ],
   imports: [
     BrowserModule,
