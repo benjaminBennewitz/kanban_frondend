@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 
 interface ThemeConfig {
   mainWrapper: string;
+  loginBtnContainer: string;
 }
 
 @Injectable({
@@ -25,12 +26,15 @@ export class ThemesComponent {
   private themeClassMapping: { [key: string]: ThemeConfig } = {
     'light-theme': {
       mainWrapper: 'main-wrapper-light',
+      loginBtnContainer: 'login-btn-light',
     },
     'dark-theme': {
       mainWrapper: 'main-wrapper-dark',
+      loginBtnContainer: 'login-btn-dark',
     },
     default: {
       mainWrapper: 'main-wrapper',
+      loginBtnContainer: 'login-btn',
     },
   };
 
@@ -52,10 +56,15 @@ export class ThemesComponent {
     this.saveThemeToLocalStorage(selectedTheme);
 
     const mainWrapper = document.getElementById('mainWrapper');
+    const loginBtnContainer = document.getElementById('loginBtnContainer');
 
     if (mainWrapper) {
       this.removeOldClasses(mainWrapper);
       this.addNewClass(mainWrapper, selectedTheme);
+    }
+    if (loginBtnContainer) {
+      this.removeOldClasses(loginBtnContainer);
+      this.addNewClassBtn(loginBtnContainer, selectedTheme);
     }
   }
 
@@ -67,7 +76,11 @@ export class ThemesComponent {
     element.classList.remove(
       'main-wrapper',
       'main-wrapper-light',
-      'main-wrapper-dark'
+      'main-wrapper-dark',
+
+      'login-btn',
+      'login-btn-light',
+      'login-btn-dark'
     );
   }
 
@@ -82,6 +95,18 @@ export class ThemesComponent {
       this.themeClassMapping['default'];
     this.renderer.addClass(element, themeConfig.mainWrapper);
   }
+
+    /**
+   * Function to set the right theme class by selection
+   * @param element
+   * @param selectedTheme
+   */
+    private addNewClassBtn(element: HTMLElement, selectedTheme: string) {
+      const themeConfig =
+        this.themeClassMapping[selectedTheme] ||
+        this.themeClassMapping['default'];
+      this.renderer.addClass(element, themeConfig.loginBtnContainer);
+    }
 
   /**
    * Function to save selected theme to local storage

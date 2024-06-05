@@ -43,6 +43,18 @@ $accent-light: hsl(232, 72%, 21%);
     transition: all 550ms;
 }
 
+#loginBtnContainer{
+    button.login-btn-light{
+        background-color: $background;
+        color:$text;
+        transition: all 250ms;
+        &:hover{
+            background-color: $text-light;
+            color:$secondary-light;
+        }
+    }
+}
+
 /* BOARD COMPONENT */
 .board-bg-light{
     background-color: $secondary;

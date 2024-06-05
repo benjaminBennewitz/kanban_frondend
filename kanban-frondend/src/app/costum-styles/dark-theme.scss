@@ -28,6 +28,8 @@ $text-dark: hsl(0, 0%, 97%);
 $link-dark: hsl(355, 100%, 58%);
 $accent-dark: hsl(192, 83%, 26%);
 
+
+/* LOGIN COMPONENT*/
 .main-wrapper-dark{
     background-color: $secondary-dark;
     color: $text-dark;
@@ -41,6 +43,18 @@ $accent-dark: hsl(192, 83%, 26%);
     align-items: center;
 
     transition: all 550ms;
+}
+
+#loginBtnContainer{
+    button.login-btn-dark{
+        background-color: $background;
+        color:$text;
+        transition: all 250ms;
+        &:hover{
+            background-color: $accent-dark;
+            color:$text-dark;
+        }
+    }
 }
 
 /* BOARD COMPONENT */
