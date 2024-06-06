@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ThemesComponent } from '../../services/themes/themes.component';
+import { MatSnackBarRef } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',

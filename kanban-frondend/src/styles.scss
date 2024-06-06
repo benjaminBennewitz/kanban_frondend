@@ -136,3 +136,20 @@ html{
     //Custom styles for the element while it is animated
     transition: all 150ms;
 }
+
+/* STYLES FOR LOGIN */
+.login-btn{
+    button{
+        background-color: $background;
+        color:$text;
+        transition: all 250ms;
+        &:hover{
+            background-color: $link;
+            color:$secondary;
+        }
+    }
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__surface {
+    background-color: $link !important;
+}

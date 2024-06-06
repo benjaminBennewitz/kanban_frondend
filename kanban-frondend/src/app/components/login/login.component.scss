@@ -55,15 +55,3 @@ body {
     min-width: 310px;
     max-width: 900px;
 }
-
-#loginBtnContainer{
-    button.login-btn{
-        background-color: $background;
-        color:$text;
-        transition: all 250ms;
-        &:hover{
-            background-color: $link;
-            color:$secondary;
-        }
-    }
-}
