@@ -56,6 +56,29 @@ $accent-light: hsl(232, 72%, 21%);
 }
 
 /* BOARD COMPONENT */
+.board-overlay-light{
+    background-color: $primary-light;
+    color: $text-light;
+
+    font-size: 50px;
+
+    min-height: 100%;
+    min-width: 100%;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: all 1s;
+
+    overflow: hidden !important;
+}
+
 .board-bg-light{
     background-color: $secondary;
     transition: all 550ms;

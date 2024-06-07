@@ -58,6 +58,29 @@ $accent-dark: hsl(192, 83%, 26%);
 }
 
 /* BOARD COMPONENT */
+.board-overlay-dark{
+    background-color: $accent-dark;
+    color: $text-dark;
+
+    font-size: 50px;
+
+    min-height: 100%;
+    min-width: 100%;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: all 1s;
+
+    overflow: hidden !important;
+}
+
 .board-bg-dark{
     background-color: $secondary-dark;
     transition: all 550ms;

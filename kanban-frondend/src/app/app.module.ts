@@ -28,11 +28,13 @@ import {
 } from '@angular/cdk/drag-drop';
 import { ThemesComponent } from './services/themes/themes.component';
 
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackbarsComponent } from './components/snackbars/snackbars.component';
 
 import { FormsModule } from '@angular/forms';
 import { SnackMsgComponent } from './components/snack-msg/snack-msg.component';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -61,6 +63,7 @@ import { SnackMsgComponent } from './components/snack-msg/snack-msg.component';
     CdkDrag,
     MatSnackBarModule,
     FormsModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     provideAnimationsAsync(),

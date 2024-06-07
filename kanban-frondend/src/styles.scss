@@ -22,54 +22,72 @@
 /*
 ### GLOBAL STYLES
 */
-html, body { height: 100%; }
-body{ margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
-mat-form-field {width: 100%;}
-mat-sidenav-container{position: absolute;top:0;left:0}
-mat-drawer-content{ overflow-x: hidden !important}
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+mat-sidenav-container {
+    position: absolute;
+    top: 0;
+    left: 0
+}
+
+mat-drawer-content {
+    overflow-x: hidden !important
+}
 
 /*
 ### COMMON STYLES
 */
-.mr-l-16{
+.mr-l-16 {
     margin-left: 16px;
 }
 
-.mr-t-16{
+.mr-t-16 {
     margin-top: 16px;
 }
 
-.mr-t-24{
+.mr-t-24 {
     margin-top: 24px;
 }
 
-.pad-l-24{
-    padding-left:24px;
+.pad-l-24 {
+    padding-left: 24px;
 }
 
-.pad-r-24{
-    padding-right:24px;
+.pad-r-24 {
+    padding-right: 24px;
 }
 
-.flex-c-c{
+.flex-c-c {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.flex-btw-c{
+.flex-btw-c {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.flex-col{
+.flex-col {
     display: flex;
     flex-direction: column;
 }
 
-.gap-32{
-    gap:32px;
+.gap-32 {
+    gap: 32px;
 }
 
 /*
@@ -78,18 +96,16 @@ mat-drawer-content{ overflow-x: hidden !important}
 
 /* STYLES FOR INPUTS */
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-    background-color: $background !important;
+    background-color: $secondary !important;
 }
 
-.mdc-text-field--filled:not(.mdc-text-field--disabled)
-.mdc-text-field--focused .mdc-floating-label, 
-.mdc-text-field--filled:not(.mdc-text-field--disabled).mdc-text-field--focused 
-.mdc-floating-label--float-above{
+.mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-text-field--focused .mdc-floating-label,
+.mdc-text-field--filled:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label--float-above {
     color: $primary !important;
 }
 
 /* STYLES FOR SELECTBOX*/
-html{
+html {
     --mat-select-focused-arrow-color: hsl(355, 100%, 58%) !important;
     --mat-minimal-pseudo-checkbox-selected-checkmark-color: hsl(355, 100%, 58%) !important;
     --mdc-filled-text-field-focus-active-indicator-color: hsl(355, 100%, 58%) !important;
@@ -101,7 +117,7 @@ html{
 }
 
 /* STYLES FOR SCROLLBARS*/
-*{
+* {
     scrollbar-width: thin;
     scrollbar-color: $accent $background;
     border: none;
@@ -112,7 +128,7 @@ html{
     /* User-defined styles for drawing the card */
     cursor: move;
     transition: box-shadow 0.3s ease;
-    border-radius:20px;
+    border-radius: 20px;
 }
 
 .cdk-drag:hover {
@@ -126,8 +142,8 @@ html{
 }
 
 .cdk-drag-preview {
-   //User-defined styles for the drag preview
-    height:fit-content !important;
+    //User-defined styles for the drag preview
+    height: fit-content !important;
     border-radius: 20px;
     opacity: 0.8;
 }
@@ -138,15 +154,16 @@ html{
 }
 
 /* STYLES FOR LOGIN */
-.login-btn{
-    button{
-        background-color: $background;
-        color:$text;
-        transition: all 250ms;
-        &:hover{
-            background-color: $link;
-            color:$secondary;
-        }
+.login-btn {
+    background-color: $secondary !important;
+    color: $text !important;
+    transition: all 250ms !important;
+    box-shadow: none !important;
+
+    &:hover {
+        background-color: $link !important;
+        color: $secondary !important;
+        transition: all 250ms !important;
     }
 }
 

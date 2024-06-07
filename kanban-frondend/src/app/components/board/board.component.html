@@ -1,3 +1,15 @@
+<!-- WELCOME OVERLAY -->
+<div id="boardOverlay" [ngClass]="{
+    'board-overlay': currentTheme === 'default',
+    'board-overlay-light': currentTheme === 'light-theme',
+    'board-overlay-dark': currentTheme === 'dark-theme',
+    'slide-out': hideOverlay
+}" class="board-overlay" [style.visibility]="hideOverlay ? 'hidden' : 'visible'">
+    Welcome Ben
+</div>
+
+
+
 <mat-drawer-container class="mat-drawer-container" autosize>
     <!-- SIDENAV START -->
     <mat-drawer id="sideNav" #drawer [ngClass]="{

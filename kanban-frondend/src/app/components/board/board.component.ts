@@ -20,6 +20,7 @@ interface Task {
 export class BoardComponent implements OnInit {
   showFiller = false;
   currentTheme: string = 'default';
+  hideOverlay = false;
 
   constructor(private themesComponent: ThemesComponent) {}
 
@@ -27,7 +28,21 @@ export class BoardComponent implements OnInit {
     this.themesComponent.currentTheme$.subscribe((theme) => {
       this.currentTheme = theme;
     });
+
+    // Set a timeout to hide the overlay after 2 seconds
+    setTimeout(() => {
+      this.hideOverlay = true;
+    }, 2000);
+
+       // Set a timeout to hide the overlay after 3 seconds
+       setTimeout(() => {
+        const boardOverlay = document.getElementById('boardOverlay');
+        if (boardOverlay) {
+          boardOverlay.style.display = 'none';
+        }
+      }, 3000);
   }
+
 
   /**
    * 
