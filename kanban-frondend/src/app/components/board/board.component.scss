@@ -33,38 +33,43 @@ mat-icon{
     color:$secondary;
 }
 
-.board-overlay{
+.board-overlay {
     background-color: $primary;
     color: $background;
-
     font-size: 50px;
-
     min-height: 100%;
     min-width: 100%;
-
     position: fixed;
     top: 0;
     left: 0;
     z-index: 9999;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     transition: all 1s;
-
-    overflow: hidden !important;
+    overflow: hidden;
 }
 
 .slide-out {
-    overflow: hidden !important;
     transform: translateX(100%);
     opacity: 0;
 }
 
-  .board-overlay-hide {
+.board-overlay-hide {
     animation: slideOutRight 2s forwards;
-  }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
 
 .board-bg{
     background-color: $secondary;

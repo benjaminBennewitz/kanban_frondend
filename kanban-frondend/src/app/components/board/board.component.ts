@@ -16,7 +16,6 @@ interface Task {
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
 })
-
 export class BoardComponent implements OnInit {
   showFiller = false;
   currentTheme: string = 'default';
@@ -29,28 +28,53 @@ export class BoardComponent implements OnInit {
       this.currentTheme = theme;
     });
 
-    // Set a timeout to hide the overlay after 2 seconds
+    //Timeout for welcome slide animation
     setTimeout(() => {
-      this.hideOverlay = true;
+      this.hideBoardOverlay();
     }, 2000);
-
-       // Set a timeout to hide the overlay after 3 seconds
-       setTimeout(() => {
-        const boardOverlay = document.getElementById('boardOverlay');
-        if (boardOverlay) {
-          boardOverlay.style.display = 'none';
-        }
-      }, 3000);
   }
 
+  /**
+   * Hide the board overlay with animation and temporarily disable overflow
+   */
+  hideBoardOverlay() {
+    this.hideOverlay = true;
+    this.setTemporaryOverflowHidden();
+
+    // Set a timeout to hide the overlay element completely after the animation
+    setTimeout(() => {
+      const boardOverlay = document.getElementById('boardOverlay');
+      if (boardOverlay) {
+        boardOverlay.style.display = 'none';
+      }
+      this.restoreOverflow();
+    }, 2000); // Match the duration of the animation
+  }
 
   /**
-   * 
+   * Temporarily set overflow to hidden
+   */
+  setTemporaryOverflowHidden() {
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+  }
+
+  /**
+   * Restore overflow to auto
+   */
+  restoreOverflow() {
+    document.documentElement.style.overflow = 'auto';
+    document.body.style.overflow = 'auto';
+  }
+
+  /**
+   * Handle theme change
    * @param selectedTheme 
    */
   onThemeChange(selectedTheme: string) {
     this.themesComponent.onThemeChange(selectedTheme);
   }
+
 
   urgent: Task[] = [];
 
