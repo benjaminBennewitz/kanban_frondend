@@ -36,6 +36,8 @@ import { SnackMsgComponent } from './components/snack-msg/snack-msg.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,6 +66,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatSnackBarModule,
     FormsModule,
     BrowserAnimationsModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     provideAnimationsAsync(),

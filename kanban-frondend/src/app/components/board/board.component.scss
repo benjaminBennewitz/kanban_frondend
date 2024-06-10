@@ -33,6 +33,7 @@ mat-icon{
     color:$secondary;
 }
 
+/* Welcome Overlay START */
 .board-overlay {
     background-color: $primary;
     color: $background;
@@ -52,11 +53,11 @@ mat-icon{
 
 .slide-out {
     transform: translateX(100%);
-    opacity: 0;
+    opacity: 1;
 }
 
 .board-overlay-hide {
-    animation: slideOutRight 2s forwards;
+    animation: slideOutRight 1.5s forwards;
 }
 
 @keyframes slideOutRight {
@@ -69,7 +70,7 @@ mat-icon{
         opacity: 0;
     }
 }
-
+/* Welcome Overlay END */
 
 .board-bg{
     background-color: $secondary;
@@ -147,10 +148,29 @@ mat-icon{
     left:0;
     background-color: $background;
     min-width: 100vw;
-    height: calc(100vh - 120px);
-    max-height: calc(100vh - 120px);
+    min-height: 100%;
     margin: 0;
     padding: 0;
+}
+
+.board-user{
+    color:$text;
+    position: absolute;
+    top:76px;
+    left:56px;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: first baseline;
+    gap:32px;
+
+    h1{
+        font-size: 16px;
+    }
+
+    p {
+        font-size: 12px;
+    }
 }
 
 .board-wrapper-col{
@@ -159,6 +179,8 @@ mat-icon{
     justify-content: space-around;
     align-items: flex-start;
     flex-wrap: wrap;
+
+    min-height: calc(100vh - 120px);
 
     position: relative;
     overflow: auto;
@@ -333,5 +355,9 @@ mat-icon{
         justify-content: space-around;
         align-items: flex-start;
         gap:32px;
+    }
+    .board-user{
+        justify-content: center;
+        gap:24px;
     }
 }

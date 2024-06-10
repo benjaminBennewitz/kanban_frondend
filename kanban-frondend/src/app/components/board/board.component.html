@@ -54,6 +54,14 @@
         'board-bg-light': currentTheme === 'light-theme',
         'board-bg-dark': currentTheme === 'dark-theme'}" class="board-bg">
 
+        <div [ngClass]="{
+            'board-user': currentTheme === 'default',
+            'board-user-light': currentTheme === 'light-theme',
+            'board-user-dark': currentTheme === 'dark-theme'}"
+            class="board-user">
+            <h1>Welcome Ben</h1><p>5 Tasks left</p><p>2 Tasks urgent</p><p>1 Tasks overdue</p>
+        </div>
+
         <!-- BOARD CONTENT INNER START -->
         <div id="boardBG" [ngClass]="{
             'board-wrapper': currentTheme === 'default',
