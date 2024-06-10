@@ -57,7 +57,7 @@ mat-icon{
 }
 
 .board-overlay-hide {
-    animation: slideOutRight 1.5s forwards;
+    animation: slideOutRight 1s forwards;
 }
 
 @keyframes slideOutRight {
@@ -70,6 +70,22 @@ mat-icon{
         opacity: 0;
     }
 }
+
+.slide-out-logout {
+    animation: slideOutRight 1s forwards;
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(100%);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
 /* Welcome Overlay END */
 
 .board-bg{
@@ -140,6 +156,12 @@ mat-icon{
             }
         }
     }
+}
+
+.log-out{
+    position: absolute;
+    bottom: 24px;
+    left: 8px;
 }
 
 .board-wrapper{
@@ -228,11 +250,16 @@ mat-icon{
 .board-card {
     background-color: $secondary;
     color: $text;
+    border:solid 2px transparent;
     border-radius: 20px;
     width: 380px;
     height: fit-content;
     padding: 8px 8px 16px 8px;
     transition: all 550ms;
+
+    &.overdue {
+        border-color: $link;
+    }
 }
 
 .board-heading{

@@ -3,11 +3,20 @@
     'board-overlay': currentTheme === 'default',
     'board-overlay-light': currentTheme === 'light-theme',
     'board-overlay-dark': currentTheme === 'dark-theme',
-    'slide-out': hideOverlay
-}" class="board-overlay" [style.visibility]="hideOverlay ? 'hidden' : 'visible'">
+    'slide-out': hideWelcomeOverlay
+}" class="board-overlay" [style.visibility]="hideWelcomeOverlay ? 'hidden' : 'visible'">
     Welcome Ben
 </div>
 
+<!-- LOG OUT OVERLAY -->
+<div id="boardOverlayLogOut" [ngClass]="{
+    'board-overlay': currentTheme === 'default',
+    'board-overlay-light': currentTheme === 'light-theme',
+    'board-overlay-dark': currentTheme === 'dark-theme',
+    'slide-out-logout': !hideLogOutOverlay
+}" class="board-overlay" [style.visibility]="hideLogOutOverlay ? 'hidden' : 'visible'">
+    Logging out
+</div>
 
 
 <mat-drawer-container class="mat-drawer-container" autosize>
@@ -18,15 +27,16 @@
         'board-sidenav-dark': currentTheme === 'dark-theme'}" class="board-sidenav" mode="over" [opened]="false">
         <div class="logo-container">B² TICKETEER</div>
         <ul class="menu-items">
-            <li [routerLink]="['/']"><mat-icon>dashboard</mat-icon>Board</li>
+            <li><mat-icon>dashboard</mat-icon>Board</li>
             <li>
-                <div class="flex-c-c"><mat-icon>settings</mat-icon><mat-label>Themes</mat-label></div>
+                <div class="flex-c-c"><mat-icon>settings</mat-icon><mat-label>Theme</mat-label></div>
                 <mat-select (selectionChange)="onThemeChange($event.value)">
                     <mat-option value="default">Default</mat-option>
                     <mat-option value="light-theme">Light</mat-option>
                     <mat-option value="dark-theme">Dark</mat-option>
                 </mat-select>
             </li>
+            <li (click)="onLogout()" class="log-out"><mat-icon>logout</mat-icon>Logout</li>
         </ul>
     </mat-drawer>
     <!-- SIDENAV END -->
@@ -70,6 +80,7 @@
 
             <!-- BOARD COLUMNS START -->
             <div class="board-wrapper-col">
+
                 <!-- URGENT START-->
                 <div class="board-card-wrapper">
                     <div [ngClass]="{
@@ -114,7 +125,7 @@
                                         </mat-card-header>
                                         <mat-card-content>
                                             <p>{{item.content}}</p>
-                                            <p class="board-card-date">{{item.date}}</p>
+                                            <p class="board-card-date">{{getFormattedDate(item.date)}}</p>
                                         </mat-card-content>
                                         <mat-card-actions class="board-col-tools">
                                             <mat-icon class="board-col-icons">edit</mat-icon>
@@ -157,8 +168,10 @@
                                     <mat-card [ngClass]="{
                                         'board-card': currentTheme === 'default',
                                         'board-card-light': currentTheme === 'light-theme',
-                                        'board-card-dark': currentTheme === 'dark-theme'}"
-                                        [attr.id]="'CardId-' + item.id" class=" board-card" cdkDragPreview>
+                                        'board-card-dark': currentTheme === 'dark-theme',
+                                        'overdue': isDatePast(item.date)}"
+                                        [attr.id]="'CardId-' + item.id" class=" board-card" 
+                                        cdkDragPreview>
                                         <mat-card-header>
                                             <div class="flex-col">
                                                 <mat-card-title>{{item.title}}</mat-card-title>
@@ -172,7 +185,7 @@
                                         </mat-card-header>
                                         <mat-card-content>
                                             <p>{{item.content}}</p>
-                                            <p class="board-card-date">{{item.date}}</p>
+                                            <p class="board-card-date">{{getFormattedDate(item.date)}}</p>
                                         </mat-card-content>
                                         <mat-card-actions class="board-col-tools">
                                             <mat-icon class="board-col-icons">edit</mat-icon>
@@ -230,7 +243,7 @@
                                         </mat-card-header>
                                         <mat-card-content>
                                             <p>{{item.content}}</p>
-                                            <p class="board-card-date">{{item.date}}</p>
+                                            <p class="board-card-date">{{getFormattedDate(item.date)}}</p>
                                         </mat-card-content>
                                         <mat-card-actions class="board-col-tools">
                                             <mat-icon class="board-col-icons">edit</mat-icon>
@@ -289,7 +302,7 @@
                                         </mat-card-header>
                                         <mat-card-content>
                                             <p>{{item.content}}</p>
-                                            <p class="board-card-date">{{item.date}}</p>
+                                            <p class="board-card-date">{{getFormattedDate(item.date)}}</p>
                                         </mat-card-content>
                                         <mat-card-actions class="board-col-tools">
                                             <mat-icon class="board-col-icons">edit</mat-icon>

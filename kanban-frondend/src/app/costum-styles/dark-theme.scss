@@ -132,6 +132,10 @@ $accent-dark: hsl(192, 83%, 26%);
     padding: 8px 8px 16px 8px;
 
     transition: all 550ms;
+
+    &.overdue {
+        border:solid 2px $link-dark;
+    }
 }
 
 .board-card-wrapper-empty-dark{

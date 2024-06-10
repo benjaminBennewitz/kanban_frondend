@@ -118,12 +118,17 @@ $accent-light: hsl(232, 72%, 21%);
     background-color: $secondary-light;
     color: $accent-light;
     border-radius: 20px;
+    border:solid 2px transparent;
     width: 380px;
 
     height: fit-content;
     padding: 8px 8px 16px 8px;
 
     transition: all 550ms;
+
+    &.overdue {
+        border-color: $link-light;
+    }
 }
 
 .board-card-subtitle-light{
@@ -134,7 +139,7 @@ $accent-light: hsl(232, 72%, 21%);
 .board-card-wrapper-empty-light{
     background: linear-gradient(180deg, $secondary-light, $background-light);
     border-radius: 20px;
-    & .board-col-icons, .mr-t-16{
+    & .board-col-, .mr-t-16{
         color:$text;
         cursor: pointer;
     }

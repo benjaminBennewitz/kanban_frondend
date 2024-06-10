@@ -9,23 +9,20 @@ import { LoginComponent } from './components/login/login.component';
 import { BoardComponent } from './components/board/board.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
-import {MatSelectModule} from '@angular/material/select';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatToolbarModule} from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 
-import {DragDropModule} from '@angular/cdk/drag-drop';
-import {
-  CdkDrag,
-  CdkDropList,
-} from '@angular/cdk/drag-drop';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
 import { ThemesComponent } from './services/themes/themes.component';
 
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -37,6 +34,10 @@ import { SnackMsgComponent } from './components/snack-msg/snack-msg.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
+import { MatDialogModule } from '@angular/material/dialog';
+
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -67,11 +68,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     FormsModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
+    MatDatepickerModule,
   ],
-  providers: [
-    provideAnimationsAsync(),
-    ThemesComponent,
-  ],
-  bootstrap: [AppComponent]
+  providers: [provideAnimationsAsync(), ThemesComponent],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
