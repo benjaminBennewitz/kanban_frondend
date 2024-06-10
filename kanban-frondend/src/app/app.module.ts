@@ -35,9 +35,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import { MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { DialogRegisterComponent } from './components/dialog-register/dialog-register.component';
+
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_NATIVE_DATE_FORMATS, NativeDateAdapter } from '@angular/material/core';
+
 
 @NgModule({
   declarations: [
@@ -48,6 +53,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     ThemesComponent,
     SnackbarsComponent,
     SnackMsgComponent,
+    DialogRegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,8 +76,16 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatProgressSpinnerModule,
     MatDialogModule,
     MatDatepickerModule,
+    MatTooltipModule,
   ],
-  providers: [provideAnimationsAsync(), ThemesComponent],
+  providers: [
+    provideAnimationsAsync(), 
+    ThemesComponent,
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+    { provide: MatDialogRef, useValue: {} },
+    { provide: DateAdapter, useClass: NativeDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: MAT_NATIVE_DATE_FORMATS }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -23,42 +23,10 @@
 @import '../../costum-styles/light-theme.scss';
 @import '../../costum-styles/dark-theme.scss';
 
-
-body {
+.register-btn-container{
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-.main-wrapper {
-    background-color: $primary;
-    color: $secondary;
-
-    height: 100vh;
-    width: 100vw;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    transition: all 550ms;
-}
-
-.outer-wrapper--login {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 500px;
-    min-width: 310px;
-    max-width: 900px;
-}
-
-/* MEDIA QUERRYS*/
-@media (max-width: 720px) {
-    .outer-wrapper--login{
-        width: 80%;
-    }
+    gap:32px;
+    padding-bottom:32px;
 }

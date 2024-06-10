@@ -167,6 +167,10 @@ html {
     }
 }
 
+.login-btn.register{
+    min-width: 120px;
+}
+
 .mat-mdc-snack-bar-container .mdc-snackbar__surface {
     background-color: $link !important;
 }
