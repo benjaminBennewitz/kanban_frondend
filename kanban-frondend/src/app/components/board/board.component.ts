@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ThemesComponent } from '../../services/themes/themes.component';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { TooltipPosition } from '@angular/material/tooltip';
+import { FormControl } from '@angular/forms';
 
 interface Task {
   id: number;
@@ -24,6 +26,9 @@ export class BoardComponent implements OnInit {
   hideLogOutOverlay = true;
 
   constructor(private themesComponent: ThemesComponent, private router: Router) {}
+
+  positionOptions: TooltipPosition[] = ['below', 'above', 'left', 'right'];
+  position = new FormControl(this.positionOptions[0]);
 
   ngOnInit() {
     this.themesComponent.currentTheme$.subscribe((theme) => {

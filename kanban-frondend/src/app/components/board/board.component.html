@@ -49,7 +49,7 @@
             'board-toolbar-dark': currentTheme === 'dark-theme'}" class="board-toolbar">
             <mat-toolbar-row>
                 <div class="flex-c-c">
-                    <mat-icon class="menu-icon" (click)="drawer.toggle()">menu</mat-icon>
+                    <mat-icon matTooltip="Open menu" [matTooltipPosition]="position.value!" matTooltipShowDelay="750" class="menu-icon" (click)="drawer.toggle()">menu</mat-icon>
                     <span class="mr-l-16">TICKETEER</span>
                 </div>
                 <span>B²</span>
@@ -67,9 +67,11 @@
         <div [ngClass]="{
             'board-user': currentTheme === 'default',
             'board-user-light': currentTheme === 'light-theme',
-            'board-user-dark': currentTheme === 'dark-theme'}"
-            class="board-user">
-            <h1>Welcome Ben</h1><p>5 Tasks left</p><p>2 Tasks urgent</p><p>1 Tasks overdue</p>
+            'board-user-dark': currentTheme === 'dark-theme'}" class="board-user">
+            <h1>Welcome Ben</h1>
+            <p>5 Tasks left</p>
+            <p>2 Tasks urgent</p>
+            <p>1 Tasks overdue</p>
         </div>
 
         <!-- BOARD CONTENT INNER START -->
@@ -86,11 +88,11 @@
                     <div [ngClass]="{
                         'board-heading': currentTheme === 'default',
                         'board-heading-light': currentTheme === 'light-theme',
-                        'board-heading-dark': currentTheme === 'dark-theme'}"
-                        class="flex-btw-c board-heading">
+                        'board-heading-dark': currentTheme === 'dark-theme'}" class="flex-btw-c board-heading">
                         <div class="board-col-headline pad-l-24">Urgent</div>
                         <div class="pad-r-24">
-                            <mat-icon>add</mat-icon><mat-icon>more_horiz</mat-icon>
+                            <mat-icon matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">add</mat-icon>
+                            <mat-icon matTooltip="More" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">more_horiz</mat-icon>
                         </div>
                     </div>
                     <div class="board-col-overflow">
@@ -101,7 +103,7 @@
                             class="1003" cdkDropList #urgentList="cdkDropList" [cdkDropListData]="urgent"
                             [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]"
                             (cdkDropListDropped)="drop($event)">
-                            <div class="flex-c-c add" *ngIf="urgent.length === 0">
+                            <div class="flex-c-c add" *ngIf="urgent.length === 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
                                 <mat-icon class="mr-t-16 board-col-icons">add</mat-icon>
                                 <div class="mr-t-16">Add Task</div>
                             </div>
@@ -110,8 +112,9 @@
                                     <mat-card [ngClass]="{
                                         'board-card': currentTheme === 'default',
                                         'board-card-light': currentTheme === 'light-theme',
-                                        'board-card-dark': currentTheme === 'dark-theme'}"
-                                        [attr.id]="'CardId-' + item.id" class=" board-card" cdkDragPreview>
+                                        'board-card-dark': currentTheme === 'dark-theme',
+                                        'overdue': isDatePast(item.date)}" [attr.id]="'CardId-' + item.id"
+                                        class=" board-card" cdkDragPreview>
                                         <mat-card-header>
                                             <div class="flex-col">
                                                 <mat-card-title>{{item.title}}</mat-card-title>
@@ -125,11 +128,17 @@
                                         </mat-card-header>
                                         <mat-card-content>
                                             <p>{{item.content}}</p>
-                                            <p class="board-card-date">{{getFormattedDate(item.date)}}</p>
+                                            <p [ngClass]="{
+                                                'board-card-date': currentTheme === 'default',
+                                                'board-card-date-light': currentTheme === 'light-theme',
+                                                'board-card-date-dark': currentTheme === 'dark-theme'}"
+                                                class="board-card-date">{{getFormattedDate(item.date)}}</p>
                                         </mat-card-content>
                                         <mat-card-actions class="board-col-tools">
-                                            <mat-icon class="board-col-icons">edit</mat-icon>
-                                            <mat-icon class="board-col-icons">delete</mat-icon>
+                                            <mat-icon class="board-col-icons" matTooltip="Edit"
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750">edit</mat-icon>
+                                            <mat-icon class="board-col-icons" matTooltip="Delete"
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750">delete</mat-icon>
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
@@ -144,11 +153,11 @@
                     <div [ngClass]="{
                         'board-heading': currentTheme === 'default',
                         'board-heading-light': currentTheme === 'light-theme',
-                        'board-heading-dark': currentTheme === 'dark-theme'}"
-                        class="flex-btw-c board-heading">
+                        'board-heading-dark': currentTheme === 'dark-theme'}" class="flex-btw-c board-heading">
                         <div class="board-col-headline pad-l-24">To do</div>
                         <div class="pad-r-24">
-                            <mat-icon>add</mat-icon><mat-icon>more_horiz</mat-icon>
+                            <mat-icon matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">add</mat-icon>
+                            <mat-icon matTooltip="More" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">more_horiz</mat-icon>
                         </div>
                     </div>
                     <div class="board-col-overflow">
@@ -159,7 +168,7 @@
                             class="1003" cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo"
                             [cdkDropListConnectedTo]="[urgentList, inProgressList, doneList]"
                             (cdkDropListDropped)="drop($event)">
-                            <div class="flex-c-c" *ngIf="todo.length === 0">
+                            <div class="flex-c-c" *ngIf="todo.length === 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
                                 <mat-icon class="mr-t-16 board-col-icons">add</mat-icon>
                                 <div class="mr-t-16">Add Task</div>
                             </div>
@@ -169,9 +178,8 @@
                                         'board-card': currentTheme === 'default',
                                         'board-card-light': currentTheme === 'light-theme',
                                         'board-card-dark': currentTheme === 'dark-theme',
-                                        'overdue': isDatePast(item.date)}"
-                                        [attr.id]="'CardId-' + item.id" class=" board-card" 
-                                        cdkDragPreview>
+                                        'overdue': isDatePast(item.date)}" [attr.id]="'CardId-' + item.id"
+                                        class=" board-card" cdkDragPreview>
                                         <mat-card-header>
                                             <div class="flex-col">
                                                 <mat-card-title>{{item.title}}</mat-card-title>
@@ -185,11 +193,17 @@
                                         </mat-card-header>
                                         <mat-card-content>
                                             <p>{{item.content}}</p>
-                                            <p class="board-card-date">{{getFormattedDate(item.date)}}</p>
+                                            <p [ngClass]="{
+                                                'board-card-date': currentTheme === 'default',
+                                                'board-card-date-light': currentTheme === 'light-theme',
+                                                'board-card-date-dark': currentTheme === 'dark-theme'}"
+                                                class="board-card-date">{{getFormattedDate(item.date)}}</p>
                                         </mat-card-content>
                                         <mat-card-actions class="board-col-tools">
-                                            <mat-icon class="board-col-icons">edit</mat-icon>
-                                            <mat-icon class="board-col-icons">delete</mat-icon>
+                                            <mat-icon class="board-col-icons" matTooltip="Edit"
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750">edit</mat-icon>
+                                            <mat-icon class="board-col-icons" matTooltip="Delete"
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750">delete</mat-icon>
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
@@ -204,11 +218,11 @@
                     <div [ngClass]="{
                         'board-heading': currentTheme === 'default',
                         'board-heading-light': currentTheme === 'light-theme',
-                        'board-heading-dark': currentTheme === 'dark-theme'}"
-                        class="flex-btw-c board-heading">
+                        'board-heading-dark': currentTheme === 'dark-theme'}" class="flex-btw-c board-heading">
                         <div class="board-col-headline pad-l-24">In progress</div>
                         <div class="pad-r-24">
-                            <mat-icon>add</mat-icon><mat-icon>more_horiz</mat-icon>
+                            <mat-icon matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">add</mat-icon>
+                            <mat-icon matTooltip="More" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">more_horiz</mat-icon>
                         </div>
                     </div>
                     <div class="board-col-overflow">
@@ -219,7 +233,7 @@
                             class="1003" cdkDropList #inProgressList="cdkDropList" [cdkDropListData]="inProgress"
                             [cdkDropListConnectedTo]="[urgentList, todoList, doneList]"
                             (cdkDropListDropped)="drop($event)">
-                            <div class="flex-c-c" *ngIf="inProgress.length === 0">
+                            <div class="flex-c-c" *ngIf="inProgress.length === 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
                                 <mat-icon class="mr-t-16 board-col-icons">add</mat-icon>
                                 <div class="mr-t-16">Add Task</div>
                             </div>
@@ -228,8 +242,9 @@
                                     <mat-card [ngClass]="{
                                         'board-card': currentTheme === 'default',
                                         'board-card-light': currentTheme === 'light-theme',
-                                        'board-card-dark': currentTheme === 'dark-theme'}"
-                                        [attr.id]="'CardId-' + item.id" class=" board-card" cdkDragPreview>
+                                        'board-card-dark': currentTheme === 'dark-theme',
+                                        'overdue': isDatePast(item.date)}" [attr.id]="'CardId-' + item.id"
+                                        class=" board-card" cdkDragPreview>
                                         <mat-card-header>
                                             <div class="flex-col">
                                                 <mat-card-title>{{item.title}}</mat-card-title>
@@ -243,11 +258,17 @@
                                         </mat-card-header>
                                         <mat-card-content>
                                             <p>{{item.content}}</p>
-                                            <p class="board-card-date">{{getFormattedDate(item.date)}}</p>
+                                            <p [ngClass]="{
+                                                'board-card-date': currentTheme === 'default',
+                                                'board-card-date-light': currentTheme === 'light-theme',
+                                                'board-card-date-dark': currentTheme === 'dark-theme'}"
+                                                class="board-card-date">{{getFormattedDate(item.date)}}</p>
                                         </mat-card-content>
                                         <mat-card-actions class="board-col-tools">
-                                            <mat-icon class="board-col-icons">edit</mat-icon>
-                                            <mat-icon class="board-col-icons">delete</mat-icon>
+                                            <mat-icon class="board-col-icons" matTooltip="Edit"
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750">edit</mat-icon>
+                                            <mat-icon class="board-col-icons" matTooltip="Delete"
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750">delete</mat-icon>
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
@@ -262,11 +283,11 @@
                     <div [ngClass]="{
                         'board-heading': currentTheme === 'default',
                         'board-heading-light': currentTheme === 'light-theme',
-                        'board-heading-dark': currentTheme === 'dark-theme'}"
-                        class="flex-btw-c board-heading">
+                        'board-heading-dark': currentTheme === 'dark-theme'}" class="flex-btw-c board-heading">
                         <div class="board-col-headline pad-l-24">Done</div>
                         <div class="pad-r-24">
-                            <mat-icon>add</mat-icon><mat-icon>more_horiz</mat-icon>
+                            <mat-icon matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">add</mat-icon>
+                            <mat-icon matTooltip="More" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">more_horiz</mat-icon>
                         </div>
                     </div>
                     <div class="board-col-overflow">
@@ -277,7 +298,7 @@
                             class="1003" cdkDropList #doneList="cdkDropList" [cdkDropListData]="done"
                             [cdkDropListConnectedTo]="[urgentList, todoList, inProgressList]"
                             (cdkDropListDropped)="drop($event)">
-                            <div class="flex-c-c" *ngIf="done.length === 0">
+                            <div class="flex-c-c" *ngIf="done.length === 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
                                 <mat-icon class="mr-t-16 board-col-icons">add</mat-icon>
                                 <div class="mr-t-16">Add Task</div>
                             </div>
@@ -286,8 +307,9 @@
                                     <mat-card [ngClass]="{
                                         'board-card': currentTheme === 'default',
                                         'board-card-light': currentTheme === 'light-theme',
-                                        'board-card-dark': currentTheme === 'dark-theme'}"
-                                        [attr.id]="'CardId-' + item.id" class=" board-card" cdkDragPreview>
+                                        'board-card-dark': currentTheme === 'dark-theme',
+                                        'overdue': isDatePast(item.date)}" [attr.id]="'CardId-' + item.id"
+                                        class=" board-card" cdkDragPreview>
                                         <mat-card-header>
                                             <div class="flex-col">
                                                 <mat-card-title>{{item.title}}</mat-card-title>
@@ -302,11 +324,17 @@
                                         </mat-card-header>
                                         <mat-card-content>
                                             <p>{{item.content}}</p>
-                                            <p class="board-card-date">{{getFormattedDate(item.date)}}</p>
+                                            <p [ngClass]="{
+                                                'board-card-date': currentTheme === 'default',
+                                                'board-card-date-light': currentTheme === 'light-theme',
+                                                'board-card-date-dark': currentTheme === 'dark-theme'}"
+                                                class="board-card-date">{{getFormattedDate(item.date)}}</p>
                                         </mat-card-content>
                                         <mat-card-actions class="board-col-tools">
-                                            <mat-icon class="board-col-icons">edit</mat-icon>
-                                            <mat-icon class="board-col-icons">delete</mat-icon>
+                                            <mat-icon class="board-col-icons" matTooltip="Edit"
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750">edit</mat-icon>
+                                            <mat-icon class="board-col-icons" matTooltip="Delete"
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750">delete</mat-icon>
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>

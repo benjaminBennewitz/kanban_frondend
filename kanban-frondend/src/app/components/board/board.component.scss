@@ -259,7 +259,21 @@ mat-icon{
 
     &.overdue {
         border-color: $link;
+        color:$link-dark;
+
+        & mat-icon{
+            color:$link !important;
+        }
+
+        & .board-card-date{
+            color:$link;
+            font-weight: 900;
+        }
     }
+}
+
+.board-card-date{
+    color:$text;
 }
 
 .board-heading{
@@ -307,7 +321,7 @@ mat-icon{
 }
 
 .board-card-date{
-    color: $link;
+    color: $text;
 }
 
 .board-col-tools{
@@ -316,7 +330,7 @@ mat-icon{
     right:8px;
 
     mat-icon{
-        color: $link;
+        color: $text;
         transition: all 250ms;
         padding: 4px;
 

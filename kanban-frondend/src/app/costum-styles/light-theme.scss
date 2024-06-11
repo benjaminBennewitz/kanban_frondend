@@ -118,7 +118,7 @@ $accent-light: hsl(232, 72%, 21%);
     background-color: $secondary-light;
     color: $accent-light;
     border-radius: 20px;
-    border:solid 2px transparent;
+    border:solid 2px $primary-light;
     width: 380px;
 
     height: fit-content;
@@ -126,10 +126,27 @@ $accent-light: hsl(232, 72%, 21%);
 
     transition: all 550ms;
 
+    & mat-icon{
+        color:$primary-light !important;
+    }
+
     &.overdue {
         border-color: $link-light;
+        color:$link-light;
+        & mat-icon{
+            color:$link-light !important;
+        }
+        & .board-card-date-light{
+            color:$link-light;
+            font-weight: 900;
+        }
     }
 }
+
+.board-card-date-light{
+    color:$primary-light;
+}
+
 
 .board-card-subtitle-light{
     color: $accent-light;

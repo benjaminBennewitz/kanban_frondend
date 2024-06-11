@@ -21,9 +21,9 @@ export class SnackbarsComponent {
       data: { message: message }
     });
 
-    // Wait for the snackbar to be dismissed before navigating
+    /* Wait for the snackbar to be dismissed before navigating
     snackBarRef.afterDismissed().subscribe(() => {
       this.router.navigate(['/board']);
-    });
+    });*/
   }
 }

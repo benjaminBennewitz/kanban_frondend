@@ -26,7 +26,7 @@ $primary-dark: hsl(240, 0%, 10%);
 $secondary-dark: hsl(194, 100%, 15%);
 $text-dark: hsl(0, 0%, 97%);
 $link-dark: hsl(355, 100%, 58%);
-$accent-dark: hsl(192, 83%, 26%);
+$accent-dark: hsl(192, 69%, 36%);
 
 
 /* LOGIN COMPONENT*/
@@ -59,7 +59,7 @@ $accent-dark: hsl(192, 83%, 26%);
 
 /* BOARD COMPONENT */
 .board-overlay-dark{
-    background-color: $accent-dark;
+    background-color: $secondary-dark;
     color: $text-dark;
 
     font-size: 50px;
@@ -133,9 +133,25 @@ $accent-dark: hsl(192, 83%, 26%);
 
     transition: all 550ms;
 
-    &.overdue {
-        border:solid 2px $link-dark;
+    & mat-icon{
+        color:$accent-dark !important;
     }
+
+    &.overdue {
+        color:$link-dark;
+        border:2px solid $link-dark;
+        & mat-icon{
+            color:$link-dark !important;
+        }
+        & .board-card-date-dark{
+            color:$link-dark;
+            font-weight: 900;
+        }
+    }
+}
+
+.board-card-date-dark{
+    color:$accent-dark;
 }
 
 .board-card-wrapper-empty-dark{
