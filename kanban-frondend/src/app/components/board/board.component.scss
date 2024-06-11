@@ -175,23 +175,33 @@ mat-icon{
     padding: 0;
 }
 
-.board-user{
-    color:$text;
+.board-user {
+    color: $text;
     position: absolute;
-    top:76px;
-    left:56px;
-
+    top: 76px;
+    width: 100%;
     display: flex;
-    justify-content: flex-start;
-    align-items: first baseline;
-    gap:32px;
+    justify-content: center;
+    overflow: hidden;
 
-    h1{
-        font-size: 16px;
-    }
+    .hud {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 90%;
+        margin: 0 16px;
+        padding: 0 8px;
+        overflow-x: auto;
+        white-space: nowrap;
+        gap: 16px;
 
-    p {
-        font-size: 12px;
+        h1 {
+            font-size: 20px;
+        }
+
+        p {
+            font-size: 14px;
+        }
     }
 }
 
@@ -221,6 +231,7 @@ mat-icon{
     max-height: inherit;
     padding:8px;
     height: 700px;
+    color:$text;
 }
 
 .board-media-row{
@@ -402,8 +413,29 @@ mat-icon{
         align-items: flex-start;
         gap:32px;
     }
-    .board-user{
+    .board-user {
+        overflow: hidden;
+        display: flex;
         justify-content: center;
-        gap:24px;
+
+        .hud {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 90%;
+            margin: 0 16px;
+            padding: 0 8px;
+            overflow-x: auto;
+            white-space: nowrap; /* Prevents text from wrapping */
+            gap: 16px;
+
+            h1 {
+                font-size: 14px;
+            }
+
+            p {
+                font-size: 12px;
+            }
+        }
     }
 }

@@ -67,11 +67,14 @@
         <div [ngClass]="{
             'board-user': currentTheme === 'default',
             'board-user-light': currentTheme === 'light-theme',
-            'board-user-dark': currentTheme === 'dark-theme'}" class="board-user">
-            <h1>Welcome Ben</h1>
-            <p>5 Tasks left</p>
-            <p>2 Tasks urgent</p>
-            <p>1 Tasks overdue</p>
+            'board-user-dark': currentTheme === 'dark-theme'}" 
+            class="board-user">
+            <div class="flex-c-c hud">
+                <h1>Welcome Ben</h1>
+                <p>5 Tasks left</p>
+                <p>2 Tasks urgent</p>
+                <p>1 Tasks overdue</p>
+            </div>
         </div>
 
         <!-- BOARD CONTENT INNER START -->
@@ -95,7 +98,11 @@
                             <mat-icon matTooltip="More" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">more_horiz</mat-icon>
                         </div>
                     </div>
-                    <div class="board-col-overflow">
+                    <div [ngClass]="{
+                        'board-col-overflow': currentTheme === 'default',
+                        'board-col-overflow-light': currentTheme === 'light-theme',
+                        'board-col-overflow-dark': currentTheme === 'dark-theme'}"
+                        class="board-col-overflow">
                         <div [ngClass]="{
                                 'board-card-wrapper-empty': urgent.length === 0 && currentTheme === 'default',
                                 'board-card-wrapper-empty-light': urgent.length === 0 && currentTheme === 'light-theme',
@@ -142,6 +149,10 @@
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
+                                <div class="flex-c-c pointer" *ngIf="urgent.length > 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
+                                    <mat-icon class="mr-t-16">add</mat-icon>
+                                    <div class="mr-t-16">Add Task</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -160,7 +171,11 @@
                             <mat-icon matTooltip="More" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">more_horiz</mat-icon>
                         </div>
                     </div>
-                    <div class="board-col-overflow">
+                    <div [ngClass]="{
+                        'board-col-overflow': currentTheme === 'default',
+                        'board-col-overflow-light': currentTheme === 'light-theme',
+                        'board-col-overflow-dark': currentTheme === 'dark-theme'}"
+                        class="board-col-overflow">
                         <div [ngClass]="{
                                 'board-card-wrapper-empty': todo.length === 0 && currentTheme === 'default',
                                 'board-card-wrapper-empty-light': todo.length === 0 && currentTheme === 'light-theme',
@@ -207,6 +222,10 @@
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
+                                <div class="flex-c-c pointer" *ngIf="todo.length > 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
+                                    <mat-icon class="mr-t-16">add</mat-icon>
+                                    <div class="mr-t-16">Add Task</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -225,7 +244,11 @@
                             <mat-icon matTooltip="More" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">more_horiz</mat-icon>
                         </div>
                     </div>
-                    <div class="board-col-overflow">
+                    <div [ngClass]="{
+                        'board-col-overflow': currentTheme === 'default',
+                        'board-col-overflow-light': currentTheme === 'light-theme',
+                        'board-col-overflow-dark': currentTheme === 'dark-theme'}"
+                        class="board-col-overflow">
                         <div [ngClass]="{
                                 'board-card-wrapper-empty': inProgress.length === 0 && currentTheme === 'default',
                                 'board-card-wrapper-empty-light': inProgress.length === 0 && currentTheme === 'light-theme',
@@ -272,6 +295,10 @@
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
+                                <div class="flex-c-c pointer" *ngIf="inProgress.length > 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
+                                    <mat-icon class="mr-t-16">add</mat-icon>
+                                    <div class="mr-t-16">Add Task</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -290,7 +317,11 @@
                             <mat-icon matTooltip="More" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">more_horiz</mat-icon>
                         </div>
                     </div>
-                    <div class="board-col-overflow">
+                    <div [ngClass]="{
+                        'board-col-overflow': currentTheme === 'default',
+                        'board-col-overflow-light': currentTheme === 'light-theme',
+                        'board-col-overflow-dark': currentTheme === 'dark-theme'}"
+                        class="board-col-overflow">
                         <div [ngClass]="{
                                 'board-card-wrapper-empty': done.length === 0 && currentTheme === 'default',
                                 'board-card-wrapper-empty-light': done.length === 0 && currentTheme === 'light-theme',

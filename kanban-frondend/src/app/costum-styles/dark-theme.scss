@@ -121,64 +121,71 @@ $accent-dark: hsl(192, 69%, 36%);
     font-style: italic;
 }
 
-.board-card-dark{
+.board-card-dark {
     background-color: $secondary-dark;
     color: $text-dark;
-    border:solid 3px $accent-dark;
+    border: solid 3px $accent-dark;
     border-radius: 20px;
     width: 380px;
-
     height: fit-content;
     padding: 8px 8px 16px 8px;
-
     transition: all 550ms;
 
-    & mat-icon{
-        color:$accent-dark !important;
+    & mat-icon {
+        color: $accent-dark !important;
     }
 
     &.overdue {
-        color:$link-dark;
-        border:2px solid $link-dark;
-        & mat-icon{
-            color:$link-dark !important;
+        color: $link-dark;
+        border: 2px solid $link-dark;
+
+        & mat-icon {
+            color: $link-dark !important;
         }
-        & .board-card-date-dark{
-            color:$link-dark;
+
+        & .board-card-date-dark {
+            color: $link-dark;
             font-weight: 900;
         }
     }
 }
 
-.board-card-dark.doneIt{
+.board-card-dark.doneIt {
     opacity: 0.4;
     border: none;
 }
 
-.board-card-date-dark{
-    color:$accent-dark;
+.board-card-date-dark {
+    color: $accent-dark;
 }
 
-.board-card-wrapper-empty-dark{
+.board-card-wrapper-empty-dark {
     background: linear-gradient(180deg, $secondary-dark, $primary-dark);
-    color:$text-dark;
-    & .board-col-icons, .mr-t-16{
-        color:$text-dark;
+    color: $text-dark;
+
+    & .board-col-icons, .mr-t-16 {
+        color: $text-dark;
         cursor: pointer;
     }
 
     border-radius: 20px;
-
-    height:500px;
+    height: 500px;
     max-height: 600px;
-
     animation: bounce 2s 1;
 }
 
-.board-wrapper-dark{
+.board-col-overflow-dark {
+    overflow-y: auto;
+    max-height: inherit;
+    padding: 8px;
+    height: 700px;
+    color: $text-dark;
+}
+
+.board-wrapper-dark {
     position: relative;
-    top:120px;
-    left:0;
+    top: 120px;
+    left: 0;
     background-color: $primary-dark;
     min-width: 100vw;
     min-height: 100%;
@@ -186,69 +193,110 @@ $accent-dark: hsl(192, 69%, 36%);
     padding: 0;
 }
 
-.board-user-dark{
-    color:$text-dark;
+.board-user-dark {
+    color: $text-dark;
     position: absolute;
-    top:76px;
-    left:56px;
-
+    top: 76px;
+    width: 100%;
     display: flex;
-    justify-content: flex-start;
-    align-items: first baseline;
-    gap:32px;
+    justify-content: center;
+    overflow: hidden;
 
-    h1{
-        font-size: 16px;
-    }
+    .hud {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 90%;
+        margin: 0 16px;
+        padding: 0 8px;
+        overflow-x: auto;
+        white-space: nowrap;
+        gap: 16px;
 
-    p {
-        font-size: 12px;
+        h1 {
+            font-size: 20px;
+        }
+
+        p {
+            font-size: 14px;
+        }
     }
 }
 
-/* MEDIA QUERRYS*/
+/* MEDIA QUERIES */
 @media (max-width: 720px) {
-    .board-wrapper-dark{
+    .board-wrapper-dark {
         overflow: auto;
     }
+
     .board-wrapper-col-dark {
         flex-direction: column;
         align-items: center;
         height: fit-content;
         padding-bottom: 64px;
     }
-    .board-col-overflow-dark{
+
+    .board-col-overflow-dark {
         height: fit-content;
     }
-    .board-card-wrapper-empty-dark{
+
+    .board-card-wrapper-empty-dark {
         height: 150px;
     }
-    .board-col-headline-dark{
+
+    .board-col-headline-dark {
         font-size: 16px;
     }
-    .mat-mdc-card-title-dark{
+
+    .mat-mdc-card-title-dark {
         font-size: 14px;
     }
-    .mat-mdc-card-subtitle-dark, .mat-mdc-card-content-dark{
+
+    .mat-mdc-card-subtitle-dark, .mat-mdc-card-content-dark {
         font-size: 11px;
     }
-    .board-card-dark{
+
+    .board-card-dark {
         width: 300px;
         height: fit-content;
-        padding:8px;
+        padding: 8px;
     }
-    .board-card-wrapper-dark{
+
+    .board-card-wrapper-dark {
         max-width: 320px;
     }
-    .board-media-row-dark{
+
+    .board-media-row-dark {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
         align-items: flex-start;
-        gap:32px;
+        gap: 32px;
     }
-    .board-user-dark{
+
+    .board-user-dark {
+        overflow: hidden;
+        display: flex;
         justify-content: center;
-        gap:24px;
+
+        .hud {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 90%;
+            margin: 0 16px;
+            padding: 0 8px;
+            overflow-x: auto;
+            white-space: nowrap; /* Prevents text from wrapping */
+            gap: 16px;
+
+            h1 {
+                font-size: 14px;
+            }
+
+            p {
+                font-size: 12px;
+            }
+        }
     }
 }
