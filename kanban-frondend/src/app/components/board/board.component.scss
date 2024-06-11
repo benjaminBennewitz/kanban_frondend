@@ -272,6 +272,11 @@ mat-icon{
     }
 }
 
+.board-card.doneIt{
+    opacity: 0.4;
+    border: none;
+}
+
 .board-card-date{
     color:$text;
 }

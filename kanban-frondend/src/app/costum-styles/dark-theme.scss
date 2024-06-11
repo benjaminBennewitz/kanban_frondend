@@ -150,6 +150,11 @@ $accent-dark: hsl(192, 69%, 36%);
     }
 }
 
+.board-card-dark.doneIt{
+    opacity: 0.4;
+    border: none;
+}
+
 .board-card-date-dark{
     color:$accent-dark;
 }

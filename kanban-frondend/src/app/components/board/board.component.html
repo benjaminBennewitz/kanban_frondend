@@ -307,9 +307,8 @@
                                     <mat-card [ngClass]="{
                                         'board-card': currentTheme === 'default',
                                         'board-card-light': currentTheme === 'light-theme',
-                                        'board-card-dark': currentTheme === 'dark-theme',
-                                        'overdue': isDatePast(item.date)}" [attr.id]="'CardId-' + item.id"
-                                        class=" board-card" cdkDragPreview>
+                                        'board-card-dark': currentTheme === 'dark-theme'}" [attr.id]="'CardId-' + item.id"
+                                        class="board-card doneIt" cdkDragPreview>
                                         <mat-card-header>
                                             <div class="flex-col">
                                                 <mat-card-title>{{item.title}}</mat-card-title>

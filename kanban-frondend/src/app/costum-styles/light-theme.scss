@@ -143,6 +143,11 @@ $accent-light: hsl(232, 72%, 21%);
     }
 }
 
+.board-card-light.doneIt{
+    opacity: 0.4;
+    border: none;
+}
+
 .board-card-date-light{
     color:$primary-light;
 }
