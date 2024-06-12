@@ -181,12 +181,12 @@ mat-icon{
     top: 76px;
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     overflow: hidden;
 
     .hud {
         display: flex;
-        align-items: center;
+        align-items: first baseline;
         justify-content: flex-start;
         width: 90%;
         margin: 0 16px;
@@ -232,6 +232,12 @@ mat-icon{
     padding:8px;
     height: 700px;
     color:$text;
+    transition: all 250ms;
+    .pointer{
+        mat-icon{
+            color:$text;
+        }
+    }
 }
 
 .board-media-row{
@@ -269,13 +275,7 @@ mat-icon{
     transition: all 550ms;
 
     &.overdue {
-        border-color: $link;
-        color:$link-dark;
-
-        & mat-icon{
-            color:$link !important;
-        }
-
+        border-bottom: solid 2px $link;
         & .board-card-date{
             color:$link;
             font-weight: 900;

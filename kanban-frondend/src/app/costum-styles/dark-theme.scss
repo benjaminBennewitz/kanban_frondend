@@ -136,13 +136,7 @@ $accent-dark: hsl(192, 69%, 36%);
     }
 
     &.overdue {
-        color: $link-dark;
-        border: 2px solid $link-dark;
-
-        & mat-icon {
-            color: $link-dark !important;
-        }
-
+        border-bottom: solid 2px $link-dark;
         & .board-card-date-dark {
             color: $link-dark;
             font-weight: 900;
@@ -180,6 +174,12 @@ $accent-dark: hsl(192, 69%, 36%);
     padding: 8px;
     height: 700px;
     color: $text-dark;
+    transition: all 250ms;
+    .pointer{
+        mat-icon{
+            color:$text-dark;
+        }
+    }
 }
 
 .board-wrapper-dark {
@@ -199,12 +199,12 @@ $accent-dark: hsl(192, 69%, 36%);
     top: 76px;
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     overflow: hidden;
 
     .hud {
         display: flex;
-        align-items: center;
+        align-items: first baseline;
         justify-content: flex-start;
         width: 90%;
         margin: 0 16px;
@@ -277,12 +277,10 @@ $accent-dark: hsl(192, 69%, 36%);
     .board-user-dark {
         overflow: hidden;
         display: flex;
-        justify-content: center;
+        justify-content: center !important;
 
         .hud {
             display: flex;
-            align-items: center;
-            justify-content: flex-start;
             width: 90%;
             margin: 0 16px;
             padding: 0 8px;

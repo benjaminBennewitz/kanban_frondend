@@ -131,11 +131,7 @@ $accent-light: hsl(232, 72%, 21%);
     }
 
     &.overdue {
-        border-color: $link-light;
-        color:$link-light;
-        & mat-icon{
-            color:$link-light !important;
-        }
+        border-bottom: solid 2px $link-light;
         & .board-card-date-light{
             color:$link-light;
             font-weight: 900;
@@ -178,6 +174,12 @@ $accent-light: hsl(232, 72%, 21%);
     padding:8px;
     height: 700px;
     color:$text-light;
+    transition: all 250ms;
+    .pointer{
+        mat-icon{
+            color:$text-light;
+        }
+    }
 }
 
 .board-wrapper-light{
@@ -197,12 +199,12 @@ $accent-light: hsl(232, 72%, 21%);
     top: 76px;
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     overflow: hidden;
 
     .hud {
         display: flex;
-        align-items: center;
+        align-items: first baseline;
         justify-content: flex-start;
         width: 90%;
         margin: 0 16px;
@@ -269,8 +271,6 @@ $accent-light: hsl(232, 72%, 21%);
 
         .hud {
             display: flex;
-            align-items: center;
-            justify-content: flex-start;
             width: 90%;
             margin: 0 16px;
             padding: 0 8px;

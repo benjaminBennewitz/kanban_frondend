@@ -1,0 +1,16 @@
++-------------------+                +---------------------+              +----------------------+
+|     Board         |                |        List         |              |         Card         |
+|-------------------|                |---------------------|              |----------------------|
+| * id (PK)         | 2              | * id (PK)           | 1          N | * id (PK)            |
+| * name            |----------------| * name              |--------------| * title              |
+|                   |                | * board_id (FK)     |              | * description        |
++-------------------+                +---------------------+              | * list_id (FK)       |
+                                                                          | * due_date           |
+# zum Beispiel:                      # zum Beispiel:                      | * status             |
+# Board von User 1                   # todo, in progress,                 | * priority           |
+                                     # await, done                        | * contact            |
+                                                                          | * color              |
+                                                                          +----------------------+
+                        
+                                                                           # einzelne Task/Karte
+                                                                         

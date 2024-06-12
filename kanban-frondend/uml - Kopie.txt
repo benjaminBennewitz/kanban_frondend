@@ -1,0 +1,48 @@
++-------------------+                +---------------------+              +----------------------+
+|     Board         |                |        List         |              |         Card         |
+|-------------------|                |---------------------|              |----------------------|
+| - id: int         | 2              | - id: int           | 1          N | - id: int            |
+| - name: String    |----------------| - name: String      |--------------| - title: String      |
+|                   |                | - board_id: int     |              | - description: String|
++-------------------+                +---------------------+              | - list_id: int       |
+                                                                          | - due_date: Date     |
+# zum Beispiel:                      # zum Beispiel:                      | - status: String     |
+# Board von User 1                   # todo, in progress,                 | - priority: String   |
+                                     # await, done                        | - contact: String    |
+                                                                          | - color: String      |
+                                                                          +----------------------+
+
+                                                                           # einzelne Task/Karte
+
+
+
+Erläuterungen:
+Board:
+
+# id: int (Primärschlüssel, eindeutige Identifikation eines Boards)
+# name: String (Name des Boards)
+
+List:
+
+# id: int (Primärschlüssel, eindeutige Identifikation einer Liste)
+# name: String (Name der Liste)
+# board_id: int (Fremdschlüssel, der auf das zugehörige Board verweist)
+
+Card:
+
+# id: int (Primärschlüssel, eindeutige Identifikation einer Karte)
+# title: String (Titel der Karte)
+# description: String (Beschreibung der Karte)
+# list_id: int (Fremdschlüssel, der auf die zugehörige Liste verweist)
+# due_date: Date (Fälligkeitsdatum der Karte)
+# status: String (Status der Karte, z.B. "To Do", "In Progress", "Done")
+# priority: String (Priorität der Karte, z.B. "High", "Medium", "Low")
+# contact: String (Kontaktperson für die Karte)
+# color: String (Farbe der Karte)
+
+Beziehungen:
+
+# Ein Board hat mehrere Lists (1:n Beziehung).
+# Eine List hat mehrere Cards (1:n Beziehung).
+# Visuelles UML-Diagramm
+
