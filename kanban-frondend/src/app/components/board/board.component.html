@@ -71,9 +71,10 @@
             class="board-user">
             <div class="flex-c-c hud">
                 <h1>Welcome Ben</h1>
-                <p>5 Tasks left</p>
-                <p>2 Tasks urgent</p>
-                <p>1 Tasks overdue</p>
+                <div>{{ urgentCount$ | async }} Urgent</div>
+                <div>{{ todoCount$ | async }} To-Do</div>
+                <div>{{ inProgressCount$ | async }} In Progress</div>
+                <div>{{ overdueCount$ | async }} Overdue</div>
             </div>
         </div>
 
@@ -111,8 +112,10 @@
                             [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]"
                             (cdkDropListDropped)="drop($event)">
                             <div class="flex-c-c add" *ngIf="urgent.length === 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
-                                <mat-icon class="mr-t-16 board-col-icons">add</mat-icon>
-                                <div class="mr-t-16">Add Task</div>
+                                <div class="mr-t-16 flex-c-c board-empty-add-task" (click)="addTaskDialog()">
+                                    <mat-icon class="board-col-icons">add</mat-icon>
+                                    <div>Add Task</div>
+                                </div>
                             </div>
                             <div class="board-media-row">
                                 <div *ngFor="let item of urgent" cdkDrag>
@@ -143,15 +146,15 @@
                                         </mat-card-content>
                                         <mat-card-actions class="board-col-tools">
                                             <mat-icon class="board-col-icons" matTooltip="Edit"
-                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750">edit</mat-icon>
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750" (click)="editTaskDialog()">edit</mat-icon>
                                             <mat-icon class="board-col-icons" matTooltip="Delete"
-                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750">delete</mat-icon>
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750" (click)="deleteTaskDialog()">delete</mat-icon>
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
-                                <div class="flex-c-c pointer" *ngIf="urgent.length > 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
-                                    <mat-icon class="mr-t-16">add</mat-icon>
-                                    <div class="mr-t-16">Add Task</div>
+                                <div class="flex-c-c pointer mr-t-16" *ngIf="urgent.length > 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750" (click)="addTaskDialog()">
+                                    <mat-icon>add</mat-icon>
+                                    <div>Add Task</div>
                                 </div>
                             </div>
                         </div>
@@ -183,9 +186,11 @@
                             class="1003" cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo"
                             [cdkDropListConnectedTo]="[urgentList, inProgressList, doneList]"
                             (cdkDropListDropped)="drop($event)">
-                            <div class="flex-c-c" *ngIf="todo.length === 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
-                                <mat-icon class="mr-t-16 board-col-icons">add</mat-icon>
-                                <div class="mr-t-16">Add Task</div>
+                            <div class="flex-c-c add" *ngIf="todo.length === 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
+                                <div class="mr-t-16 flex-c-c board-empty-add-task" (click)="addTaskDialog()">
+                                    <mat-icon class="board-col-icons">add</mat-icon>
+                                    <div>Add Task</div>
+                                </div>
                             </div>
                             <div class="board-media-row">
                                 <div *ngFor="let item of todo" cdkDrag>
@@ -216,15 +221,15 @@
                                         </mat-card-content>
                                         <mat-card-actions class="board-col-tools">
                                             <mat-icon class="board-col-icons" matTooltip="Edit"
-                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750">edit</mat-icon>
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750" (click)="editTaskDialog()">edit</mat-icon>
                                             <mat-icon class="board-col-icons" matTooltip="Delete"
-                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750">delete</mat-icon>
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750" (click)="deleteTaskDialog()">delete</mat-icon>
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
-                                <div class="flex-c-c pointer" *ngIf="todo.length > 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
-                                    <mat-icon class="mr-t-16">add</mat-icon>
-                                    <div class="mr-t-16">Add Task</div>
+                                <div class="flex-c-c pointer mr-t-16" *ngIf="todo.length > 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750" (click)="addTaskDialog()">
+                                    <mat-icon>add</mat-icon>
+                                    <div>Add Task</div>
                                 </div>
                             </div>
                         </div>
@@ -256,9 +261,11 @@
                             class="1003" cdkDropList #inProgressList="cdkDropList" [cdkDropListData]="inProgress"
                             [cdkDropListConnectedTo]="[urgentList, todoList, doneList]"
                             (cdkDropListDropped)="drop($event)">
-                            <div class="flex-c-c" *ngIf="inProgress.length === 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
-                                <mat-icon class="mr-t-16 board-col-icons">add</mat-icon>
-                                <div class="mr-t-16">Add Task</div>
+                            <div class="flex-c-c add" *ngIf="inProgress.length === 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
+                                <div class="mr-t-16 flex-c-c board-empty-add-task" (click)="addTaskDialog()">
+                                    <mat-icon class="board-col-icons">add</mat-icon>
+                                    <div>Add Task</div>
+                                </div>
                             </div>
                             <div class="board-media-row">
                                 <div *ngFor="let item of inProgress" cdkDrag>
@@ -289,15 +296,15 @@
                                         </mat-card-content>
                                         <mat-card-actions class="board-col-tools">
                                             <mat-icon class="board-col-icons" matTooltip="Edit"
-                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750">edit</mat-icon>
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750" (click)="editTaskDialog()">edit</mat-icon>
                                             <mat-icon class="board-col-icons" matTooltip="Delete"
-                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750">delete</mat-icon>
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750" (click)="deleteTaskDialog()">delete</mat-icon>
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
-                                <div class="flex-c-c pointer" *ngIf="inProgress.length > 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
-                                    <mat-icon class="mr-t-16">add</mat-icon>
-                                    <div class="mr-t-16">Add Task</div>
+                                <div class="flex-c-c pointer mr-t-16" *ngIf="inProgress.length > 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750" (click)="addTaskDialog()">
+                                    <mat-icon>add</mat-icon>
+                                    <div>Add Task</div>
                                 </div>
                             </div>
                         </div>
@@ -312,8 +319,11 @@
                         'board-heading-light': currentTheme === 'light-theme',
                         'board-heading-dark': currentTheme === 'dark-theme'}" class="flex-btw-c board-heading">
                         <div class="board-col-headline pad-l-24">Done</div>
+                        <div class="flex-c-c board-done" *ngIf="done.length > 0">
+                            <mat-icon class="check">check_small</mat-icon>
+                            <div>{{ doneCount$ | async }} Task finished</div>
+                        </div>
                         <div class="pad-r-24">
-                            <mat-icon matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">add</mat-icon>
                             <mat-icon matTooltip="More" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">more_horiz</mat-icon>
                         </div>
                     </div>
@@ -330,8 +340,7 @@
                             [cdkDropListConnectedTo]="[urgentList, todoList, inProgressList]"
                             (cdkDropListDropped)="drop($event)">
                             <div class="flex-c-c" *ngIf="done.length === 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
-                                <mat-icon class="mr-t-16 board-col-icons">add</mat-icon>
-                                <div class="mr-t-16">Add Task</div>
+                                <div class="mr-t-16 flex-c-c">Nothing done<mat-icon class="sad">mood_bad</mat-icon></div>
                             </div>
                             <div class="board-media-row">
                                 <div *ngFor="let item of done" cdkDrag>
@@ -362,9 +371,9 @@
                                         </mat-card-content>
                                         <mat-card-actions class="board-col-tools">
                                             <mat-icon class="board-col-icons" matTooltip="Edit"
-                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750">edit</mat-icon>
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750" (click)="editTaskDialog()">edit</mat-icon>
                                             <mat-icon class="board-col-icons" matTooltip="Delete"
-                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750">delete</mat-icon>
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750" (click)="deleteTaskDialog()">delete</mat-icon>
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>

@@ -24,13 +24,13 @@
 @import '../../costum-styles/dark-theme.scss';
 @import '../../costum-styles/animations.scss';
 
-mat-toolbar-row{
+mat-toolbar-row {
     justify-content: space-between;
     align-items: center;
 }
 
-mat-icon{
-    color:$secondary;
+mat-icon {
+    color: $secondary;
 }
 
 /* Welcome Overlay START */
@@ -65,6 +65,7 @@ mat-icon{
         transform: translateX(0);
         opacity: 1;
     }
+
     to {
         transform: translateX(100%);
         opacity: 0;
@@ -80,6 +81,7 @@ mat-icon{
         transform: translateX(100%);
         opacity: 1;
     }
+
     to {
         transform: translateX(0);
         opacity: 1;
@@ -88,17 +90,17 @@ mat-icon{
 
 /* Welcome Overlay END */
 
-.board-bg{
+.board-bg {
     background-color: $secondary;
     transition: all 550ms;
 }
 
-.mat-drawer-container{
+.mat-drawer-container {
     height: 100%;
     width: 100%;
 }
 
-.board-toolbar{
+.board-toolbar {
     background-color: $primary;
     color: $secondary;
     position: fixed;
@@ -106,19 +108,19 @@ mat-icon{
     z-index: 2;
 }
 
-.menu-icon{
+.menu-icon {
     cursor: pointer;
 }
 
-.board-sidenav{
+.board-sidenav {
     width: 300px;
     background-color: $primary;
     color: $secondary;
 }
 
-.logo-container{
-    border-bottom: 1px solid rgba($secondary,0.15);
-    padding:0 16px 0 16px;
+.logo-container {
+    border-bottom: 1px solid rgba($secondary, 0.15);
+    padding: 0 16px 0 16px;
     min-height: 64px;
     display: flex;
     align-items: center;
@@ -141,16 +143,20 @@ mat-icon{
         align-items: center;
         cursor: pointer;
         transition: all 250ms ease;
+
         &:hover {
             background-color: $background;
             color: $text;
+
             mat-icon {
                 color: $text;
             }
         }
+
         &:focus {
             background-color: $secondary;
             color: $text;
+
             mat-icon {
                 color: $text;
             }
@@ -158,16 +164,16 @@ mat-icon{
     }
 }
 
-.log-out{
+.log-out {
     position: absolute;
     bottom: 24px;
     left: 8px;
 }
 
-.board-wrapper{
+.board-wrapper {
     position: relative;
-    top:120px;
-    left:0;
+    top: 120px;
+    left: 0;
     background-color: $background;
     min-width: 100vw;
     min-height: 100%;
@@ -205,7 +211,7 @@ mat-icon{
     }
 }
 
-.board-wrapper-col{
+.board-wrapper-col {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -218,7 +224,7 @@ mat-icon{
     overflow: auto;
 }
 
-.board-card-wrapper{
+.board-card-wrapper {
     height: 100%;
     max-height: 960px;
     width: 400px;
@@ -226,33 +232,36 @@ mat-icon{
     overflow-y: hidden;
 }
 
-.board-col-overflow{
+.board-col-overflow {
     overflow-y: auto;
     max-height: inherit;
-    padding:8px;
+    padding: 8px;
     height: 700px;
-    color:$text;
+    color: $text;
     transition: all 250ms;
-    .pointer{
-        mat-icon{
-            color:$text;
+
+    .pointer {
+        mat-icon {
+            color: $text;
         }
     }
 }
 
-.board-media-row{
+.board-media-row {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    gap:24px;
+    gap: 24px;
 }
 
-.board-card-wrapper-empty{
+.board-card-wrapper-empty {
     background: linear-gradient(180deg, $secondary, $background);
     border-radius: 20px;
-    & .board-col-icons, .mr-t-16{
-        color:$text;
+
+    & .board-col-icons,
+    .mr-t-16 {
+        color: $text;
         cursor: pointer;
     }
 
@@ -267,7 +276,7 @@ mat-icon{
 .board-card {
     background-color: $secondary;
     color: $text;
-    border:solid 2px transparent;
+    border: solid 2px transparent;
     border-radius: 20px;
     width: 380px;
     height: fit-content;
@@ -276,82 +285,136 @@ mat-icon{
 
     &.overdue {
         border-bottom: solid 2px $link;
-        & .board-card-date{
-            color:$link;
+
+        & .board-card-date {
+            color: $link;
             font-weight: 900;
         }
     }
 }
 
-.board-card.doneIt{
+.board-card.doneIt {
     opacity: 0.4;
     border: none;
 }
 
-.board-card-date{
-    color:$text;
+.board-card-date {
+    color: $text;
 }
 
-.board-heading{
+.board-heading {
     margin-bottom: 16px;
-    color:$text;
+    color: $text;
     transition: all 550ms;
-    & mat-icon{
-        color:$text;
+
+    & mat-icon {
+        color: $text;
         cursor: pointer;
-    
+        transition: all 250ms;
+        padding: 4px;
+
+        &:hover {
+            background-color: $link;
+            color: $secondary;
+            border-radius: 50px;
+        }
+
         &:nth-child(2) {
-            margin-left:24px;
+            margin-left: 24px;
         }
     }
 }
 
-.board-card-subtitle{
+.board-empty-add-task {
+    cursor: pointer;
+    transition: all 150ms;
+
+    mat-icon {
+        color: $text;
+    }
+
+    &:hover {
+        background-color: $link;
+        color: $secondary !important;
+        border-radius: 50px;
+        padding: 6px 12px;
+
+        mat-icon {
+            color: $secondary !important;
+        }
+    }
+}
+
+.sad {
+    color: $link;
+    margin-left:16px;
+}
+
+.check{
+    background-color: unset;
+
+    &:hover{
+        background-color: transparent !important;
+        color:$low !important;
+        cursor: default !important;
+    }
+}
+
+.board-done{
+    color:$low;
+
+    mat-icon{
+        color:$low;
+        margin-right: 16px;
+    }
+}
+
+.board-card-subtitle {
     color: $text;
     font-style: italic;
 }
 
-.urgent{
+.urgent {
     background-color: $urgent;
     border-radius: 10px;
     width: 20px;
     height: 3px;
 }
 
-.medium{
+.medium {
     background-color: $medium;
     border-radius: 10px;
     width: 20px;
     height: 3px;
 }
 
-.low{
+.low {
     background-color: $low;
     border-radius: 10px;
     width: 20px;
     height: 3px;
 }
 
-.board-col-headline{
+.board-col-headline {
     font-size: 24px;
 }
 
-.board-card-date{
+.board-card-date {
     color: $text;
 }
 
-.board-col-tools{
+.board-col-tools {
     position: absolute;
     bottom: 0;
-    right:8px;
+    right: 8px;
 
-    mat-icon{
+    mat-icon {
         color: $text;
         transition: all 250ms;
         padding: 4px;
 
-        &:hover{
-            color:$primary;
+        &:hover {
+            color: $primary;
             background-color: $background;
             border-radius: 100%;
             transform: scale(1.1);
@@ -361,58 +424,87 @@ mat-icon{
     }
 }
 
-.mat-mdc-select{
-    color:$secondary !important;
+.mat-mdc-select {
+    color: $secondary !important;
     margin-left: 16px;
     font-style: italic;
     font-size: 12px !important;
 }
-.mat-mdc-select:hover{
-    color:$text !important;
+
+.mat-mdc-select:hover {
+    color: $text !important;
 }
+
+.pointer {
+    cursor: pointer;
+    transition: all 150ms;
+
+    &:hover {
+        background-color: $link;
+        color: $secondary;
+        border-radius: 50px;
+        padding: 6px 12px;
+
+        mat-icon {
+            color: $secondary !important;
+        }
+    }
+}
+
 
 
 /* MEDIA QUERRYS*/
 @media (max-width: 720px) {
-    .board-wrapper{
+    .board-wrapper {
         overflow: auto;
     }
+
     .board-wrapper-col {
         flex-direction: column;
         align-items: center;
         height: fit-content;
         padding-bottom: 64px;
     }
-    .board-col-overflow{
+
+    .board-col-overflow {
         height: fit-content;
     }
-    .board-card-wrapper-empty{
+
+    .board-card-wrapper-empty {
         height: 150px;
     }
-    .board-col-headline{
+
+    .board-col-headline {
         font-size: 16px;
     }
-    .mat-mdc-card-title{
+
+    .mat-mdc-card-title {
         font-size: 14px;
     }
-    .mat-mdc-card-subtitle, .mat-mdc-card-content{
+
+    .mat-mdc-card-subtitle,
+    .mat-mdc-card-content {
         font-size: 11px;
     }
-    .board-card{
+
+    .board-card {
         width: 300px;
         height: fit-content;
-        padding:8px;
+        padding: 8px;
     }
-    .board-card-wrapper{
+
+    .board-card-wrapper {
         max-width: 320px;
     }
-    .board-media-row{
+
+    .board-media-row {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
         align-items: flex-start;
-        gap:32px;
+        gap: 32px;
     }
+
     .board-user {
         overflow: hidden;
         display: flex;
@@ -426,7 +518,8 @@ mat-icon{
             margin: 0 16px;
             padding: 0 8px;
             overflow-x: auto;
-            white-space: nowrap; /* Prevents text from wrapping */
+            white-space: nowrap;
+            /* Prevents text from wrapping */
             gap: 16px;
 
             h1 {

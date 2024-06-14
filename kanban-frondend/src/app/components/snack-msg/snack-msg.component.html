@@ -1,4 +1,8 @@
 <p class="flex-c-c">{{ data.message }}
-    <mat-icon class="snack-msg">sentiment_very_satisfied</mat-icon>
-    <mat-spinner strokeWidth="3" [diameter]="30" class="login-spinner"></mat-spinner>
+    <ng-container *ngIf="data.showIcon">
+        <mat-icon class="snack-msg">sentiment_very_satisfied</mat-icon>
+    </ng-container>
+    <ng-container *ngIf="data.showSpinner">
+        <mat-spinner strokeWidth="3" [diameter]="30" class="login-spinner"></mat-spinner>
+    </ng-container>
 </p>

@@ -1,9 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { ThemesComponent } from '../../services/themes/themes.component';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { SnackbarsComponent } from '../snackbars/snackbars.component';
+import { BehaviorSubject } from 'rxjs';
 
 interface Task {
   id: number;
@@ -24,8 +31,25 @@ export class BoardComponent implements OnInit {
   currentTheme: string = 'default';
   hideWelcomeOverlay = false;
   hideLogOutOverlay = true;
+  doneCount$: BehaviorSubject<number>;
+  urgentCount$: BehaviorSubject<number>;
+  inProgressCount$: BehaviorSubject<number>;
+  todoCount$: BehaviorSubject<number>;
+  overdueCount$: BehaviorSubject<number>;
 
-  constructor(private themesComponent: ThemesComponent, private router: Router) {}
+  constructor(
+    private themesComponent: ThemesComponent,
+    private router: Router,
+    public dialog: MatDialog,
+    private snackbarsComponent: SnackbarsComponent,
+    private cdr: ChangeDetectorRef
+  ) {
+    this.doneCount$ = new BehaviorSubject<number>(this.done.length);
+    this.urgentCount$ = new BehaviorSubject<number>(this.urgent.length);
+    this.inProgressCount$ = new BehaviorSubject<number>(this.inProgress.length);
+    this.todoCount$ = new BehaviorSubject<number>(this.todo.length);
+    this.overdueCount$ = new BehaviorSubject<number>(this.getOverdueCount());
+  }
 
   positionOptions: TooltipPosition[] = ['below', 'above', 'left', 'right'];
   position = new FormControl(this.positionOptions[0]);
@@ -114,38 +138,63 @@ export class BoardComponent implements OnInit {
 
   /**
    * Handle theme change
-   * @param selectedTheme 
+   * @param selectedTheme
    */
   onThemeChange(selectedTheme: string) {
     this.themesComponent.onThemeChange(selectedTheme);
   }
 
-  
- /**
+  /**
    * checks if the date is past due
-   * @param date 
-   * @returns 
+   * @param date
+   * @returns
    */
- isDatePast(date: Date): boolean {
-  const today = new Date();
-  return date < today;
-}
+  isDatePast(date: Date): boolean {
+    const today = new Date();
+    return date < today;
+  }
 
-/**
- * checks if the date is past due
- * @param date 
- * @returns 
- */
-isDateOverdue(date: Date): boolean {
-  return this.isDatePast(date);
-}
+  /**
+   * checks if the date is past due
+   * @param date
+   * @returns
+   */
+  isDateOverdue(date: Date): boolean {
+    return this.isDatePast(date);
+  }
 
-// Methode zum Formatieren des Datums
-getFormattedDate(date: Date): string {
-  return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
-}
+  /**
+   * format the date object
+   * @param date
+   * @returns
+   */
+  getFormattedDate(date: Date): string {
+    return (
+      date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear()
+    );
+  }
 
+  /**
+   * shows delete task dialog
+   */
+  deleteTaskDialog() {
+    this.snackbarsComponent.openSnackBar('Task deleted', false, false);
+  }
 
+  /**
+   * shows edit task dialog
+   */
+  editTaskDialog() {
+    this.snackbarsComponent.openSnackBar('Task edited', false, false);
+  }
+
+  addTaskDialog() {
+    this.snackbarsComponent.openSnackBar('Task created', true, false);
+  }
+
+  /**
+   * default tasks
+   */
   urgent: Task[] = [];
 
   todo: Task[] = [
@@ -206,7 +255,13 @@ getFormattedDate(date: Date): string {
     },
   ];
 
-  drop(event: CdkDragDrop<Task[]>) {
+  /**
+   * drag and drop function from Angular
+   * updateDoneCount method for update the cards count on done section
+   * @param event
+   * @returns
+   */
+  drop(event: CdkDragDrop<any[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -225,12 +280,45 @@ getFormattedDate(date: Date): string {
         event.currentIndex
       );
     }
+    this.updateDoneCount();
+    this.updateOverdueCount();
+  }
+
+  /**
+   * updates the cards count
+   */
+  updateDoneCount() {
+    this.doneCount$.next(this.done.length);
+    this.urgentCount$.next(this.urgent.length);
+    this.todoCount$.next(this.todo.length);
+    this.inProgressCount$.next(this.inProgress.length);
+    this.cdr.detectChanges();
+  }
+
+  /**
+   * updates the overdue tasks count
+   */
+  updateOverdueCount() {
+    this.overdueCount$.next(this.getOverdueCount());
+    this.cdr.detectChanges();
+  }
+
+  /**
+   * Returns the count of overdue tasks
+   */
+  getOverdueCount(): number {
+    return (
+      this.urgent.filter((task) => this.isDateOverdue(task.date)).length +
+      this.todo.filter((task) => this.isDateOverdue(task.date)).length +
+      this.inProgress.filter((task) => this.isDateOverdue(task.date)).length +
+      this.done.filter((task) => this.isDateOverdue(task.date)).length
+    );
   }
 
   /**
    * checks the priority and sets the right class for color highlighting
-   * @param prio 
-   * @returns 
+   * @param prio
+   * @returns
    */
   getPriorityClass(prio: string): string {
     switch (prio) {

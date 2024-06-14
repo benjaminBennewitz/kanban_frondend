@@ -104,9 +104,18 @@ $accent-light: hsl(232, 72%, 21%);
     margin-bottom: 16px;
     color:$text-light;
     transition: all 550ms;
+
     & mat-icon{
         color:$text-light;
         cursor: pointer;
+        transition: all 250ms;
+        padding:4px;
+
+        &:hover {
+            background-color: $link-light;
+            color: $secondary-light;
+            border-radius: 50px;
+        }
     
         &:nth-child(2) {
             margin-left:24px;

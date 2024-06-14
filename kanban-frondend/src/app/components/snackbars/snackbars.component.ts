@@ -10,20 +10,24 @@ import { Router } from '@angular/router';
 })
 export class SnackbarsComponent {
 
-  constructor(private _snackBar: MatSnackBar, private router: Router) {}
+  constructor(private snackBar: MatSnackBar, private router: Router) {}
 
   durationInSeconds = 3000;
 
-  // Function to open the snackbar with a message parameter and navigate after showing the snackbar
-  openSnackBar(message: string) {
-    const snackBarRef = this._snackBar.openFromComponent(SnackMsgComponent, {
-      duration: this.durationInSeconds,
-      data: { message: message }
+  /**
+   * snackbar object for showing dynamic snackbars
+   * @param message 
+   * @param showIcon 
+   * @param showSpinner 
+   */
+  openSnackBar(message: string, showIcon: boolean = true, showSpinner: boolean = true) {
+    this.snackBar.openFromComponent(SnackMsgComponent, {
+      data: {
+        message: message,
+        showIcon: showIcon,
+        showSpinner: showSpinner
+      },
+      duration: 2500
     });
-
-    /* Wait for the snackbar to be dismissed before navigating
-    snackBarRef.afterDismissed().subscribe(() => {
-      this.router.navigate(['/board']);
-    });*/
   }
 }

@@ -31,19 +31,19 @@ export class LoginComponent implements OnInit {
     this.themesComponent.onThemeChange(selectedTheme);
   }
 
-  login() {
-    this.snackbarsComponent.openSnackBar('Login successful!');
+  loginDialog() {
+    this.snackbarsComponent.openSnackBar('Login successful!', true, true);
     setTimeout(() => {
       this.router.navigate(['/board']);
-    }, 2500); // Delay of 2.5 seconds
+    }, 1500); // Delay of 1.5 seconds
   }
 
-  openDialog() {
+  registerDialog() {
     const dialogRef = this.dialog.open(DialogRegisterComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'registered') {
-        this.snackbarsComponent.openSnackBar('Registration successful!');
+        this.snackbarsComponent.openSnackBar('Registration successful!', true, true);
         // No navigation here
       }
     });

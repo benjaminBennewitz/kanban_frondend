@@ -106,9 +106,18 @@ $accent-dark: hsl(192, 69%, 36%);
     margin-bottom: 16px;
     color:$text-dark;
     transition: all 550ms;
+
     & mat-icon{
         color:$text-dark;
         cursor: pointer;
+        transition: all 250ms;
+        padding:4px;
+
+        &:hover {
+            background-color: $link-dark;
+            color: $text-dark;
+            border-radius: 50px;
+        }
     
         &:nth-child(2) {
             margin-left:24px;
