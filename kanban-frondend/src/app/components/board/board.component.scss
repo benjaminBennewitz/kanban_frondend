@@ -407,19 +407,43 @@ mat-icon {
     position: absolute;
     bottom: 0;
     right: 8px;
+    transition: all 150ms;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap:16px;
+
 
     mat-icon {
         color: $text;
         transition: all 250ms;
-        padding: 4px;
+        padding: 2px;
+        font-size: 20px;
+        text-align: center;
 
         &:hover {
             color: $primary;
             background-color: $background;
             border-radius: 100%;
             transform: scale(1.1);
-            padding: 4px;
+            padding: 2px;
             cursor: pointer !important;
+        }
+    }
+
+    .board-done-icon{
+        color:$text;
+        cursor: pointer;
+        padding:2px;
+    
+        &:hover{
+            border-radius: 100%;
+            transform: scale(1.1);
+            padding: 2px;
+            cursor: pointer !important;
+            background-color: $low;
+            color:$secondary;
         }
     }
 }

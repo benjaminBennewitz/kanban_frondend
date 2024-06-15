@@ -19,6 +19,8 @@ interface Task {
   content: string;
   date: Date;
   prio: string;
+  done: Boolean;
+  status: 'urgent' | 'todo' | 'inProgress' | 'done';
 }
 
 @Component({
@@ -188,9 +190,20 @@ export class BoardComponent implements OnInit {
     this.snackbarsComponent.openSnackBar('Task edited', false, false);
   }
 
+  /**
+   * shows add task dialog
+   */
   addTaskDialog() {
     this.snackbarsComponent.openSnackBar('Task created', true, false);
   }
+
+  /**
+   * shows done task dialog
+   */
+  doneTaskDialog() {
+    this.snackbarsComponent.openSnackBar('Task finished - moved to done!', true, false);
+  }
+
 
   /**
    * default tasks
@@ -206,6 +219,8 @@ export class BoardComponent implements OnInit {
         'Many new functions on Angular 18: Material 3, deferrable views and built-in controls flows are now officially stable and bring a number of improvements',
       date: new Date('2024-07-22'),
       prio: 'urgent',
+      done: false,
+      status: 'todo',
     },
     {
       id: 2,
@@ -214,6 +229,8 @@ export class BoardComponent implements OnInit {
       content: 'Install REST framework, set up venv, check requirements',
       date: new Date('2024-08-06'),
       prio: 'medium',
+      done: false,
+      status: 'todo',
     },
     {
       id: 3,
@@ -222,6 +239,8 @@ export class BoardComponent implements OnInit {
       content: 'very fiddly thing to make work',
       date: new Date('2024-06-23'),
       prio: 'low',
+      done: false,
+      status: 'todo',
     },
   ];
 
@@ -233,6 +252,8 @@ export class BoardComponent implements OnInit {
       content: 'N/A',
       date: new Date('2024-05-15'),
       prio: '',
+      done: false,
+      status: 'inProgress',
     },
     {
       id: 5,
@@ -241,6 +262,8 @@ export class BoardComponent implements OnInit {
       content: 'Check functions and classes',
       date: new Date('2024-06-01'),
       prio: 'low',
+      done: false,
+      status: 'inProgress',
     },
   ];
 
@@ -252,6 +275,8 @@ export class BoardComponent implements OnInit {
       content: 'Pay attention to class naming',
       date: new Date('2024-07-19'),
       prio: 'medium',
+      done: false,
+      status: 'done',
     },
   ];
 
