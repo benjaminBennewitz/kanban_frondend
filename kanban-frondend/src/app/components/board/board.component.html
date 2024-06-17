@@ -18,7 +18,6 @@
     Logging out
 </div>
 
-
 <mat-drawer-container class="mat-drawer-container" autosize>
     <!-- SIDENAV START -->
     <mat-drawer id="sideNav" #drawer [ngClass]="{
@@ -49,7 +48,8 @@
             'board-toolbar-dark': currentTheme === 'dark-theme'}" class="board-toolbar">
             <mat-toolbar-row>
                 <div class="flex-c-c">
-                    <mat-icon matTooltip="Open menu" [matTooltipPosition]="position.value!" matTooltipShowDelay="750" class="menu-icon" (click)="drawer.toggle()">menu</mat-icon>
+                    <mat-icon matTooltip="Open menu" [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
+                        class="menu-icon" (click)="drawer.toggle()">menu</mat-icon>
                     <span class="mr-l-16">TICKETEER</span>
                 </div>
                 <span>B²</span>
@@ -67,14 +67,13 @@
         <div [ngClass]="{
             'board-user': currentTheme === 'default',
             'board-user-light': currentTheme === 'light-theme',
-            'board-user-dark': currentTheme === 'dark-theme'}" 
-            class="board-user">
+            'board-user-dark': currentTheme === 'dark-theme'}" class="board-user">
             <div class="flex-c-c hud">
                 <h1>Welcome Ben</h1>
-                <div>{{ urgentCount$ | async }} Urgent</div>
-                <div>{{ todoCount$ | async }} To-Do</div>
-                <div>{{ inProgressCount$ | async }} In Progress</div>
-                <div>{{ overdueCount$ | async }} Overdue</div>
+                <div>{{ taskService.urgentCount$ | async }} Urgent</div>
+                <div>{{ taskService.todoCount$ | async }} To-Do</div>
+                <div>{{ taskService.inProgressCount$ | async }} In Progress</div>
+                <div>{{ taskService.overdueCount$ | async }} Overdue</div>
             </div>
         </div>
 
@@ -95,35 +94,37 @@
                         'board-heading-dark': currentTheme === 'dark-theme'}" class="flex-btw-c board-heading">
                         <div class="board-col-headline pad-l-24">Urgent</div>
                         <div class="pad-r-24">
-                            <mat-icon matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">add</mat-icon>
-                            <mat-icon matTooltip="More" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">more_horiz</mat-icon>
+                            <mat-icon matTooltip="New task" [matTooltipPosition]="position.value!"
+                                matTooltipShowDelay="750">add</mat-icon>
+                            <mat-icon matTooltip="More" [matTooltipPosition]="position.value!"
+                                matTooltipShowDelay="750">more_horiz</mat-icon>
                         </div>
                     </div>
                     <div [ngClass]="{
                         'board-col-overflow': currentTheme === 'default',
                         'board-col-overflow-light': currentTheme === 'light-theme',
-                        'board-col-overflow-dark': currentTheme === 'dark-theme'}"
-                        class="board-col-overflow">
+                        'board-col-overflow-dark': currentTheme === 'dark-theme'}" class="board-col-overflow">
                         <div [ngClass]="{
-                                'board-card-wrapper-empty': urgent.length === 0 && currentTheme === 'default',
-                                'board-card-wrapper-empty-light': urgent.length === 0 && currentTheme === 'light-theme',
-                                'board-card-wrapper-empty-dark': urgent.length === 0 && currentTheme === 'dark-theme'}"
-                            class="1003" cdkDropList #urgentList="cdkDropList" [cdkDropListData]="urgent"
+                                'board-card-wrapper-empty': taskService.urgent.length === 0 && currentTheme === 'default',
+                                'board-card-wrapper-empty-light': taskService.urgent.length === 0 && currentTheme === 'light-theme',
+                                'board-card-wrapper-empty-dark': taskService.urgent.length === 0 && currentTheme === 'dark-theme'}"
+                            class="1003" cdkDropList #urgentList="cdkDropList" [cdkDropListData]="taskService.urgent"
                             [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]"
                             (cdkDropListDropped)="drop($event)">
-                            <div class="flex-c-c add" *ngIf="urgent.length === 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
+                            <div class="flex-c-c add" *ngIf="taskService.urgent.length === 0" matTooltip="New task"
+                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
                                 <div class="mr-t-16 flex-c-c board-empty-add-task" (click)="addTaskDialog()">
                                     <mat-icon class="board-col-icons">add</mat-icon>
                                     <div>Add Task</div>
                                 </div>
                             </div>
                             <div class="board-media-row">
-                                <div *ngFor="let task of urgent" cdkDrag>
+                                <div *ngFor="let task of taskService.urgent" cdkDrag>
                                     <mat-card [ngClass]="{
                                         'board-card': currentTheme === 'default',
                                         'board-card-light': currentTheme === 'light-theme',
                                         'board-card-dark': currentTheme === 'dark-theme',
-                                        'overdue': isDatePast(task.date)}" [attr.id]="'CardId-' + task.id"
+                                        'overdue': taskService.isDatePast(task.date)}" [attr.id]="'CardId-' + task.id"
                                         class=" board-card" cdkDragPreview>
                                         <mat-card-header>
                                             <div class="flex-col">
@@ -133,7 +134,7 @@
                                                     'board-card-subtitle-light': currentTheme === 'light-theme',
                                                     'board-card-subtitle-dark': currentTheme === 'dark-theme'}"
                                                     class="board-card-subtitle ">{{task.subtitle}}</mat-card-subtitle>
-                                                <div [ngClass]="getPriorityClass(task.prio)"></div>
+                                                <div [ngClass]="taskService.getPriorityClass(task.prio)"></div>
                                             </div>
                                         </mat-card-header>
                                         <mat-card-content>
@@ -142,19 +143,24 @@
                                                 'board-card-date': currentTheme === 'default',
                                                 'board-card-date-light': currentTheme === 'light-theme',
                                                 'board-card-date-dark': currentTheme === 'dark-theme'}"
-                                                class="board-card-date">{{getFormattedDate(task.date)}}</p>
+                                                class="board-card-date">{{taskService.getFormattedDate(task.date)}}</p>
                                         </mat-card-content>
                                         <mat-card-actions class="board-col-tools">
                                             <mat-icon class="board-done-icon" matTooltip="mark as done!"
-                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750" (click)="doneTaskDialog()">check</mat-icon>
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
+                                                (click)="doneTaskDialog()">check</mat-icon>
                                             <mat-icon class="board-col-icons" matTooltip="Edit"
-                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750" (click)="editTaskDialog()">edit</mat-icon>
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
+                                                (click)="editTaskDialog()">edit</mat-icon>
                                             <mat-icon class="board-col-icons" matTooltip="Delete"
-                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750" (click)="deleteTaskDialog()">delete</mat-icon>
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
+                                                (click)="deleteTaskDialog()">delete</mat-icon>
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
-                                <div class="flex-c-c pointer mr-t-16" *ngIf="urgent.length > 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750" (click)="addTaskDialog()">
+                                <div class="flex-c-c pointer mr-t-16" *ngIf="taskService.urgent.length > 0"
+                                    matTooltip="New task" [matTooltipPosition]="position.value!"
+                                    matTooltipShowDelay="750" (click)="addTaskDialog()">
                                     <mat-icon>add</mat-icon>
                                     <div>Add Task</div>
                                 </div>
@@ -164,43 +170,45 @@
                 </div>
                 <!-- URGENT END-->
 
-                <!-- TO DO START-->
+                <!-- TODO START -->
                 <div class="board-card-wrapper">
                     <div [ngClass]="{
                         'board-heading': currentTheme === 'default',
                         'board-heading-light': currentTheme === 'light-theme',
                         'board-heading-dark': currentTheme === 'dark-theme'}" class="flex-btw-c board-heading">
-                        <div class="board-col-headline pad-l-24">To do</div>
+                        <div class="board-col-headline pad-l-24">To-Do</div>
                         <div class="pad-r-24">
-                            <mat-icon matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">add</mat-icon>
-                            <mat-icon matTooltip="More" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">more_horiz</mat-icon>
+                            <mat-icon matTooltip="New task" [matTooltipPosition]="position.value!"
+                                matTooltipShowDelay="750">add</mat-icon>
+                            <mat-icon matTooltip="More" [matTooltipPosition]="position.value!"
+                                matTooltipShowDelay="750">more_horiz</mat-icon>
                         </div>
                     </div>
                     <div [ngClass]="{
                         'board-col-overflow': currentTheme === 'default',
                         'board-col-overflow-light': currentTheme === 'light-theme',
-                        'board-col-overflow-dark': currentTheme === 'dark-theme'}"
-                        class="board-col-overflow">
+                        'board-col-overflow-dark': currentTheme === 'dark-theme'}" class="board-col-overflow">
                         <div [ngClass]="{
-                                'board-card-wrapper-empty': todo.length === 0 && currentTheme === 'default',
-                                'board-card-wrapper-empty-light': todo.length === 0 && currentTheme === 'light-theme',
-                                'board-card-wrapper-empty-dark': todo.length === 0 && currentTheme === 'dark-theme'}"
-                            class="1003" cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo"
+                                'board-card-wrapper-empty': taskService.todo.length === 0 && currentTheme === 'default',
+                                'board-card-wrapper-empty-light': taskService.todo.length === 0 && currentTheme === 'light-theme',
+                                'board-card-wrapper-empty-dark': taskService.todo.length === 0 && currentTheme === 'dark-theme'}"
+                            class="1003" cdkDropList #todoList="cdkDropList" [cdkDropListData]="taskService.todo"
                             [cdkDropListConnectedTo]="[urgentList, inProgressList, doneList]"
                             (cdkDropListDropped)="drop($event)">
-                            <div class="flex-c-c add" *ngIf="todo.length === 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
+                            <div class="flex-c-c add" *ngIf="taskService.todo.length === 0" matTooltip="New task"
+                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
                                 <div class="mr-t-16 flex-c-c board-empty-add-task" (click)="addTaskDialog()">
                                     <mat-icon class="board-col-icons">add</mat-icon>
                                     <div>Add Task</div>
                                 </div>
                             </div>
                             <div class="board-media-row">
-                                <div *ngFor="let task of todo" cdkDrag>
+                                <div *ngFor="let task of taskService.todo" cdkDrag>
                                     <mat-card [ngClass]="{
                                         'board-card': currentTheme === 'default',
                                         'board-card-light': currentTheme === 'light-theme',
                                         'board-card-dark': currentTheme === 'dark-theme',
-                                        'overdue': isDatePast(task.date)}" [attr.id]="'CardId-' + task.id"
+                                        'overdue': taskService.isDatePast(task.date)}" [attr.id]="'CardId-' + task.id"
                                         class=" board-card" cdkDragPreview>
                                         <mat-card-header>
                                             <div class="flex-col">
@@ -210,7 +218,7 @@
                                                     'board-card-subtitle-light': currentTheme === 'light-theme',
                                                     'board-card-subtitle-dark': currentTheme === 'dark-theme'}"
                                                     class="board-card-subtitle ">{{task.subtitle}}</mat-card-subtitle>
-                                                <div [ngClass]="getPriorityClass(task.prio)"></div>
+                                                <div [ngClass]="taskService.getPriorityClass(task.prio)"></div>
                                             </div>
                                         </mat-card-header>
                                         <mat-card-content>
@@ -219,19 +227,24 @@
                                                 'board-card-date': currentTheme === 'default',
                                                 'board-card-date-light': currentTheme === 'light-theme',
                                                 'board-card-date-dark': currentTheme === 'dark-theme'}"
-                                                class="board-card-date">{{getFormattedDate(task.date)}}</p>
+                                                class="board-card-date">{{taskService.getFormattedDate(task.date)}}</p>
                                         </mat-card-content>
                                         <mat-card-actions class="board-col-tools">
                                             <mat-icon class="board-done-icon" matTooltip="mark as done!"
-                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750" (click)="doneTaskDialog()">check</mat-icon>
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
+                                                (click)="doneTaskDialog()">check</mat-icon>
                                             <mat-icon class="board-col-icons" matTooltip="Edit"
-                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750" (click)="editTaskDialog()">edit</mat-icon>
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
+                                                (click)="editTaskDialog()">edit</mat-icon>
                                             <mat-icon class="board-col-icons" matTooltip="Delete"
-                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750" (click)="deleteTaskDialog()">delete</mat-icon>
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
+                                                (click)="deleteTaskDialog()">delete</mat-icon>
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
-                                <div class="flex-c-c pointer mr-t-16" *ngIf="todo.length > 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750" (click)="addTaskDialog()">
+                                <div class="flex-c-c pointer mr-t-16" *ngIf="taskService.todo.length > 0"
+                                    matTooltip="New task" [matTooltipPosition]="position.value!"
+                                    matTooltipShowDelay="750" (click)="addTaskDialog()">
                                     <mat-icon>add</mat-icon>
                                     <div>Add Task</div>
                                 </div>
@@ -239,45 +252,48 @@
                         </div>
                     </div>
                 </div>
-                <!-- TO DO END-->
+                <!-- TODO END -->
 
-                <!-- IN PROGRESS START-->
+                <!-- IN PROGRESS START -->
                 <div class="board-card-wrapper">
                     <div [ngClass]="{
                         'board-heading': currentTheme === 'default',
                         'board-heading-light': currentTheme === 'light-theme',
                         'board-heading-dark': currentTheme === 'dark-theme'}" class="flex-btw-c board-heading">
-                        <div class="board-col-headline pad-l-24">In progress</div>
+                        <div class="board-col-headline pad-l-24">In Progress</div>
                         <div class="pad-r-24">
-                            <mat-icon matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">add</mat-icon>
-                            <mat-icon matTooltip="More" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">more_horiz</mat-icon>
+                            <mat-icon matTooltip="New task" [matTooltipPosition]="position.value!"
+                                matTooltipShowDelay="750">add</mat-icon>
+                            <mat-icon matTooltip="More" [matTooltipPosition]="position.value!"
+                                matTooltipShowDelay="750">more_horiz</mat-icon>
                         </div>
                     </div>
                     <div [ngClass]="{
                         'board-col-overflow': currentTheme === 'default',
                         'board-col-overflow-light': currentTheme === 'light-theme',
-                        'board-col-overflow-dark': currentTheme === 'dark-theme'}"
-                        class="board-col-overflow">
+                        'board-col-overflow-dark': currentTheme === 'dark-theme'}" class="board-col-overflow">
                         <div [ngClass]="{
-                                'board-card-wrapper-empty': inProgress.length === 0 && currentTheme === 'default',
-                                'board-card-wrapper-empty-light': inProgress.length === 0 && currentTheme === 'light-theme',
-                                'board-card-wrapper-empty-dark': inProgress.length === 0 && currentTheme === 'dark-theme'}"
-                            class="1003" cdkDropList #inProgressList="cdkDropList" [cdkDropListData]="inProgress"
+                                'board-card-wrapper-empty': taskService.inProgress.length === 0 && currentTheme === 'default',
+                                'board-card-wrapper-empty-light': taskService.inProgress.length === 0 && currentTheme === 'light-theme',
+                                'board-card-wrapper-empty-dark': taskService.inProgress.length === 0 && currentTheme === 'dark-theme'}"
+                            class="1003" cdkDropList #inProgressList="cdkDropList"
+                            [cdkDropListData]="taskService.inProgress"
                             [cdkDropListConnectedTo]="[urgentList, todoList, doneList]"
                             (cdkDropListDropped)="drop($event)">
-                            <div class="flex-c-c add" *ngIf="inProgress.length === 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
+                            <div class="flex-c-c add" *ngIf="taskService.inProgress.length === 0" matTooltip="New task"
+                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
                                 <div class="mr-t-16 flex-c-c board-empty-add-task" (click)="addTaskDialog()">
                                     <mat-icon class="board-col-icons">add</mat-icon>
                                     <div>Add Task</div>
                                 </div>
                             </div>
                             <div class="board-media-row">
-                                <div *ngFor="let task of inProgress" cdkDrag>
+                                <div *ngFor="let task of taskService.inProgress" cdkDrag>
                                     <mat-card [ngClass]="{
                                         'board-card': currentTheme === 'default',
                                         'board-card-light': currentTheme === 'light-theme',
                                         'board-card-dark': currentTheme === 'dark-theme',
-                                        'overdue': isDatePast(task.date)}" [attr.id]="'CardId-' + task.id"
+                                        'overdue': taskService.isDatePast(task.date)}" [attr.id]="'CardId-' + task.id"
                                         class=" board-card" cdkDragPreview>
                                         <mat-card-header>
                                             <div class="flex-col">
@@ -287,7 +303,7 @@
                                                     'board-card-subtitle-light': currentTheme === 'light-theme',
                                                     'board-card-subtitle-dark': currentTheme === 'dark-theme'}"
                                                     class="board-card-subtitle ">{{task.subtitle}}</mat-card-subtitle>
-                                                <div [ngClass]="getPriorityClass(task.prio)"></div>
+                                                <div [ngClass]="taskService.getPriorityClass(task.prio)"></div>
                                             </div>
                                         </mat-card-header>
                                         <mat-card-content>
@@ -296,19 +312,24 @@
                                                 'board-card-date': currentTheme === 'default',
                                                 'board-card-date-light': currentTheme === 'light-theme',
                                                 'board-card-date-dark': currentTheme === 'dark-theme'}"
-                                                class="board-card-date">{{getFormattedDate(task.date)}}</p>
+                                                class="board-card-date">{{taskService.getFormattedDate(task.date)}}</p>
                                         </mat-card-content>
                                         <mat-card-actions class="board-col-tools">
                                             <mat-icon class="board-done-icon" matTooltip="mark as done!"
-                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750" (click)="doneTaskDialog()">check</mat-icon>
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
+                                                (click)="doneTaskDialog()">check</mat-icon>
                                             <mat-icon class="board-col-icons" matTooltip="Edit"
-                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750" (click)="editTaskDialog()">edit</mat-icon>
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
+                                                (click)="editTaskDialog()">edit</mat-icon>
                                             <mat-icon class="board-col-icons" matTooltip="Delete"
-                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750" (click)="deleteTaskDialog()">delete</mat-icon>
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
+                                                (click)="deleteTaskDialog()">delete</mat-icon>
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
-                                <div class="flex-c-c pointer mr-t-16" *ngIf="inProgress.length > 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750" (click)="addTaskDialog()">
+                                <div class="flex-c-c pointer mr-t-16" *ngIf="taskService.inProgress.length > 0"
+                                    matTooltip="New task" [matTooltipPosition]="position.value!"
+                                    matTooltipShowDelay="750" (click)="addTaskDialog()">
                                     <mat-icon>add</mat-icon>
                                     <div>Add Task</div>
                                 </div>
@@ -316,18 +337,18 @@
                         </div>
                     </div>
                 </div>
-                <!-- IN PROGRESS END-->
+                <!-- IN PROGRESS END -->
 
-                <!-- DONE START-->
+                <!-- DONE START -->
                 <div class="board-card-wrapper">
                     <div [ngClass]="{
                         'board-heading': currentTheme === 'default',
                         'board-heading-light': currentTheme === 'light-theme',
                         'board-heading-dark': currentTheme === 'dark-theme'}" class="flex-btw-c board-heading">
                         <div class="board-col-headline pad-l-24">Done</div>
-                        <div class="flex-c-c board-done" *ngIf="done.length > 0">
+                        <div class="flex-c-c board-done" *ngIf="taskService.done.length > 0">
                             <mat-icon class="check">check_small</mat-icon>
-                            <div>{{ doneCount$ | async }} Task finished</div>
+                            <div>{{ taskService.doneCount$ | async }} Task finished</div>
                         </div>
                         <div class="pad-r-24">
                             <mat-icon matTooltip="More" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">more_horiz</mat-icon>
@@ -339,17 +360,17 @@
                         'board-col-overflow-dark': currentTheme === 'dark-theme'}"
                         class="board-col-overflow">
                         <div [ngClass]="{
-                                'board-card-wrapper-empty': done.length === 0 && currentTheme === 'default',
-                                'board-card-wrapper-empty-light': done.length === 0 && currentTheme === 'light-theme',
-                                'board-card-wrapper-empty-dark': done.length === 0 && currentTheme === 'dark-theme'}"
-                            class="1003" cdkDropList #doneList="cdkDropList" [cdkDropListData]="done"
+                                'board-card-wrapper-empty': taskService.done.length === 0 && currentTheme === 'default',
+                                'board-card-wrapper-empty-light': taskService.done.length === 0 && currentTheme === 'light-theme',
+                                'board-card-wrapper-empty-dark': taskService.done.length === 0 && currentTheme === 'dark-theme'}"
+                            class="1003" cdkDropList #doneList="cdkDropList" [cdkDropListData]="taskService.done"
                             [cdkDropListConnectedTo]="[urgentList, todoList, inProgressList]"
                             (cdkDropListDropped)="drop($event)">
-                            <div class="flex-c-c" *ngIf="done.length === 0" matTooltip="New task" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
+                            <div class="flex-c-c" *ngIf="taskService.done.length === 0">
                                 <div class="mr-t-16 flex-c-c">Nothing done<mat-icon class="sad">mood_bad</mat-icon></div>
                             </div>
                             <div class="board-media-row">
-                                <div *ngFor="let task of done" cdkDrag>
+                                <div *ngFor="let task of taskService.done" cdkDrag>
                                     <mat-card [ngClass]="{
                                         'board-card': currentTheme === 'default',
                                         'board-card-light': currentTheme === 'light-theme',
@@ -364,7 +385,7 @@
                                                     'board-card-subtitle-dark': currentTheme === 'dark-theme'}"
                                                     [attr.id]="'CardId-' + task.id" class=" board-card"
                                                     class="board-card-subtitle ">{{task.subtitle}}</mat-card-subtitle>
-                                                <div [ngClass]="getPriorityClass(task.prio)"></div>
+                                                <div [ngClass]="taskService.getPriorityClass(task.prio)"></div>
                                             </div>
                                         </mat-card-header>
                                         <mat-card-content>
@@ -373,14 +394,14 @@
                                                 'board-card-date': currentTheme === 'default',
                                                 'board-card-date-light': currentTheme === 'light-theme',
                                                 'board-card-date-dark': currentTheme === 'dark-theme'}"
-                                                class="board-card-date">{{getFormattedDate(task.date)}}</p>
+                                                class="board-card-date">{{taskService.getFormattedDate(task.date)}}</p>
                                         </mat-card-content>
                                     </mat-card>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div><!-- DONE END-->
+                </div><!-- DONE END -->
             </div><!-- BOARD COLUMNS END -->
         </div><!-- BOARD CONTENT INNER END -->
     </div><!-- BOARD CONTENT END -->

@@ -30,7 +30,8 @@ import { SnackMsgComponent } from './components/snack-msg/snack-msg.component';
 import { DialogRegisterComponent } from './components/dialog-register/dialog-register.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_NATIVE_DATE_FORMATS, NativeDateAdapter } from '@angular/material/core';
-import { CountPipe } from './components/board/count.pipe'
+import { CountPipe } from './components/board/count.pipe';
+import { TaskServiceComponent } from './services/task-service/task-service.component';
 
 
 @NgModule({
@@ -76,6 +77,7 @@ import { CountPipe } from './components/board/count.pipe'
     { provide: DateAdapter, useClass: NativeDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: MAT_NATIVE_DATE_FORMATS },
     SnackbarsComponent,
+    TaskServiceComponent,
   ],
   bootstrap: [AppComponent],
 })
