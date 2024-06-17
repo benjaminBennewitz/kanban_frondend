@@ -2,6 +2,7 @@
 
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { SnackbarsComponent } from '../../components/snackbars/snackbars.component';
 
 interface Task {
   id: number;
@@ -18,6 +19,9 @@ interface Task {
   providedIn: 'root',
 })
 export class TaskServiceComponent {
+
+  showDatePicker: boolean = false;
+
   urgent: Task[] = [];
 
   todo: Task[] = [
@@ -90,30 +94,64 @@ export class TaskServiceComponent {
     },
   ];
 
-  // BehaviorSubjects for tracking task counts
+  /**
+   * BehaviorSubjects for tracking task counts
+   */
   doneCount$ = new BehaviorSubject<number>(this.done.length);
   urgentCount$ = new BehaviorSubject<number>(this.urgent.length);
   inProgressCount$ = new BehaviorSubject<number>(this.inProgress.length);
   todoCount$ = new BehaviorSubject<number>(this.todo.length);
   overdueCount$ = new BehaviorSubject<number>(this.getOverdueCount());
 
-  constructor() {}
+  constructor(private snackbarsComponent: SnackbarsComponent) {}
 
+  /**
+   * main funciton for calculating the past date
+   * @param date 
+   * @returns 
+   */
   isDatePast(date: Date): boolean {
     const today = new Date();
     return date < today;
   }
 
+  /**
+   * help funciton to return the past date
+   * @param date 
+   * @returns 
+   */
   isDateOverdue(date: Date): boolean {
     return this.isDatePast(date);
   }
 
+  /**
+   * help function for formatting the date
+   * @param date 
+   * @returns 
+   */
   getFormattedDate(date: Date): string {
     return (
       date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear()
     );
   }
 
+  toggleDatePicker(): void {
+    this.showDatePicker = !this.showDatePicker;
+  }
+
+  onDateChange(event: Event, task: Task): void {
+    const input = event.target as HTMLInputElement;
+    if (input.value) {
+      task.date = new Date(input.value);
+      this.showDatePicker = false; // Verstecke den Date-Picker nach der Auswahl
+      this.updateCounts();
+    }
+  }
+
+  /**
+   * count the tasks state
+   * @returns 
+   */
   getOverdueCount(): number {
     return (
       this.urgent.filter((task) => this.isDateOverdue(task.date)).length +
@@ -123,6 +161,11 @@ export class TaskServiceComponent {
     );
   }
 
+  /**
+   * checks the prio state and returns it
+   * @param prio 
+   * @returns 
+   */
   getPriorityClass(prio: string): string {
     switch (prio) {
       case 'urgent':
@@ -136,11 +179,80 @@ export class TaskServiceComponent {
     }
   }
 
+  /**
+   * updates the correct count when tasks change the column
+   */
   updateCounts() {
     this.doneCount$.next(this.done.length);
     this.urgentCount$.next(this.urgent.length);
     this.todoCount$.next(this.todo.length);
     this.inProgressCount$.next(this.inProgress.length);
     this.overdueCount$.next(this.getOverdueCount());
+  }
+
+  /**
+   * Deletes a task from the respective list
+   * @param taskId ID of the task to be deleted
+   */
+  deleteTask(taskId: number): void {
+    this.urgent = this.urgent.filter(task => task.id !== taskId);
+    this.todo = this.todo.filter(task => task.id !== taskId);
+    this.inProgress = this.inProgress.filter(task => task.id !== taskId);
+    this.done = this.done.filter(task => task.id !== taskId);
+    // Update counts
+    this.updateCounts();
+    // Show Snackbar
+    this.snackbarsComponent.openSnackBar('Task deleted', false, false);
+  }
+
+  /**
+   * Marks a task as done and moves it to the 'done' array
+   * @param taskId ID of the task to be marked as done
+   */
+  taskDone(taskId: number): void {
+    // Finde den Task, der verschoben werden soll
+    const taskToMove = this.findTaskById(taskId);
+
+    if (taskToMove) {
+      // Entferne den Task aus dem aktuellen Array
+      this.removeFromCurrentArray(taskToMove);
+      // Füge den Task zum 'done' Array hinzu
+      this.done.push(taskToMove);
+      // Update die Zähler
+      this.updateCounts();
+      // Show Snackbar
+      this.snackbarsComponent.openSnackBar('Task finished - moved to done!', true, false);
+    }
+  }
+  
+  /**
+   * Hilfsfunktion, um einen Task anhand seiner ID zu finden
+   * @param taskId ID des gesuchten Tasks
+   * @returns Der gefundene Task oder null, wenn nicht gefunden
+   */
+  private findTaskById(taskId: number): Task | null {
+    const allTasks = [...this.urgent, ...this.todo, ...this.inProgress, ...this.done];
+    return allTasks.find(task => task.id === taskId) || null;
+  }
+
+  /**
+   * Hilfsfunktion, um einen Task aus dem aktuellen Array zu entfernen
+   * @param taskToRemove Der Task, der entfernt werden soll
+   */
+  private removeFromCurrentArray(taskToRemove: Task): void {
+    this.urgent = this.removeFromTaskArray(this.urgent, taskToRemove);
+    this.todo = this.removeFromTaskArray(this.todo, taskToRemove);
+    this.inProgress = this.removeFromTaskArray(this.inProgress, taskToRemove);
+    // Der Task wird aus dem aktuellen Array entfernt, daher ist keine Aktion erforderlich
+  }
+
+  /**
+   * Hilfsfunktion, um einen Task aus einem Array zu entfernen
+   * @param array Das Array, aus dem der Task entfernt werden soll
+   * @param taskToRemove Der Task, der entfernt werden soll
+   * @returns Ein neues Array ohne den entfernten Task
+   */
+  private removeFromTaskArray(array: Task[], taskToRemove: Task): Task[] {
+    return array.filter(task => task.id !== taskToRemove.id);
   }
 }

@@ -43,11 +43,54 @@ mat-sidenav-container {
 }
 
 mat-drawer-content {
-    overflow-x: hidden !important
+    overflow-x: hidden !important;
 }
 
 mat-card{
     box-shadow: none !important;
+    cursor: move;
+    padding:16px !important;
+
+    mat-card-header, mat-card-content{
+        padding:0 !important;
+    }
+
+    mat-card-title, mat-card-subtitle, mat-card-content{
+        cursor: text;
+        width: 100%;
+
+        input{
+            background-color: transparent;
+            padding:4px;
+        }
+    }
+
+    mat-card-title input{
+        font-size: 16px;
+        font-weight: bold;
+        width: 100%;
+    }
+
+    mat-card-subtitle input{
+        font-size: 14px;
+        width: 100%;
+    }
+
+    mat-card-content textarea {
+        background-color: transparent;
+        font-size: 14px;
+        width: 100%;
+        padding: 4px;
+        box-sizing: border-box;
+        resize: none;
+        overflow: auto;
+        font-family: inherit;
+        height: auto;
+    }
+}
+
+.mat-mdc-card-header{
+    display: block !important;
 }
 
 /*

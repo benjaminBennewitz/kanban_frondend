@@ -1,6 +1,6 @@
 // src/app/components/board/board.component.ts
 
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ThemesComponent } from '../../services/themes/themes.component';
 import {
@@ -32,7 +32,7 @@ interface Task {
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
 })
-export class BoardComponent implements OnInit {
+export class BoardComponent implements OnInit, AfterViewInit  {
   showFiller = false;
   currentTheme: string = 'default';
   hideWelcomeOverlay = false;
@@ -42,6 +42,7 @@ export class BoardComponent implements OnInit {
   inProgressCount$: BehaviorSubject<number>;
   todoCount$: BehaviorSubject<number>;
   overdueCount$: BehaviorSubject<number>;
+  @ViewChild('contentTextarea') contentTextarea?: ElementRef;
 
   constructor(
     private themesComponent: ThemesComponent,
@@ -74,6 +75,24 @@ export class BoardComponent implements OnInit {
 
     // Show welcome overlay when the user logs in
     this.showWelcomeOverlay();
+
+    this.adjustTextareaHeight();
+  }
+
+  ngAfterViewInit(): void {
+    this.adjustTextareaHeight();
+  }
+
+  adjustTextareaHeight(): void {
+    if (this.contentTextarea) {
+      const textarea = this.contentTextarea.nativeElement;
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight + 'px';
+    }
+  }
+
+  onInput(): void {
+    this.adjustTextareaHeight();
   }
 
   showWelcomeOverlay() {
@@ -132,20 +151,12 @@ export class BoardComponent implements OnInit {
     this.themesComponent.onThemeChange(selectedTheme);
   }
 
-  deleteTaskDialog() {
-    this.snackbarsComponent.openSnackBar('Task deleted', false, false);
-  }
-
   editTaskDialog() {
     this.snackbarsComponent.openSnackBar('Task edited', false, false);
   }
 
   addTaskDialog() {
     this.snackbarsComponent.openSnackBar('Task created', true, false);
-  }
-
-  doneTaskDialog() {
-    this.snackbarsComponent.openSnackBar('Task finished - moved to done!', true, false);
   }
 
   drop(event: CdkDragDrop<any[]>) {
@@ -168,5 +179,6 @@ export class BoardComponent implements OnInit {
       );
     }
     this.taskService.updateCounts();
+    setTimeout(() => this.adjustTextareaHeight(), 0);
   }
 }

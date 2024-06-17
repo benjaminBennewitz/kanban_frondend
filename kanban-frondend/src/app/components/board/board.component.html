@@ -138,7 +138,7 @@
                                             </div>
                                         </mat-card-header>
                                         <mat-card-content>
-                                            <p>{{task.content}}</p>
+                                            <textarea #contentTextarea (input)="onInput()">{{task.content}}</textarea>
                                             <p [ngClass]="{
                                                 'board-card-date': currentTheme === 'default',
                                                 'board-card-date-light': currentTheme === 'light-theme',
@@ -148,13 +148,13 @@
                                         <mat-card-actions class="board-col-tools">
                                             <mat-icon class="board-done-icon" matTooltip="mark as done!"
                                                 [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
-                                                (click)="doneTaskDialog()">check</mat-icon>
+                                                (click)="taskService.taskDone(task.id)">check</mat-icon>
                                             <mat-icon class="board-col-icons" matTooltip="Edit"
                                                 [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
                                                 (click)="editTaskDialog()">edit</mat-icon>
                                             <mat-icon class="board-col-icons" matTooltip="Delete"
                                                 [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
-                                                (click)="deleteTaskDialog()">delete</mat-icon>
+                                                (click)="taskService.deleteTask(task.id)">delete</mat-icon>
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
@@ -212,33 +212,36 @@
                                         class=" board-card" cdkDragPreview>
                                         <mat-card-header>
                                             <div class="flex-col">
-                                                <mat-card-title>{{task.title}}</mat-card-title>
+                                                <mat-card-title><input value="{{task.title}}"></mat-card-title>
                                                 <mat-card-subtitle [ngClass]="{
                                                     'board-card-subtitle': currentTheme === 'default',
                                                     'board-card-subtitle-light': currentTheme === 'light-theme',
                                                     'board-card-subtitle-dark': currentTheme === 'dark-theme'}"
-                                                    class="board-card-subtitle ">{{task.subtitle}}</mat-card-subtitle>
+                                                    class="board-card-subtitle"><input value="{{task.subtitle}}"></mat-card-subtitle>
                                                 <div [ngClass]="taskService.getPriorityClass(task.prio)"></div>
                                             </div>
                                         </mat-card-header>
                                         <mat-card-content>
-                                            <p>{{task.content}}</p>
-                                            <p [ngClass]="{
+                                            <textarea #contentTextarea (input)="onInput()">{{task.content}}</textarea>
+                                            <div [ngClass]="{
                                                 'board-card-date': currentTheme === 'default',
                                                 'board-card-date-light': currentTheme === 'light-theme',
                                                 'board-card-date-dark': currentTheme === 'dark-theme'}"
-                                                class="board-card-date">{{taskService.getFormattedDate(task.date)}}</p>
+                                                class="board-card-date">
+                                                <span *ngIf="!taskService.showDatePicker" (click)="taskService.toggleDatePicker()">{{taskService.getFormattedDate(task.date)}}</span>
+                                                <input *ngIf="taskService.showDatePicker" type="date" [value]="task.date | date:'yyyy-MM-dd'" (change)="taskService.onDateChange($event, task)" (blur)="taskService.toggleDatePicker()">
+                                            </div>
                                         </mat-card-content>
                                         <mat-card-actions class="board-col-tools">
                                             <mat-icon class="board-done-icon" matTooltip="mark as done!"
                                                 [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
-                                                (click)="doneTaskDialog()">check</mat-icon>
+                                                (click)="taskService.taskDone(task.id)">check</mat-icon>
                                             <mat-icon class="board-col-icons" matTooltip="Edit"
                                                 [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
                                                 (click)="editTaskDialog()">edit</mat-icon>
                                             <mat-icon class="board-col-icons" matTooltip="Delete"
                                                 [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
-                                                (click)="deleteTaskDialog()">delete</mat-icon>
+                                                (click)="taskService.deleteTask(task.id)">delete</mat-icon>
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
@@ -307,7 +310,7 @@
                                             </div>
                                         </mat-card-header>
                                         <mat-card-content>
-                                            <p>{{task.content}}</p>
+                                            <textarea #contentTextarea (input)="onInput()">{{task.content}}</textarea>
                                             <p [ngClass]="{
                                                 'board-card-date': currentTheme === 'default',
                                                 'board-card-date-light': currentTheme === 'light-theme',
@@ -317,13 +320,13 @@
                                         <mat-card-actions class="board-col-tools">
                                             <mat-icon class="board-done-icon" matTooltip="mark as done!"
                                                 [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
-                                                (click)="doneTaskDialog()">check</mat-icon>
+                                                (click)="taskService.taskDone(task.id)">check</mat-icon>
                                             <mat-icon class="board-col-icons" matTooltip="Edit"
                                                 [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
                                                 (click)="editTaskDialog()">edit</mat-icon>
                                             <mat-icon class="board-col-icons" matTooltip="Delete"
                                                 [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
-                                                (click)="deleteTaskDialog()">delete</mat-icon>
+                                                (click)="taskService.deleteTask(task.id)">delete</mat-icon>
                                         </mat-card-actions>
                                     </mat-card>
                                 </div>
@@ -389,13 +392,18 @@
                                             </div>
                                         </mat-card-header>
                                         <mat-card-content>
-                                            <p>{{task.content}}</p>
+                                            <textarea #contentTextarea (input)="onInput()">{{task.content}}</textarea>
                                             <p [ngClass]="{
                                                 'board-card-date': currentTheme === 'default',
                                                 'board-card-date-light': currentTheme === 'light-theme',
                                                 'board-card-date-dark': currentTheme === 'dark-theme'}"
                                                 class="board-card-date">{{taskService.getFormattedDate(task.date)}}</p>
                                         </mat-card-content>
+                                        <mat-card-actions class="board-col-tools">
+                                            <mat-icon class="board-col-icons" matTooltip="Delete"
+                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
+                                                (click)="taskService.deleteTask(task.id)">delete</mat-icon>
+                                        </mat-card-actions>
                                     </mat-card>
                                 </div>
                             </div>
