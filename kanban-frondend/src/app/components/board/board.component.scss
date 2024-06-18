@@ -292,15 +292,16 @@ mat-icon {
         }
     }
 
-    input, textarea{
-        color:$text-light;
+    input,
+    textarea {
+        color: $text-light;
         font-family: inherit;
     }
 
     ::-webkit-calendar-picker-indicator {
         font-size: 17px;
-        margin-left:-15px;
-        padding:0;
+        margin-left: -15px;
+        padding: 0;
         cursor: pointer;
     }
 }
@@ -359,24 +360,24 @@ mat-icon {
 
 .sad {
     color: $link;
-    margin-left:16px;
+    margin-left: 16px;
 }
 
-.check{
+.check {
     background-color: unset;
 
-    &:hover{
+    &:hover {
         background-color: transparent !important;
-        color:$low !important;
+        color: $low !important;
         cursor: default !important;
     }
 }
 
-.board-done{
-    color:$low;
+.board-done {
+    color: $low;
 
-    mat-icon{
-        color:$low;
+    mat-icon {
+        color: $low;
         margin-right: 16px;
     }
 }
@@ -391,7 +392,7 @@ mat-icon {
     border-radius: 10px;
     width: 20px;
     height: 3px;
-    margin:8px 0;
+    margin: 8px 0;
 }
 
 .medium {
@@ -399,7 +400,7 @@ mat-icon {
     border-radius: 10px;
     width: 20px;
     height: 3px;
-    margin:8px 0;
+    margin: 8px 0;
 }
 
 .low {
@@ -407,7 +408,7 @@ mat-icon {
     border-radius: 10px;
     width: 20px;
     height: 3px;
-    margin:8px 0;
+    margin: 8px 0;
 }
 
 .board-col-headline {
@@ -427,7 +428,7 @@ mat-icon {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    gap:16px;
+    gap: 16px;
 
 
     mat-icon {
@@ -447,18 +448,18 @@ mat-icon {
         }
     }
 
-    .board-done-icon{
-        color:$text;
+    .board-done-icon {
+        color: $text;
         cursor: pointer;
-        padding:2px;
-    
-        &:hover{
+        padding: 2px;
+
+        &:hover {
             border-radius: 100%;
             transform: scale(1.1);
             padding: 2px;
             cursor: pointer !important;
             background-color: $low;
-            color:#ffffff;
+            color: #ffffff;
         }
     }
 }
@@ -493,18 +494,18 @@ mat-icon {
 /* STYLES FOR ACTIVTED INPUTS */
 .edit-mode input,
 .edit-mode textarea {
-  border-bottom: solid 1px $link;
+    border-bottom: solid 1px $link;
 }
 
 .edit-mode input:focus,
 .edit-mode textarea:focus {
-  outline: none;
+    outline: none;
 }
 
 .edit-mode.board-col-icons.edit {
     background-color: $link;
     border-radius: 100%;
-    color:$secondary;
+    color: $secondary;
 }
 
 

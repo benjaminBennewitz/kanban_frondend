@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>TICKETEER</title>
@@ -9,7 +10,31 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body class="mat-typography test">
+
+<body class="mat-typography">
   <app-root></app-root>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Browser-Erkennung und Klassen hinzufügen
+        let userAgent = navigator.userAgent;
+        var isFirefox = typeof InstallTrigger !== 'undefined';
+
+        console.log("isFirefox: ", isFirefox);
+        console.log("userAgent: ", userAgent);
+
+        if (/Chrome/.test(userAgent) && !/Chromium/.test(userAgent)) {
+          browser = "Google Chrome";
+          document.body.classList.add('chrome');
+          console.log("Chrome erkannt, Klasse hinzugefügt.");
+      }
+
+        if (isFirefox) {
+            document.body.classList.add('firefox');
+            console.log("Firefox erkannt, Klasse hinzugefügt.");
+        }
+    });
+</script>
 </body>
+
 </html>

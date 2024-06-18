@@ -22,6 +22,10 @@
 /*
 ### GLOBAL STYLES
 */
+* {
+    border: none;
+}
+
 html,
 body {
     height: 100%;
@@ -46,32 +50,35 @@ mat-drawer-content {
     overflow-x: hidden !important;
 }
 
-mat-card{
+mat-card {
     box-shadow: none !important;
     cursor: move;
-    padding:16px !important;
+    padding: 16px !important;
 
-    mat-card-header, mat-card-content{
-        padding:0 !important;
+    mat-card-header,
+    mat-card-content {
+        padding: 0 !important;
     }
 
-    mat-card-title, mat-card-subtitle, mat-card-content{
+    mat-card-title,
+    mat-card-subtitle,
+    mat-card-content {
         cursor: text;
         width: 100%;
 
-        input{
+        input {
             background-color: transparent;
-            padding:4px;
+            padding: 4px;
         }
     }
 
-    mat-card-title input{
+    mat-card-title input {
         font-size: 16px;
         font-weight: bold;
         width: 100%;
     }
 
-    mat-card-subtitle input{
+    mat-card-subtitle input {
         font-size: 14px;
         width: 100%;
     }
@@ -89,7 +96,7 @@ mat-card{
     }
 }
 
-.mat-mdc-card-header{
+.mat-mdc-card-header {
     display: block !important;
 }
 
@@ -108,7 +115,7 @@ mat-card{
     margin-top: 24px;
 }
 
-.mr-b-32{
+.mr-b-32 {
     margin-bottom: 32px;
 }
 
@@ -168,10 +175,10 @@ html {
 }
 
 /* STYLES FOR SCROLLBARS*/
-* {
+/* {
     scrollbar-width: none;
     border: none;
-}
+}*/
 
 
 /* STYLES FOR DRAG n DROP*/
@@ -218,10 +225,28 @@ html {
     }
 }
 
-.login-btn.register{
+.login-btn.register {
     min-width: 120px;
 }
 
 .mat-mdc-snack-bar-container .mdc-snackbar__surface {
     background-color: $link !important;
+}
+
+/* Chrome spezifische Stile */
+.chrome {
+    scrollbar-color: $accent transparent;
+
+    * {
+        scrollbar-width: thin;
+    }
+}
+
+/* Firefox spezifische Stile */
+.firefox {
+    scrollbar-color: $accent $link;
+
+    * {
+        scrollbar-width: thin;
+    }
 }

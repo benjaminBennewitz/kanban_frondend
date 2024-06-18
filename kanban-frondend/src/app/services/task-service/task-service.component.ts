@@ -193,10 +193,10 @@ export class TaskServiceComponent {
   /**
    * opens the add Task dialog
    */
-  addTaskDialog(): void {
+  addTaskDialog(state:string): void {
     const dialogRef = this.dialog.open(AddTaskDialogComponent, {
       width: '400px',
-      data: { title: '', subtitle: '', content: '', date: new Date(), prio:'low', status: 'todo' }
+      data: { title: '', subtitle: '', content: '', date: new Date(), prio:'low', status: state }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
