@@ -124,52 +124,58 @@
                                         'board-card': currentTheme === 'default',
                                         'board-card-light': currentTheme === 'light-theme',
                                         'board-card-dark': currentTheme === 'dark-theme',
-                                        'overdue': taskService.isDatePast(task.date)}" [attr.id]="'CardId-' + task.id"
-                                        class="board-card" cdkDragPreview>
+                                        'overdue': taskService.isDatePast(task.date),
+                                        'edit-mode': task.isEditMode}" [attr.id]="'CardId-' + task.id" class="board-card" cdkDragPreview>
                                         <mat-card-header>
-                                            <div class="flex-col">
-                                                <mat-card-title><input autocorrect="off" spellcheck="false"value="{{task.title}}"></mat-card-title>
-                                                <mat-card-subtitle [ngClass]="{
-                                                    'board-card-subtitle': currentTheme === 'default',
-                                                    'board-card-subtitle-light': currentTheme === 'light-theme',
-                                                    'board-card-subtitle-dark': currentTheme === 'dark-theme'}"
-                                                    class="board-card-subtitle"><input autocorrect="off" spellcheck="false"value="{{task.subtitle}}"></mat-card-subtitle>
-                                                <div [ngClass]="taskService.getPriorityClass(task.prio)"></div>
-                                            </div>
+                                          <div class="flex-col">
+                                            <mat-card-title>
+                                              <input autocorrect="off" spellcheck="false" [ngModel]="task.title">
+                                            </mat-card-title>
+                                            <mat-card-subtitle [ngClass]="{
+                                              'board-card-subtitle': currentTheme === 'default',
+                                              'board-card-subtitle-light': currentTheme === 'light-theme',
+                                              'board-card-subtitle-dark': currentTheme === 'dark-theme'}"
+                                              class="board-card-subtitle">
+                                              <input autocorrect="off" spellcheck="false" [ngModel]="task.subtitle">
+                                            </mat-card-subtitle>
+                                            <div [ngClass]="taskService.getPriorityClass(task.prio)"></div>
+                                          </div>
                                         </mat-card-header>
                                         <mat-card-content>
+                                          <p>
                                             <textarea #contentTextarea autocorrect="off" spellcheck="false" (input)="onInput()">{{task.content}}</textarea>
-                                            <div [ngClass]="{
-                                                'board-card-date': currentTheme === 'default',
-                                                'board-card-date-light': currentTheme === 'light-theme',
-                                                'board-card-date-dark': currentTheme === 'dark-theme',
-                                                'overdue-date': taskService.isDatePast(task.date)}"
-                                                class="board-card-date">
-                                                <input type="date" [value]="task.date | date:'yyyy-MM-dd'" (change)="taskService.onDateChange($event, task)">
-                                            </div>
+                                          </p>
+                                          <div [ngClass]="{
+                                            'board-card-date': currentTheme === 'default',
+                                            'board-card-date-light': currentTheme === 'light-theme',
+                                            'board-card-date-dark': currentTheme === 'dark-theme',
+                                            'overdue-date': taskService.isDatePast(task.date)}"
+                                            class="board-card-date">
+                                            <input type="date" [value]="task.date | date:'yyyy-MM-dd'" [disabled]="!task.isEditMode" (change)="taskService.onDateChange($event, task)">
+                                          </div>
                                         </mat-card-content>
                                         <mat-card-actions class="board-col-tools">
-                                            <mat-icon [ngClass]="{
-                                                'board-done-icon': currentTheme === 'default',
-                                                'board-done-icon-light': currentTheme === 'light-theme',
-                                                'board-done-icon-dark': currentTheme === 'dark-theme'}"
-                                                class="board-done-icon" matTooltip="mark as done!"
-                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
-                                                (click)="taskService.taskDone(task.id)">check</mat-icon>
-                                            <mat-icon [ngClass]="{
-                                                 'board-col-icons': true,
-                                                 'edit': task.isEditMode,
-                                                 'edit-mode': task.isEditMode,
-                                                 'edit-mode-light': task.isEditMode && currentTheme === 'light-theme',
-                                                 'edit-mode-dark': task.isEditMode && currentTheme === 'dark-theme'}"
-                                                 class="board-col-icons edit" matTooltip="Edit"
-                                                 [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
-                                                 (click)="taskService.toggleEditMode(task)">edit</mat-icon>
-                                            <mat-icon class="board-col-icons" matTooltip="Delete"
-                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
-                                                (click)="taskService.deleteTask(task.id)">delete</mat-icon>
+                                          <mat-icon [ngClass]="{
+                                            'board-done-icon': currentTheme === 'default',
+                                            'board-done-icon-light': currentTheme === 'light-theme',
+                                            'board-done-icon-dark': currentTheme === 'dark-theme'}"
+                                            class="board-done-icon" matTooltip="mark as done!"
+                                            [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
+                                            (click)="taskService.taskDone(task.id)">check</mat-icon>
+                                          <mat-icon [ngClass]="{
+                                            'board-col-icons': true,
+                                            'edit': task.isEditMode,
+                                            'edit-mode': task.isEditMode,
+                                            'edit-mode-light': task.isEditMode && currentTheme === 'light-theme',
+                                            'edit-mode-dark': task.isEditMode && currentTheme === 'dark-theme'}"
+                                            class="board-col-icons edit" matTooltip="Edit"
+                                            [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
+                                            (click)="taskService.toggleEditMode(task)">edit</mat-icon>
+                                          <mat-icon class="board-col-icons" matTooltip="Delete"
+                                            [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
+                                            (click)="taskService.deleteTask(task.id)">delete</mat-icon>
                                         </mat-card-actions>
-                                    </mat-card>
+                                      </mat-card> 
                                 </div>
                                 <div class="flex-c-c pointer mr-t-16 mr-b-32" *ngIf="taskService.urgent.length > 0"
                                     matTooltip="New task" [matTooltipPosition]="position.value!"
@@ -226,21 +232,21 @@
                                         <mat-card-header>
                                           <div class="flex-col">
                                             <mat-card-title>
-                                              <input [ngModel]="task.title">
+                                              <input autocorrect="off" spellcheck="false" [ngModel]="task.title">
                                             </mat-card-title>
                                             <mat-card-subtitle [ngClass]="{
                                               'board-card-subtitle': currentTheme === 'default',
                                               'board-card-subtitle-light': currentTheme === 'light-theme',
                                               'board-card-subtitle-dark': currentTheme === 'dark-theme'}"
                                               class="board-card-subtitle">
-                                              <input [ngModel]="task.subtitle">
+                                              <input autocorrect="off" spellcheck="false" [ngModel]="task.subtitle">
                                             </mat-card-subtitle>
                                             <div [ngClass]="taskService.getPriorityClass(task.prio)"></div>
                                           </div>
                                         </mat-card-header>
                                         <mat-card-content>
                                           <p>
-                                            <textarea #contentTextarea (input)="onInput()">{{task.content}}</textarea>
+                                            <textarea #contentTextarea autocorrect="off" spellcheck="false" (input)="onInput()">{{task.content}}</textarea>
                                           </p>
                                           <div [ngClass]="{
                                             'board-card-date': currentTheme === 'default',
@@ -325,52 +331,58 @@
                                         'board-card': currentTheme === 'default',
                                         'board-card-light': currentTheme === 'light-theme',
                                         'board-card-dark': currentTheme === 'dark-theme',
-                                        'overdue': taskService.isDatePast(task.date)}" [attr.id]="'CardId-' + task.id"
-                                        class=" board-card" cdkDragPreview>
+                                        'overdue': taskService.isDatePast(task.date),
+                                        'edit-mode': task.isEditMode}" [attr.id]="'CardId-' + task.id" class="board-card" cdkDragPreview>
                                         <mat-card-header>
-                                            <div class="flex-col">
-                                                <mat-card-title><input autocorrect="off" spellcheck="false"value="{{task.title}}"></mat-card-title>
-                                                <mat-card-subtitle [ngClass]="{
-                                                    'board-card-subtitle': currentTheme === 'default',
-                                                    'board-card-subtitle-light': currentTheme === 'light-theme',
-                                                    'board-card-subtitle-dark': currentTheme === 'dark-theme'}"
-                                                    class="board-card-subtitle"><input autocorrect="off" spellcheck="false"value="{{task.subtitle}}"></mat-card-subtitle>
-                                                <div [ngClass]="taskService.getPriorityClass(task.prio)"></div>
-                                            </div>
+                                          <div class="flex-col">
+                                            <mat-card-title>
+                                              <input autocorrect="off" spellcheck="false" [ngModel]="task.title">
+                                            </mat-card-title>
+                                            <mat-card-subtitle [ngClass]="{
+                                              'board-card-subtitle': currentTheme === 'default',
+                                              'board-card-subtitle-light': currentTheme === 'light-theme',
+                                              'board-card-subtitle-dark': currentTheme === 'dark-theme'}"
+                                              class="board-card-subtitle">
+                                              <input autocorrect="off" spellcheck="false" [ngModel]="task.subtitle">
+                                            </mat-card-subtitle>
+                                            <div [ngClass]="taskService.getPriorityClass(task.prio)"></div>
+                                          </div>
                                         </mat-card-header>
                                         <mat-card-content>
+                                          <p>
                                             <textarea #contentTextarea autocorrect="off" spellcheck="false" (input)="onInput()">{{task.content}}</textarea>
-                                            <div [ngClass]="{
-                                                'board-card-date': currentTheme === 'default',
-                                                'board-card-date-light': currentTheme === 'light-theme',
-                                                'board-card-date-dark': currentTheme === 'dark-theme',
-                                                'overdue-date': taskService.isDatePast(task.date)}"
-                                                class="board-card-date">
-                                                <input type="date" [value]="task.date | date:'yyyy-MM-dd'" (change)="taskService.onDateChange($event, task)">
-                                            </div>
+                                          </p>
+                                          <div [ngClass]="{
+                                            'board-card-date': currentTheme === 'default',
+                                            'board-card-date-light': currentTheme === 'light-theme',
+                                            'board-card-date-dark': currentTheme === 'dark-theme',
+                                            'overdue-date': taskService.isDatePast(task.date)}"
+                                            class="board-card-date">
+                                            <input type="date" [value]="task.date | date:'yyyy-MM-dd'" [disabled]="!task.isEditMode" (change)="taskService.onDateChange($event, task)">
+                                          </div>
                                         </mat-card-content>
                                         <mat-card-actions class="board-col-tools">
-                                            <mat-icon [ngClass]="{
-                                                'board-done-icon': currentTheme === 'default',
-                                                'board-done-icon-light': currentTheme === 'light-theme',
-                                                'board-done-icon-dark': currentTheme === 'dark-theme'}"
-                                                class="board-done-icon" matTooltip="mark as done!"
-                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
-                                                (click)="taskService.taskDone(task.id)">check</mat-icon>
-                                            <mat-icon [ngClass]="{
-                                                'board-col-icons': true,
-                                                'edit': task.isEditMode,
-                                                'edit-mode': task.isEditMode,
-                                                'edit-mode-light': task.isEditMode && currentTheme === 'light-theme',
-                                                'edit-mode-dark': task.isEditMode && currentTheme === 'dark-theme'}"
-                                                class="board-col-icons edit" matTooltip="Edit"
-                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
-                                                (click)="taskService.toggleEditMode(task)">edit</mat-icon>
-                                            <mat-icon class="board-col-icons" matTooltip="Delete"
-                                                [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
-                                                (click)="taskService.deleteTask(task.id)">delete</mat-icon>
+                                          <mat-icon [ngClass]="{
+                                            'board-done-icon': currentTheme === 'default',
+                                            'board-done-icon-light': currentTheme === 'light-theme',
+                                            'board-done-icon-dark': currentTheme === 'dark-theme'}"
+                                            class="board-done-icon" matTooltip="mark as done!"
+                                            [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
+                                            (click)="taskService.taskDone(task.id)">check</mat-icon>
+                                          <mat-icon [ngClass]="{
+                                            'board-col-icons': true,
+                                            'edit': task.isEditMode,
+                                            'edit-mode': task.isEditMode,
+                                            'edit-mode-light': task.isEditMode && currentTheme === 'light-theme',
+                                            'edit-mode-dark': task.isEditMode && currentTheme === 'dark-theme'}"
+                                            class="board-col-icons edit" matTooltip="Edit"
+                                            [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
+                                            (click)="taskService.toggleEditMode(task)">edit</mat-icon>
+                                          <mat-icon class="board-col-icons" matTooltip="Delete"
+                                            [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
+                                            (click)="taskService.deleteTask(task.id)">delete</mat-icon>
                                         </mat-card-actions>
-                                    </mat-card>
+                                      </mat-card> 
                                 </div>
                                 <div class="flex-c-c pointer mr-t-16 mr-b-32" *ngIf="taskService.inProgress.length > 0"
                                     matTooltip="New task" [matTooltipPosition]="position.value!"
