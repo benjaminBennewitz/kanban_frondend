@@ -32,6 +32,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { DateAdapter, MAT_DATE_FORMATS, MAT_NATIVE_DATE_FORMATS, NativeDateAdapter } from '@angular/material/core';
 import { CountPipe } from './components/board/count.pipe';
 import { TaskServiceComponent } from './services/task-service/task-service.component';
+import { AddTaskDialogComponent } from './components/add-task-dialog/add-task-dialog.component';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { TaskServiceComponent } from './services/task-service/task-service.compo
     SnackMsgComponent,
     DialogRegisterComponent,
     CountPipe,
+    AddTaskDialogComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,20 +1,13 @@
-// src/app/components/board/board.component.ts
-
 import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ThemesComponent } from '../../services/themes/themes.component';
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem,
-} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarsComponent } from '../snackbars/snackbars.component';
 import { BehaviorSubject } from 'rxjs';
 import { TaskServiceComponent } from '../../services/task-service/task-service.component';
-
 
 interface Task {
   id: number;
@@ -75,14 +68,19 @@ export class BoardComponent implements OnInit, AfterViewInit  {
 
     // Show welcome overlay when the user logs in
     this.showWelcomeOverlay();
-
     this.adjustTextareaHeight();
   }
 
+  /**
+   * calls the adjustTextareaHeight function
+   */
   ngAfterViewInit(): void {
     this.adjustTextareaHeight();
   }
 
+  /**
+   * changes the height of the textareas of the tasks
+   */
   adjustTextareaHeight(): void {
     if (this.contentTextarea) {
       const textarea = this.contentTextarea.nativeElement;
@@ -91,10 +89,16 @@ export class BoardComponent implements OnInit, AfterViewInit  {
     }
   }
 
+  /**
+   * calls the adjustTextareaHeight function after inputs to set the right height aggain
+   */
   onInput(): void {
     this.adjustTextareaHeight();
   }
 
+  /**
+   * shows the welcome overlay container/animation
+   */
   showWelcomeOverlay() {
     this.hideWelcomeOverlay = false;
     this.setTemporaryOverflowHidden();
@@ -112,6 +116,9 @@ export class BoardComponent implements OnInit, AfterViewInit  {
     }, 2000);
   }
 
+  /**
+   * shows the log out container/animation
+   */
   triggerLogOutOverlay() {
     this.hideLogOutOverlay = false;
     this.setTemporaryOverflowHidden();
@@ -133,32 +140,42 @@ export class BoardComponent implements OnInit, AfterViewInit  {
     }, 1500);
   }
 
+  /**
+   * help function to hide ervery scrollbar during the overlay animations
+   */
   setTemporaryOverflowHidden() {
     document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
   }
 
+  /**
+   * help function to restore the scrollbar settings after the overlay animations
+   */
   restoreOverflow() {
     document.documentElement.style.overflow = 'auto';
     document.body.style.overflow = 'auto';
   }
 
+  /**
+   * cals the triggerLogOutOverlay() function
+   */
   onLogout() {
     this.triggerLogOutOverlay();
   }
 
+  /**
+   * sets the selected theme
+   * @param selectedTheme 
+   */
   onThemeChange(selectedTheme: string) {
     this.themesComponent.onThemeChange(selectedTheme);
   }
 
-  editTaskDialog() {
-    this.snackbarsComponent.openSnackBar('Task edited', false, false);
-  }
-
-  addTaskDialog() {
-    this.snackbarsComponent.openSnackBar('Task created', true, false);
-  }
-
+  /**
+   * ANGULAR function for dropping an element by drag & drop
+   * @param event 
+   * @returns 
+   */
   drop(event: CdkDragDrop<any[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(

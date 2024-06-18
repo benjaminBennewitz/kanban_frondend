@@ -95,7 +95,7 @@
                         <div class="board-col-headline pad-l-24">Urgent</div>
                         <div class="pad-r-24">
                             <mat-icon matTooltip="New task" [matTooltipPosition]="position.value!"
-                                matTooltipShowDelay="750">add</mat-icon>
+                                matTooltipShowDelay="750" (click)="taskService.addTaskDialog()">add</mat-icon>
                             <mat-icon matTooltip="More" [matTooltipPosition]="position.value!"
                                 matTooltipShowDelay="750">more_horiz</mat-icon>
                         </div>
@@ -113,7 +113,7 @@
                             (cdkDropListDropped)="drop($event)">
                             <div class="flex-c-c add" *ngIf="taskService.urgent.length === 0" matTooltip="New task"
                                 [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
-                                <div class="mr-t-16 flex-c-c board-empty-add-task" (click)="addTaskDialog()">
+                                <div class="mr-t-16 flex-c-c board-empty-add-task" (click)="taskService.addTaskDialog()">
                                     <mat-icon class="board-col-icons">add</mat-icon>
                                     <div>Add Task</div>
                                 </div>
@@ -179,7 +179,7 @@
                                 </div>
                                 <div class="flex-c-c pointer mr-t-16 mr-b-32" *ngIf="taskService.urgent.length > 0"
                                     matTooltip="New task" [matTooltipPosition]="position.value!"
-                                    matTooltipShowDelay="750" (click)="addTaskDialog()">
+                                    matTooltipShowDelay="750" (click)="taskService.addTaskDialog()">
                                     <mat-icon>add</mat-icon>
                                     <div>Add Task</div>
                                 </div>
@@ -198,7 +198,7 @@
                         <div class="board-col-headline pad-l-24">To-Do</div>
                         <div class="pad-r-24">
                             <mat-icon matTooltip="New task" [matTooltipPosition]="position.value!"
-                                matTooltipShowDelay="750">add</mat-icon>
+                                matTooltipShowDelay="750" (click)="taskService.addTaskDialog()">add</mat-icon>
                             <mat-icon matTooltip="More" [matTooltipPosition]="position.value!"
                                 matTooltipShowDelay="750">more_horiz</mat-icon>
                         </div>
@@ -216,7 +216,7 @@
                             (cdkDropListDropped)="drop($event)">
                             <div class="flex-c-c add" *ngIf="taskService.todo.length === 0" matTooltip="New task"
                                 [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
-                                <div class="mr-t-16 flex-c-c board-empty-add-task" (click)="addTaskDialog()">
+                                <div class="mr-t-16 flex-c-c board-empty-add-task" (click)="taskService.addTaskDialog()">
                                     <mat-icon class="board-col-icons">add</mat-icon>
                                     <div>Add Task</div>
                                 </div>
@@ -282,7 +282,7 @@
                                 </div>
                                 <div class="flex-c-c pointer mr-t-16 mr-b-32" *ngIf="taskService.todo.length > 0"
                                     matTooltip="New task" [matTooltipPosition]="position.value!"
-                                    matTooltipShowDelay="750" (click)="addTaskDialog()">
+                                    matTooltipShowDelay="750" (click)="taskService.addTaskDialog()">
                                     <mat-icon>add</mat-icon>
                                     <div>Add Task</div>
                                 </div>
@@ -301,7 +301,7 @@
                         <div class="board-col-headline pad-l-24">In Progress</div>
                         <div class="pad-r-24">
                             <mat-icon matTooltip="New task" [matTooltipPosition]="position.value!"
-                                matTooltipShowDelay="750">add</mat-icon>
+                                matTooltipShowDelay="750" (click)="taskService.addTaskDialog()">add</mat-icon>
                             <mat-icon matTooltip="More" [matTooltipPosition]="position.value!"
                                 matTooltipShowDelay="750">more_horiz</mat-icon>
                         </div>
@@ -320,7 +320,7 @@
                             (cdkDropListDropped)="drop($event)">
                             <div class="flex-c-c add" *ngIf="taskService.inProgress.length === 0" matTooltip="New task"
                                 [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
-                                <div class="mr-t-16 flex-c-c board-empty-add-task" (click)="addTaskDialog()">
+                                <div class="mr-t-16 flex-c-c board-empty-add-task" (click)="taskService.addTaskDialog()">
                                     <mat-icon class="board-col-icons">add</mat-icon>
                                     <div>Add Task</div>
                                 </div>
@@ -386,7 +386,7 @@
                                 </div>
                                 <div class="flex-c-c pointer mr-t-16 mr-b-32" *ngIf="taskService.inProgress.length > 0"
                                     matTooltip="New task" [matTooltipPosition]="position.value!"
-                                    matTooltipShowDelay="750" (click)="addTaskDialog()">
+                                    matTooltipShowDelay="750" (click)="taskService.addTaskDialog()">
                                     <mat-icon>add</mat-icon>
                                     <div>Add Task</div>
                                 </div>

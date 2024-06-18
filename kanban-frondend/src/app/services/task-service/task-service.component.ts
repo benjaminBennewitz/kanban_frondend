@@ -3,6 +3,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { SnackbarsComponent } from '../../components/snackbars/snackbars.component';
+import { AddTaskDialogComponent } from '../../components/add-task-dialog/add-task-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 interface Task {
   id: number;
@@ -22,10 +24,11 @@ interface Task {
 })
 export class TaskServiceComponent {
 
+  // toogle between true and fals for the calendar icon
   showDatePicker: boolean = false;
 
+  // default tasks for testing
   urgent: Task[] = [];
-
   todo: Task[] = [
     {
       id: 1,
@@ -105,7 +108,14 @@ export class TaskServiceComponent {
   todoCount$ = new BehaviorSubject<number>(this.todo.length);
   overdueCount$ = new BehaviorSubject<number>(this.getOverdueCount());
 
-  constructor(private snackbarsComponent: SnackbarsComponent) {}
+  /**
+   * 
+   * @param snackbarsComponent 
+   * @param dialog 
+   */
+  constructor(
+    private snackbarsComponent: SnackbarsComponent,
+    private dialog: MatDialog) {}
 
   /**
    * main funciton for calculating the past date
@@ -157,6 +167,9 @@ export class TaskServiceComponent {
    */
   toggleEditMode(task: Task) {
     task.isEditMode = !task.isEditMode;
+    if (!task.isEditMode) {
+      this.snackbarsComponent.openSnackBar('Task edited', false, false);
+    }
   }
 
   /**
@@ -174,6 +187,63 @@ export class TaskServiceComponent {
         return 'low';
       default:
         return '';
+    }
+  }
+
+  /**
+   * opens the add Task dialog
+   */
+  addTaskDialog(): void {
+    const dialogRef = this.dialog.open(AddTaskDialogComponent, {
+      width: '400px',
+      data: { title: '', subtitle: '', content: '', date: new Date(), prio:'low', status: 'todo' }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const newTask: Task = {
+          id: this.generateUniqueId(),
+          title: result.title,
+          subtitle: result.subtitle,
+          content: result.content,
+          date: new Date(result.date),
+          prio: result.prio || '',
+          done: false,
+          status: result.status,
+          isEditMode: false
+        };
+        this.addTaskToCorrectArray(newTask);
+        this.snackbarsComponent.openSnackBar('Task created', true, false);
+      }
+    });
+  }
+
+  /**
+   * generate and returns a unique id for each new task
+   * @returns 
+   */
+  generateUniqueId(): number {
+    const allTasks = [...this.urgent, ...this.todo, ...this.inProgress, ...this.done];
+    return Math.max(...allTasks.map(task => task.id)) + 1;
+  }
+
+  /**
+   * pushes the task in the right array, checks the value of input from add task dialog
+   * @param task 
+   */
+  addTaskToCorrectArray(task: Task): void {
+    switch (task.status) {
+      case 'urgent':
+        this.urgent.push(task);
+        break;
+      case 'todo':
+        this.todo.push(task);
+        break;
+      case 'inProgress':
+        this.inProgress.push(task);
+        break;
+      case 'done':
+        this.done.push(task);
+        break;
     }
   }
 
@@ -197,9 +267,7 @@ export class TaskServiceComponent {
     this.todo = this.todo.filter(task => task.id !== taskId);
     this.inProgress = this.inProgress.filter(task => task.id !== taskId);
     this.done = this.done.filter(task => task.id !== taskId);
-    // Update counts
     this.updateCounts();
-    // Show Snackbar
     this.snackbarsComponent.openSnackBar('Task deleted', false, false);
   }
 
@@ -212,13 +280,9 @@ export class TaskServiceComponent {
     const taskToMove = this.findTaskById(taskId);
 
     if (taskToMove) {
-      // Entferne den Task aus dem aktuellen Array
       this.removeFromCurrentArray(taskToMove);
-      // Füge den Task zum 'done' Array hinzu
       this.done.push(taskToMove);
-      // Update die Zähler
       this.updateCounts();
-      // Show Snackbar
       this.snackbarsComponent.openSnackBar('Task finished - moved to done!', true, false);
     }
   }
