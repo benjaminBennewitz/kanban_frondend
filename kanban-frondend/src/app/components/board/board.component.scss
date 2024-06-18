@@ -236,7 +236,7 @@ mat-icon {
     overflow-y: auto;
     max-height: inherit;
     padding: 8px;
-    height: 700px;
+    height: 720px;
     color: $text;
     transition: all 250ms;
 
@@ -278,7 +278,7 @@ mat-icon {
     color: $text;
     border: solid 2px transparent;
     border-radius: 20px;
-    width: 380px;
+    width: 360px;
     height: fit-content;
     padding: 8px 8px 16px 8px;
     transition: all 550ms;
@@ -290,6 +290,18 @@ mat-icon {
             color: $link;
             font-weight: 900;
         }
+    }
+
+    input, textarea{
+        color:$text-light;
+        font-family: inherit;
+    }
+
+    ::-webkit-calendar-picker-indicator {
+        font-size: 17px;
+        margin-left:-15px;
+        padding:0;
+        cursor: pointer;
     }
 }
 
@@ -446,7 +458,7 @@ mat-icon {
             padding: 2px;
             cursor: pointer !important;
             background-color: $low;
-            color:$secondary;
+            color:#ffffff;
         }
     }
 }
@@ -476,6 +488,23 @@ mat-icon {
             color: $secondary !important;
         }
     }
+}
+
+/* STYLES FOR ACTIVTED INPUTS */
+.edit-mode input,
+.edit-mode textarea {
+  border-bottom: solid 1px $link;
+}
+
+.edit-mode input:focus,
+.edit-mode textarea:focus {
+  outline: none;
+}
+
+.edit-mode.board-col-icons.edit {
+    background-color: $link;
+    border-radius: 100%;
+    color:$secondary;
 }
 
 

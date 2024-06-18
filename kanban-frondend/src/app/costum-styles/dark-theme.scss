@@ -132,10 +132,9 @@ $accent-dark: hsl(192, 69%, 36%);
 
 .board-card-dark {
     background-color: $secondary-dark;
-    color: $text-dark;
     border: solid 3px $accent-dark;
     border-radius: 20px;
-    width: 380px;
+    width: 360px;
     height: fit-content;
     padding: 8px 8px 16px 8px;
     transition: all 550ms;
@@ -151,6 +150,19 @@ $accent-dark: hsl(192, 69%, 36%);
             font-weight: 900;
         }
     }
+
+    input, textarea{
+        color:$text-dark;
+        font-family: inherit;
+    }
+
+    ::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+        font-size: 17px;
+        margin-left:-15px;
+        padding:0;
+        cursor: pointer;
+    }
 }
 
 .board-card-dark.doneIt {
@@ -160,6 +172,9 @@ $accent-dark: hsl(192, 69%, 36%);
 
 .board-card-date-dark {
     color: $accent-dark;
+    input{
+        color:$text-dark;
+    }
 }
 
 .board-card-wrapper-empty-dark {
@@ -229,6 +244,32 @@ $accent-dark: hsl(192, 69%, 36%);
         p {
             font-size: 14px;
         }
+    }
+}
+
+.board-col-tools .board-done-icon-dark{
+    color:$text;
+    cursor: pointer;
+    padding:2px;
+
+    &:hover{
+        border-radius: 100%;
+        transform: scale(1.1);
+        padding: 2px;
+        cursor: pointer !important;
+        background-color: $low;
+        color:$text-dark !important;
+    }
+}
+
+/* STYLES FOR ACTIVTED INPUTS */
+.edit-mode-dark.board-col-icons.edit {
+    background-color: $link-dark;
+    border-radius: 100%;
+    color:$text-dark !important ;
+
+    &:hover{
+        color:$accent-dark !important;
     }
 }
 

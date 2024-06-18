@@ -13,6 +13,8 @@ interface Task {
   prio: string;
   done: Boolean;
   status: 'urgent' | 'todo' | 'inProgress' | 'done';
+  showDatePicker?: boolean;
+  isEditMode?: boolean;
 }
 
 @Injectable({
@@ -125,26 +127,14 @@ export class TaskServiceComponent {
   }
 
   /**
-   * help function for formatting the date
-   * @param date 
-   * @returns 
+   * date function when input value is change
+   * @param event 
+   * @param task 
    */
-  getFormattedDate(date: Date): string {
-    return (
-      date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear()
-    );
-  }
-
-  toggleDatePicker(): void {
-    this.showDatePicker = !this.showDatePicker;
-  }
-
   onDateChange(event: Event, task: Task): void {
     const input = event.target as HTMLInputElement;
     if (input.value) {
       task.date = new Date(input.value);
-      this.showDatePicker = false; // Verstecke den Date-Picker nach der Auswahl
-      this.updateCounts();
     }
   }
 
@@ -159,6 +149,14 @@ export class TaskServiceComponent {
       this.inProgress.filter((task) => this.isDateOverdue(task.date)).length +
       this.done.filter((task) => this.isDateOverdue(task.date)).length
     );
+  }
+
+  /**
+   * toogles the edit mode for each task
+   * @param task 
+   */
+  toggleEditMode(task: Task) {
+    task.isEditMode = !task.isEditMode;
   }
 
   /**

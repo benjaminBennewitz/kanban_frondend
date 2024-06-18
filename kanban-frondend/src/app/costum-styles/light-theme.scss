@@ -125,10 +125,9 @@ $accent-light: hsl(232, 72%, 21%);
 
 .board-card-light{
     background-color: $secondary-light;
-    color: $accent-light;
     border-radius: 20px;
     border:solid 2px $primary-light;
-    width: 380px;
+    width: 360px;
 
     height: fit-content;
     padding: 8px 8px 16px 8px;
@@ -145,6 +144,18 @@ $accent-light: hsl(232, 72%, 21%);
             color:$link-light;
             font-weight: 900;
         }
+    }
+
+    input, textarea{
+        color:$text-light;
+        font-family: inherit;
+    }
+
+    ::-webkit-calendar-picker-indicator {
+        font-size: 17px;
+        margin-left:-15px;
+        padding:0;
+        cursor: pointer;
     }
 }
 
@@ -229,6 +240,32 @@ $accent-light: hsl(232, 72%, 21%);
         p {
             font-size: 14px;
         }
+    }
+}
+
+.board-col-tools .board-done-icon-light{
+    color:$text;
+    cursor: pointer;
+    padding:2px;
+
+    &:hover{
+        border-radius: 100%;
+        transform: scale(1.1);
+        padding: 2px;
+        cursor: pointer !important;
+        background-color: $low;
+        color:$secondary-light !important;
+    }
+}
+
+/* STYLES FOR ACTIVTED INPUTS */
+.edit-mode-light.board-col-icons.edit {
+    background-color: $link-light;
+    border-radius: 100%;
+    color:$secondary-light !important ;
+
+    &:hover{
+        color:$primary-light !important;
     }
 }
 

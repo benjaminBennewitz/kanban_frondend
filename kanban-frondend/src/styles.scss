@@ -108,6 +108,10 @@ mat-card{
     margin-top: 24px;
 }
 
+.mr-b-32{
+    margin-bottom: 32px;
+}
+
 .pad-l-24 {
     padding-left: 24px;
 }
@@ -165,10 +169,10 @@ html {
 
 /* STYLES FOR SCROLLBARS*/
 * {
-    scrollbar-width: thin;
-    scrollbar-color: $accent $background;
+    scrollbar-width: none;
     border: none;
 }
+
 
 /* STYLES FOR DRAG n DROP*/
 .cdk-drag {
