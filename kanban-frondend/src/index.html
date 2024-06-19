@@ -16,25 +16,34 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // detect browser and sets the right class for scrollbar design
         let userAgent = navigator.userAgent;
         var isFirefox = typeof InstallTrigger !== 'undefined';
+        var savedTheme = localStorage.getItem('selectedTheme') || 'default';
 
         console.log("isFirefox: ", isFirefox);
         console.log("userAgent: ", userAgent);
+        console.log("Saved Theme: ", savedTheme);
 
         if (/Chrome/.test(userAgent) && !/Chromium/.test(userAgent)) {
-          browser = "Google Chrome";
-          document.body.classList.add('chrome');
-          console.log("Chrome erkannt, Klasse hinzugefügt.");
-      }
+            document.body.classList.add('chrome');
+            console.log("Chrome erkannt, Klasse hinzugefügt.");
+        }
 
         if (isFirefox) {
             document.body.classList.add('firefox');
             console.log("Firefox erkannt, Klasse hinzugefügt.");
         }
+
+        // Fügen Sie hier die Theme-Klasse hinzu
+        if (savedTheme === 'light-theme') {
+            document.body.classList.add('light-theme');
+        } else if (savedTheme === 'dark-theme') {
+            document.body.classList.add('dark-theme');
+        } else {
+            document.body.classList.add('default-theme');
+        }
     });
-</script>
+  </script>
 </body>
 
 </html>

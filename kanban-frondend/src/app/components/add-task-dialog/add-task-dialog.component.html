@@ -37,8 +37,9 @@
       <mat-option value="low">Low</mat-option>
     </mat-select>
   </mat-form-field>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-button (click)="onSave()">Save</button>
+
+  <div class="flex-c-c gap-32">
+    <button mat-button class="login-btn pad-r-l-32" (click)="onCancel()">Cancel</button>
+    <button mat-button class="login-btn pad-r-l-32" (click)="onSave()">Save</button>
+  </div>
 </div>

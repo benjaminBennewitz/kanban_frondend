@@ -35,29 +35,29 @@ export class ThemesComponent {
   };
 
   constructor(private renderer: Renderer2) {
-    // Beim Initialisieren die Theme-Einstellung aus dem localStorage laden
     const savedTheme = localStorage.getItem(this.localStorageKey);
     if (savedTheme) {
       this.currentThemeSubject.next(savedTheme);
+      this.applyTheme(savedTheme);
     }
   }
 
   /**
    * Function called when theme is changed
    * @param selectedTheme
-   * @param _containerStates
    */
-  onThemeChange(selectedTheme: string,) {
+  onThemeChange(selectedTheme: string) {
     this.currentThemeSubject.next(selectedTheme);
     this.saveThemeToLocalStorage(selectedTheme);
 
     const mainWrapper = document.getElementById('mainWrapper');
-    const loginBtnContainer = document.getElementById('loginBtnContainer');
-
     if (mainWrapper) {
       this.removeOldClasses(mainWrapper);
       this.addNewClass(mainWrapper, selectedTheme);
     }
+
+    // Apply theme to body for scrollbar styling
+    this.applyTheme(selectedTheme);
   }
 
   /**
@@ -68,7 +68,7 @@ export class ThemesComponent {
     element.classList.remove(
       'main-wrapper',
       'main-wrapper-light',
-      'main-wrapper-dark',
+      'main-wrapper-dark'
     );
   }
 
@@ -90,5 +90,14 @@ export class ThemesComponent {
    */
   private saveThemeToLocalStorage(theme: string) {
     localStorage.setItem(this.localStorageKey, theme);
+  }
+
+  /**
+   * Apply theme to body element for scrollbar styling
+   * @param theme
+   */
+  private applyTheme(theme: string) {
+    document.body.classList.remove('default-theme', 'light-theme', 'dark-theme');
+    document.body.classList.add(theme);
   }
 }
