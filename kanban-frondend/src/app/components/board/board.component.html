@@ -177,7 +177,7 @@
                                         </mat-card-actions>
                                       </mat-card> 
                                 </div>
-                                <div class="flex-c-c pointer mr-t-16 mr-b-32" *ngIf="taskService.urgent.length > 0"
+                                <div class="flex-c-c pointer mr-t-16 mr-b-32 hide-om" *ngIf="taskService.urgent.length > 0"
                                     matTooltip="New task" [matTooltipPosition]="position.value!"
                                     matTooltipShowDelay="750" (click)="taskService.addTaskDialog('urgent')">
                                     <mat-icon>add</mat-icon>
@@ -280,7 +280,7 @@
                                         </mat-card-actions>
                                       </mat-card>    
                                 </div>
-                                <div class="flex-c-c pointer mr-t-16 mr-b-32" *ngIf="taskService.todo.length > 0"
+                                <div class="flex-c-c pointer mr-t-16 mr-b-32 hide-om" *ngIf="taskService.todo.length > 0"
                                     matTooltip="New task" [matTooltipPosition]="position.value!"
                                     matTooltipShowDelay="750" (click)="taskService.addTaskDialog('todo')">
                                     <mat-icon>add</mat-icon>
@@ -384,7 +384,7 @@
                                         </mat-card-actions>
                                       </mat-card> 
                                 </div>
-                                <div class="flex-c-c pointer mr-t-16 mr-b-32" *ngIf="taskService.inProgress.length > 0"
+                                <div class="flex-c-c pointer mr-t-16 mr-b-32 hide-om" *ngIf="taskService.inProgress.length > 0"
                                     matTooltip="New task" [matTooltipPosition]="position.value!"
                                     matTooltipShowDelay="750" (click)="taskService.addTaskDialog('inProgress')">
                                     <mat-icon>add</mat-icon>

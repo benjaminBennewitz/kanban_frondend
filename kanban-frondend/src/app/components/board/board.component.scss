@@ -566,6 +566,7 @@ mat-icon {
         overflow: hidden;
         display: flex;
         justify-content: center;
+        align-items: center;
 
         .hud {
             display: flex;
@@ -581,11 +582,19 @@ mat-icon {
 
             h1 {
                 font-size: 14px;
+                line-height: 0;
+                margin: 0;
             }
 
             p {
                 font-size: 12px;
+                line-height: 0;
             }
         }
+    }
+
+    //hide on mobile
+    .hide-om{
+        display: none;
     }
 }
