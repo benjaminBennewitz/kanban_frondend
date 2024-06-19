@@ -154,6 +154,10 @@ mat-card {
     gap: 32px;
 }
 
+.overflow-hidden{
+    overflow: hidden !important;
+}
+
 /*
 ### COSTUM CHANGES
 */
@@ -238,6 +242,26 @@ html {
 .mat-mdc-snack-bar-container .mdc-snackbar__surface {
     background-color: $link !important;
 }
+
+/* STYLES FOR DOTS MENU */
+.board-dots-menu {
+    .mat-mdc-menu-content {
+      background-color: inherit !important;
+    }
+  
+    // Style for individual menu items
+    .mat-mdc-menu-item {
+      color: $text !important;
+      .mat-mdc-menu-item-text{
+        font-size:12px !important;
+      }
+  
+      mat-icon {
+        color: $text !important;
+        font-size:20px !important;
+      }
+    }
+  }
 
 /* Chrome specific styles */
 .chrome{

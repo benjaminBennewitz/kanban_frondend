@@ -18,6 +18,8 @@
     Logging out
 </div>
 
+
+
 <mat-drawer-container class="mat-drawer-container" autosize>
     <!-- SIDENAV START -->
     <mat-drawer id="sideNav" #drawer [ngClass]="{
@@ -97,7 +99,12 @@
                             <mat-icon matTooltip="New task" [matTooltipPosition]="position.value!"
                                 matTooltipShowDelay="750" (click)="taskService.addTaskDialog('urgent')">add</mat-icon>
                             <mat-icon matTooltip="More" [matTooltipPosition]="position.value!"
-                                matTooltipShowDelay="750">more_horiz</mat-icon>
+                                matTooltipShowDelay="750" [matMenuTriggerFor]="menu">more_horiz
+                            </mat-icon>
+                                <mat-menu #menu="matMenu" class="board-dots-menu">
+                                    <button mat-menu-item><mat-icon>add</mat-icon>Add empty column</button>
+                                    <button mat-menu-item><mat-icon>edit</mat-icon>Rename column</button>
+                                </mat-menu>
                         </div>
                     </div>
                     <div [ngClass]="{
@@ -199,8 +206,13 @@
                         <div class="pad-r-24">
                             <mat-icon matTooltip="New task" [matTooltipPosition]="position.value!"
                                 matTooltipShowDelay="750" (click)="taskService.addTaskDialog('todo')">add</mat-icon>
-                            <mat-icon matTooltip="More" [matTooltipPosition]="position.value!"
-                                matTooltipShowDelay="750">more_horiz</mat-icon>
+                                <mat-icon matTooltip="More" [matTooltipPosition]="position.value!"
+                                matTooltipShowDelay="750" [matMenuTriggerFor]="menu">more_horiz
+                            </mat-icon>
+                                <mat-menu #menu="matMenu" class="board-dots-menu">
+                                    <button mat-menu-item><mat-icon>add</mat-icon>Add empty column</button>
+                                    <button mat-menu-item><mat-icon>edit</mat-icon>Rename column</button>
+                                </mat-menu>
                         </div>
                     </div>
                     <div [ngClass]="{
@@ -302,8 +314,13 @@
                         <div class="pad-r-24">
                             <mat-icon matTooltip="New task" [matTooltipPosition]="position.value!"
                                 matTooltipShowDelay="750" (click)="taskService.addTaskDialog('inProgress')">add</mat-icon>
-                            <mat-icon matTooltip="More" [matTooltipPosition]="position.value!"
-                                matTooltipShowDelay="750">more_horiz</mat-icon>
+                                <mat-icon matTooltip="More" [matTooltipPosition]="position.value!"
+                                matTooltipShowDelay="750" [matMenuTriggerFor]="menu">more_horiz
+                            </mat-icon>
+                                <mat-menu #menu="matMenu" class="board-dots-menu">
+                                    <button mat-menu-item><mat-icon>add</mat-icon>Add empty column</button>
+                                    <button mat-menu-item><mat-icon>edit</mat-icon>Rename column</button>
+                                </mat-menu>
                         </div>
                     </div>
                     <div [ngClass]="{
@@ -408,7 +425,13 @@
                             <div>{{ taskService.doneCount$ | async }} Task finished</div>
                         </div>
                         <div class="pad-r-24">
-                            <mat-icon matTooltip="More" [matTooltipPosition]="position.value!" matTooltipShowDelay="750">more_horiz</mat-icon>
+                            <mat-icon matTooltip="More" [matTooltipPosition]="position.value!"
+                                matTooltipShowDelay="750" [matMenuTriggerFor]="menu">more_horiz
+                            </mat-icon>
+                                <mat-menu #menu="matMenu" class="board-dots-menu">
+                                    <button mat-menu-item><mat-icon>add</mat-icon>Add empty column</button>
+                                    <button mat-menu-item><mat-icon>edit</mat-icon>Rename column</button>
+                                </mat-menu>
                         </div>
                     </div>
                     <div [ngClass]="{
@@ -470,4 +493,20 @@
             </div><!-- BOARD COLUMNS END -->
         </div><!-- BOARD CONTENT INNER END -->
     </div><!-- BOARD CONTENT END -->
+
+    <div class="overflow-hidden cat-container">
+        <div class="cat">
+            <div class="ear ear--left"></div>
+            <div class="ear ear--right"></div>
+            <div class="face">
+                <div class="eye eye--left">
+                    <div class="eye-pupil"></div>
+                </div>
+                <div class="eye eye--right">
+                    <div class="eye-pupil"></div>
+                </div>
+                <div class="muzzle"></div>
+            </div>
+        </div>
+    </div>
 </mat-drawer-container>

@@ -22,7 +22,7 @@
 @import '../../costum-styles/default-theme.scss';
 @import '../../costum-styles/light-theme.scss';
 @import '../../costum-styles/dark-theme.scss';
-
+@import '../../costum-styles/animations.scss';
 
 body {
     display: flex;
@@ -43,7 +43,8 @@ body {
     justify-content: center;
     align-items: center;
 
-    transition: all 550ms;
+    transition: all 250ms;
+    overflow: hidden !important;
 }
 
 .outer-wrapper--login {
@@ -54,11 +55,53 @@ body {
     width: 500px;
     min-width: 310px;
     max-width: 900px;
+    z-index: 1;
 }
+
+/* WAVES ANIMATION STYLES*/
+.box {
+    position: fixed;
+    top: 0;
+    transform: rotate(30deg); 
+    left: 0;
+  }
+  
+  .wave {
+    position: absolute;
+    opacity: .4;
+    width: 1500px;
+    height: 1300px;
+    margin-left: -150px;
+    margin-top: -250px;
+    border-radius: 43%;
+  }
+
+  .wave.-one {
+    animation: rotate 12000ms infinite linear;
+    opacity: .1;
+    background: rgb(255, 255, 255);
+  }
+  
+  .wave.-two {
+    animation: rotate 15000ms infinite linear;
+    opacity: .1;
+    background: rgb(216, 208, 208);
+  }
+  
+  .wave.-three {
+    animation: rotate 12500ms infinite linear;
+    background-color: #ffffff;
+  }
 
 /* MEDIA QUERRYS*/
 @media (max-width: 720px) {
     .outer-wrapper--login{
         width: 80%;
     }
+    .box {
+        position: fixed;
+        top: 0;
+        transform: rotate(80deg); 
+        left: 0;
+      }
 }

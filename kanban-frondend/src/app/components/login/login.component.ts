@@ -27,10 +27,17 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  /**
+   * saves the selected theme in param selectedTheme
+   * @param selectedTheme 
+   */
   onThemeChange(selectedTheme: string) {
     this.themesComponent.onThemeChange(selectedTheme);
   }
 
+  /**
+   * calls the login successful snackbar
+   */
   loginDialog() {
     this.snackbarsComponent.openSnackBar('Login successful!', true, true);
     setTimeout(() => {
@@ -38,12 +45,15 @@ export class LoginComponent implements OnInit {
     }, 1500); // Delay of 1.5 seconds
   }
 
+  /**
+   * calls the registration form
+   */
   registerDialog() {
     const dialogRef = this.dialog.open(DialogRegisterComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'registered') {
-        this.snackbarsComponent.openSnackBar('Registration successful!', true, true);
+        this.snackbarsComponent.openSnackBar('Registration successful! - Please log in', true, true);
         // No navigation here
       }
     });

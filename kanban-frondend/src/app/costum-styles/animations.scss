@@ -19,15 +19,52 @@
 /*
 *** board-card-wrapper-epmty ANIMATION
 */
-
 @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-      transform: translateY(0); /* Anfangs- und Endposition */
-    }
-    40% {
-      transform: translateY(30px); /* Tiefster Punkt */
-    }
-    60% {
-      transform: translateY(15px); /* Zwischenschritt */
-    }
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
   }
+  40% {
+    transform: translateY(30px);
+  }
+  60% {
+    transform: translateY(15px);
+  }
+}
+
+/*
+*** LOGIN WAVES ANIMATION
+*/
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  from { transform: rotate(360deg); }
+}
+
+/*
+*** WELCOME ANIMATION
+*/
+@keyframes slideOutRight {
+  from {
+      transform: translateX(0);
+      opacity: 1;
+  }
+
+  to {
+      transform: translateX(100%);
+      opacity: 0;
+  }
+}
+
+/*
+*** LOGOUT  ANIMATION
+*/
+@keyframes slideOutRight {
+  from {
+      transform: translateX(100%);
+      opacity: 1;
+  }
+
+  to {
+      transform: translateX(0);
+      opacity: 1;
+  }
+}

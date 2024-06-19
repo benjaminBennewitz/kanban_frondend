@@ -198,4 +198,5 @@ export class BoardComponent implements OnInit, AfterViewInit  {
     this.taskService.updateCounts();
     setTimeout(() => this.adjustTextareaHeight(), 0);
   }
+
 }

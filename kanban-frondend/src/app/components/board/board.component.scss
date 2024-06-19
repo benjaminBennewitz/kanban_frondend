@@ -23,6 +23,7 @@
 @import '../../costum-styles/light-theme.scss';
 @import '../../costum-styles/dark-theme.scss';
 @import '../../costum-styles/animations.scss';
+@import '../../costum-styles/cat-mascot.scss';
 
 mat-toolbar-row {
     justify-content: space-between;
@@ -60,35 +61,9 @@ mat-icon {
     animation: slideOutRight 1s forwards;
 }
 
-@keyframes slideOutRight {
-    from {
-        transform: translateX(0);
-        opacity: 1;
-    }
-
-    to {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-}
-
 .slide-out-logout {
     animation: slideOutRight 1s forwards;
 }
-
-@keyframes slideOutRight {
-    from {
-        transform: translateX(100%);
-        opacity: 1;
-    }
-
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-/* Welcome Overlay END */
 
 .board-bg {
     background-color: $secondary;
@@ -106,7 +81,7 @@ mat-icon {
     position: fixed;
     top: 0;
     z-index: 2;
-}
+} 
 
 .menu-icon {
     cursor: pointer;
