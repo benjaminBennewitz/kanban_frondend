@@ -20,10 +20,7 @@
 
 <mat-drawer-container class="mat-drawer-container" autosize>
     <!-- SIDENAV START -->
-    <mat-drawer id="sideNav" #drawer [ngClass]="{
-        'board-sidenav': currentTheme === 'default',
-        'board-sidenav-light': currentTheme === 'light-theme',
-        'board-sidenav-dark': currentTheme === 'dark-theme'}" class="board-sidenav" mode="over" [opened]="false">
+    <mat-drawer id="sideNav" #drawer [ngClass]="getThemeClass('board-sidenav')" mode="over" [opened]="false">
         <div class="logo-container">B² TICKETEER</div>
         <ul class="menu-items">
             <li><mat-icon>dashboard</mat-icon>Board</li>
@@ -53,10 +50,7 @@
 
     <!-- HEADER START -->
     <div>
-        <mat-toolbar id="navToolbar" [ngClass]="{
-            'board-toolbar': currentTheme === 'default',
-            'board-toolbar-light': currentTheme === 'light-theme',
-            'board-toolbar-dark': currentTheme === 'dark-theme'}" class="board-toolbar">
+        <mat-toolbar id="navToolbar" [ngClass]="getThemeClass('board-toolbar')">
             <mat-toolbar-row>
                 <div class="flex-c-c">
                     <mat-icon matTooltip="Open menu" [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
@@ -70,15 +64,9 @@
     <!-- HEADER END -->
 
     <!-- BOARD CONTENT START -->
-    <div id="mainBoardBG" [ngClass]="{
-        'board-bg': currentTheme === 'default',
-        'board-bg-light': currentTheme === 'light-theme',
-        'board-bg-dark': currentTheme === 'dark-theme'}" class="board-bg">
+    <div id="mainBoardBG" [ngClass]="getThemeClass('board-bg')">
 
-        <div [ngClass]="{
-            'board-user': currentTheme === 'default',
-            'board-user-light': currentTheme === 'light-theme',
-            'board-user-dark': currentTheme === 'dark-theme'}" class="board-user">
+        <div [ngClass]="getThemeClass('board-user')">
             <div class="flex-c-c hud">
                 <h1>Welcome Ben</h1>
                 <div>{{ taskService.urgentCount$ | async }} Urgent</div>
@@ -89,20 +77,14 @@
         </div>
 
         <!-- BOARD CONTENT INNER START -->
-        <div id="boardBG" [ngClass]="{
-            'board-wrapper': currentTheme === 'default',
-            'board-wrapper-light': currentTheme === 'light-theme',
-            'board-wrapper-dark': currentTheme === 'dark-theme'}" class="board-wrapper">
+        <div id="boardBG" [ngClass]="getThemeClass('board-wrapper')">
 
             <!-- BOARD COLUMNS START -->
             <div class="board-wrapper-col">
 
                 <!-- URGENT START-->
                 <div class="board-card-wrapper">
-                    <div [ngClass]="{
-                        'board-heading': currentTheme === 'default',
-                        'board-heading-light': currentTheme === 'light-theme',
-                        'board-heading-dark': currentTheme === 'dark-theme'}" class="flex-btw-c board-heading">
+                    <div [ngClass]="getThemeClass('board-heading')" class="flex-btw-c">
                         <div class="board-col-headline pad-l-24">Urgent</div>
                         <div class="pad-r-24">
                             <mat-icon matTooltip="New task" [matTooltipPosition]="position.value!"
@@ -116,10 +98,7 @@
                                 </mat-menu>
                         </div>
                     </div>
-                    <div [ngClass]="{
-                        'board-col-overflow': currentTheme === 'default',
-                        'board-col-overflow-light': currentTheme === 'light-theme',
-                        'board-col-overflow-dark': currentTheme === 'dark-theme'}" class="board-col-overflow">
+                    <div [ngClass]="getThemeClass('board-col-overflow')">
                         <div [ngClass]="{
                                 'board-card-wrapper-empty': taskService.urgent.length === 0 && currentTheme === 'default',
                                 'board-card-wrapper-empty-light': taskService.urgent.length === 0 && currentTheme === 'light-theme',
@@ -147,11 +126,7 @@
                                             <mat-card-title>
                                               <input autocorrect="off" spellcheck="false" [ngModel]="task.title">
                                             </mat-card-title>
-                                            <mat-card-subtitle [ngClass]="{
-                                              'board-card-subtitle': currentTheme === 'default',
-                                              'board-card-subtitle-light': currentTheme === 'light-theme',
-                                              'board-card-subtitle-dark': currentTheme === 'dark-theme'}"
-                                              class="board-card-subtitle">
+                                            <mat-card-subtitle [ngClass]="getThemeClass('board-card-subtitle')">
                                               <input autocorrect="off" spellcheck="false" [ngModel]="task.subtitle">
                                             </mat-card-subtitle>
                                             <div [ngClass]="taskService.getPriorityClass(task.prio)"></div>
@@ -171,11 +146,7 @@
                                           </div>
                                         </mat-card-content>
                                         <mat-card-actions class="board-col-tools">
-                                          <mat-icon [ngClass]="{
-                                            'board-done-icon': currentTheme === 'default',
-                                            'board-done-icon-light': currentTheme === 'light-theme',
-                                            'board-done-icon-dark': currentTheme === 'dark-theme'}"
-                                            class="board-done-icon" matTooltip="mark as done!"
+                                          <mat-icon [ngClass]="getThemeClass('board-card-icon')" matTooltip="mark as done!"
                                             [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
                                             (click)="taskService.taskDone(task.id)">check</mat-icon>
                                           <mat-icon [ngClass]="{
@@ -207,10 +178,7 @@
 
                 <!-- TODO START -->
                 <div class="board-card-wrapper">
-                    <div [ngClass]="{
-                        'board-heading': currentTheme === 'default',
-                        'board-heading-light': currentTheme === 'light-theme',
-                        'board-heading-dark': currentTheme === 'dark-theme'}" class="flex-btw-c board-heading">
+                    <div [ngClass]="getThemeClass('board-heading')" class="flex-btw-c">
                         <div class="board-col-headline pad-l-24">To-Do</div>
                         <div class="pad-r-24">
                             <mat-icon matTooltip="New task" [matTooltipPosition]="position.value!"
@@ -224,10 +192,7 @@
                                 </mat-menu>
                         </div>
                     </div>
-                    <div [ngClass]="{
-                        'board-col-overflow': currentTheme === 'default',
-                        'board-col-overflow-light': currentTheme === 'light-theme',
-                        'board-col-overflow-dark': currentTheme === 'dark-theme'}" class="board-col-overflow">
+                    <div [ngClass]="getThemeClass('board-col-overflow')">
                         <div [ngClass]="{
                                 'board-card-wrapper-empty': taskService.todo.length === 0 && currentTheme === 'default',
                                 'board-card-wrapper-empty-light': taskService.todo.length === 0 && currentTheme === 'light-theme',
@@ -255,11 +220,7 @@
                                             <mat-card-title>
                                               <input autocorrect="off" spellcheck="false" [ngModel]="task.title">
                                             </mat-card-title>
-                                            <mat-card-subtitle [ngClass]="{
-                                              'board-card-subtitle': currentTheme === 'default',
-                                              'board-card-subtitle-light': currentTheme === 'light-theme',
-                                              'board-card-subtitle-dark': currentTheme === 'dark-theme'}"
-                                              class="board-card-subtitle">
+                                            <mat-card-subtitle [ngClass]="getThemeClass('board-card-subtitle')">
                                               <input autocorrect="off" spellcheck="false" [ngModel]="task.subtitle">
                                             </mat-card-subtitle>
                                             <div [ngClass]="taskService.getPriorityClass(task.prio)"></div>
@@ -279,11 +240,7 @@
                                           </div>
                                         </mat-card-content>
                                         <mat-card-actions class="board-col-tools">
-                                          <mat-icon [ngClass]="{
-                                            'board-done-icon': currentTheme === 'default',
-                                            'board-done-icon-light': currentTheme === 'light-theme',
-                                            'board-done-icon-dark': currentTheme === 'dark-theme'}"
-                                            class="board-done-icon" matTooltip="mark as done!"
+                                          <mat-icon [ngClass]="getThemeClass('board-done-icon')" matTooltip="mark as done!"
                                             [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
                                             (click)="taskService.taskDone(task.id)">check</mat-icon>
                                           <mat-icon [ngClass]="{
@@ -315,10 +272,7 @@
 
                 <!-- IN PROGRESS START -->
                 <div class="board-card-wrapper">
-                    <div [ngClass]="{
-                        'board-heading': currentTheme === 'default',
-                        'board-heading-light': currentTheme === 'light-theme',
-                        'board-heading-dark': currentTheme === 'dark-theme'}" class="flex-btw-c board-heading">
+                    <div [ngClass]="getThemeClass('board-heading')" class="flex-btw-c">
                         <div class="board-col-headline pad-l-24">In Progress</div>
                         <div class="pad-r-24">
                             <mat-icon matTooltip="New task" [matTooltipPosition]="position.value!"
@@ -332,10 +286,7 @@
                                 </mat-menu>
                         </div>
                     </div>
-                    <div [ngClass]="{
-                        'board-col-overflow': currentTheme === 'default',
-                        'board-col-overflow-light': currentTheme === 'light-theme',
-                        'board-col-overflow-dark': currentTheme === 'dark-theme'}" class="board-col-overflow">
+                    <div [ngClass]="getThemeClass('board-col-overflow')">
                         <div [ngClass]="{
                                 'board-card-wrapper-empty': taskService.inProgress.length === 0 && currentTheme === 'default',
                                 'board-card-wrapper-empty-light': taskService.inProgress.length === 0 && currentTheme === 'light-theme',
@@ -364,11 +315,7 @@
                                             <mat-card-title>
                                               <input autocorrect="off" spellcheck="false" [ngModel]="task.title">
                                             </mat-card-title>
-                                            <mat-card-subtitle [ngClass]="{
-                                              'board-card-subtitle': currentTheme === 'default',
-                                              'board-card-subtitle-light': currentTheme === 'light-theme',
-                                              'board-card-subtitle-dark': currentTheme === 'dark-theme'}"
-                                              class="board-card-subtitle">
+                                            <mat-card-subtitle [ngClass]="getThemeClass('board-card-subtitle')">
                                               <input autocorrect="off" spellcheck="false" [ngModel]="task.subtitle">
                                             </mat-card-subtitle>
                                             <div [ngClass]="taskService.getPriorityClass(task.prio)"></div>
@@ -388,11 +335,7 @@
                                           </div>
                                         </mat-card-content>
                                         <mat-card-actions class="board-col-tools">
-                                          <mat-icon [ngClass]="{
-                                            'board-done-icon': currentTheme === 'default',
-                                            'board-done-icon-light': currentTheme === 'light-theme',
-                                            'board-done-icon-dark': currentTheme === 'dark-theme'}"
-                                            class="board-done-icon" matTooltip="mark as done!"
+                                          <mat-icon [ngClass]="getThemeClass('board-done-icon')" matTooltip="mark as done!"
                                             [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
                                             (click)="taskService.taskDone(task.id)">check</mat-icon>
                                           <mat-icon [ngClass]="{
@@ -424,10 +367,7 @@
 
                 <!-- DONE START -->
                 <div class="board-card-wrapper">
-                    <div [ngClass]="{
-                        'board-heading': currentTheme === 'default',
-                        'board-heading-light': currentTheme === 'light-theme',
-                        'board-heading-dark': currentTheme === 'dark-theme'}" class="flex-btw-c board-heading">
+                    <div [ngClass]="getThemeClass('board-heading')" class="flex-btw-c">
                         <div class="board-col-headline pad-l-24">Done</div>
                         <div class="flex-c-c board-done" *ngIf="taskService.done.length > 0">
                             <mat-icon class="check">check_small</mat-icon>
@@ -443,11 +383,7 @@
                                 </mat-menu>
                         </div>
                     </div>
-                    <div [ngClass]="{
-                        'board-col-overflow': currentTheme === 'default',
-                        'board-col-overflow-light': currentTheme === 'light-theme',
-                        'board-col-overflow-dark': currentTheme === 'dark-theme'}"
-                        class="board-col-overflow">
+                    <div [ngClass]="getThemeClass('board-col-overflow')">
                         <div [ngClass]="{
                                 'board-card-wrapper-empty': taskService.done.length === 0 && currentTheme === 'default',
                                 'board-card-wrapper-empty-light': taskService.done.length === 0 && currentTheme === 'light-theme',
@@ -469,11 +405,8 @@
                                         <mat-card-header>
                                             <div class="flex-col">
                                                 <mat-card-title><input autocorrect="off" spellcheck="false"value="{{task.title}}"></mat-card-title>
-                                                <mat-card-subtitle [ngClass]="{
-                                                    'board-card-subtitle': currentTheme === 'default',
-                                                    'board-card-subtitle-light': currentTheme === 'light-theme',
-                                                    'board-card-subtitle-dark': currentTheme === 'dark-theme'}"
-                                                    class="board-card-subtitle"><input autocorrect="off" spellcheck="false"value="{{task.subtitle}}"></mat-card-subtitle>
+                                                <mat-card-subtitle [ngClass]="getThemeClass('board-card-subtitle')">
+                                                    <input autocorrect="off" spellcheck="false"value="{{task.subtitle}}"></mat-card-subtitle>
                                                 <div [ngClass]="taskService.getPriorityClass(task.prio)"></div>
                                             </div>
                                         </mat-card-header>
@@ -505,7 +438,7 @@
 
     <div [ngClass]="{'hidden': !checked}" class="carly-wrapper" id="carlyWrapper">
         <div class="overflow-hidden cat-container">
-          <div class="cat">
+          <div [ngClass]="getThemeClass('cat')">
             <div class="ear ear--left"></div>
             <div class="ear ear--right"></div>
             <div class="face">
@@ -520,7 +453,11 @@
           </div>
         </div>
       
-        <div *ngIf="showMascotDialog" class="mascot-dialog" id="mascotDialog" [ngClass]="{'bounce-enter': showMascotDialog}">
+        <div *ngIf="showMascotDialog" class="mascot-dialog" id="mascotDialog" 
+            [ngClass]="{'bounce-enter': showMascotDialog,
+                    'mascot-dialog': currentTheme === 'default',
+                    'mascot-dialog-light': currentTheme === 'light-theme',
+                    'mascot-dialog-dark': currentTheme === 'dark-theme'}">
           <p>{{ currentText }}</p>
         </div>
       </div>

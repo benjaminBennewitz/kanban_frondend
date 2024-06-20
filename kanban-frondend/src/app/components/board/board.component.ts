@@ -10,17 +10,6 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { TaskServiceComponent } from '../../services/task-service/task-service.component';
 import { MascotComponent } from '../../services/mascot/mascot.component';
 
-interface Task {
-  id: number;
-  title: string;
-  subtitle: string;
-  content: string;
-  date: Date;
-  prio: string;
-  done: Boolean;
-  status: 'urgent' | 'todo' | 'inProgress' | 'done';
-}
-
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
@@ -45,7 +34,7 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
   allTasksLeft: number = 0;
   showMascotDialog: boolean = false;
 
-  checked = false;
+  checked = true;
   disabled = false;
   
 
@@ -84,8 +73,6 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
     // Show welcome overlay when the user logs in
     this.showWelcomeOverlay();
     this.adjustTextareaHeight();
-
-    // update function for mascot texts
    
 
     // Subscribe to changes in counts and update mascot texts accordingly
@@ -309,5 +296,23 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
     }
     this.taskService.updateCounts();
     setTimeout(() => this.adjustTextareaHeight(), 0);
+  }
+
+/**
+ * help function to set ngClasses for themeing
+ * @param baseClass 
+ * @returns 
+ */
+  getThemeClass(baseClass: string): string {
+    switch (this.currentTheme) {
+      case 'default':
+        return `${baseClass}`;
+      case 'light-theme':
+        return `${baseClass}-light`;
+      case 'dark-theme':
+        return `${baseClass}-dark`;
+      default:
+        return `${baseClass}`;
+    }
   }
 }

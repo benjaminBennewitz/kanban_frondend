@@ -17,6 +17,7 @@
 #################################*/
 
 @import './animations.scss';
+@import './cat-mascot.scss';
 
 /*
 ### GLOBAL COLORS
@@ -271,6 +272,46 @@ $accent-dark: hsl(192, 69%, 36%);
     &:hover{
         color:$accent-dark !important;
     }
+}
+
+/* STYLES FOR CARLY AND TEXTBOX */
+.cat-dark {
+    margin-bottom: -120px;
+	position: relative;
+	height: $size;
+	width: $size * 1.13;
+    position: absolute;
+    filter: drop-shadow(0 -6mm 4mm rgba(185, 185, 185,0.15));
+	transition: all 250ms;
+	&:hover{
+		filter: drop-shadow(0 -6mm 4mm rgba($secondary-dark, 0.9));
+	}
+}
+
+.mascot-dialog-dark{
+    position: absolute;
+	bottom:100px;
+	left:100px;
+	z-index: 999;
+	width: 200px;
+	height:80px;
+	background-color: $secondary-dark;
+	color:$text-dark;
+	text-align: center;
+	padding:8px 16px;
+	border-radius: 40px 40px 40px 10px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	p{
+		margin:0;
+	}
+
+	&.bounce-enter {
+		@include bounce-in;
+	}
 }
 
 /* MEDIA QUERIES */

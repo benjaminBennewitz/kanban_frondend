@@ -17,6 +17,7 @@
 #################################*/
 
 @import './animations.scss';
+@import './cat-mascot.scss';
 
 // Light Theme
 $primary-light: hsl(223, 44%, 80%);
@@ -58,7 +59,7 @@ $accent-light: hsl(232, 72%, 21%);
 /* BOARD COMPONENT */
 .board-overlay-light{
     background-color: $primary-light;
-    color: $text-light;
+    color: $secondary-light;
 
     font-size: 50px;
 
@@ -267,6 +268,46 @@ $accent-light: hsl(232, 72%, 21%);
     &:hover{
         color:$primary-light !important;
     }
+}
+
+/* STYLES FOR CARLY AND TEXTBOX */
+.cat-light {
+    margin-bottom: -120px;
+	position: relative;
+	height: $size;
+	width: $size * 1.13;
+    position: absolute;
+    filter: drop-shadow(0 -6mm 4mm rgba(185, 185, 185,0.5));
+	transition: all 250ms;
+	&:hover{
+		filter: drop-shadow(0 -6mm 4mm rgba($primary-light, 0.9));
+	}
+}
+
+.mascot-dialog-light{
+    position: absolute;
+	bottom:100px;
+	left:100px;
+	z-index: 999;
+	width: 200px;
+	height:80px;
+	background-color: $primary-light;
+	color:#ffffff;
+	text-align: center;
+	padding:8px 16px;
+	border-radius: 40px 40px 40px 10px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	p{
+		margin:0;
+	}
+
+	&.bounce-enter {
+		@include bounce-in;
+	}
 }
 
 /* MEDIA QUERRYS*/
