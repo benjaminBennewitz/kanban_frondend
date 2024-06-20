@@ -167,7 +167,7 @@ mat-icon {
 
     .hud {
         display: flex;
-        align-items: first baseline;
+        align-items: center;
         justify-content: flex-start;
         width: 90%;
         margin: 0 16px;
@@ -178,11 +178,26 @@ mat-icon {
 
         h1 {
             font-size: 20px;
+            margin: 0;
         }
 
         p {
             font-size: 14px;
         }
+
+        mat-icon{
+            color:$text;
+        }
+    }
+}
+
+.board-clicker-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    p{
+        line-height: 0;
+        margin: 0;
     }
 }
 

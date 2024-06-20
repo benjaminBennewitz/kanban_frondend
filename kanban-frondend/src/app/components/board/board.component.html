@@ -67,12 +67,15 @@
     <div id="mainBoardBG" [ngClass]="getThemeClass('board-bg')">
 
         <div [ngClass]="getThemeClass('board-user')">
-            <div class="flex-c-c hud">
+            <div class="hud">
                 <h1>Welcome Ben</h1>
-                <div>{{ taskService.urgentCount$ | async }} Urgent</div>
-                <div>{{ taskService.todoCount$ | async }} To-Do</div>
-                <div>{{ taskService.inProgressCount$ | async }} In Progress</div>
-                <div>{{ taskService.overdueCount$ | async }} Overdue</div>
+                <div class="flex-btw-c">{{ taskService.urgentCount$ | async }} Urgent</div>
+                <div class="flex-btw-c">{{ taskService.todoCount$ | async }} To-Do</div>
+                <div class="flex-btw-c">{{ taskService.inProgressCount$ | async }} In Progress</div>
+                <div class="flex-btw-c">{{ taskService.overdueCount$ | async }} Overdue</div>
+                <div class="board-clicker-wrapper">
+                    <mat-icon>play_circle</mat-icon>
+                </div>
             </div>
         </div>
 
