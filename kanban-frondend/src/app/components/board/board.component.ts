@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ThemesComponent } from '../../services/themes/themes.component';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
@@ -6,8 +6,9 @@ import { TooltipPosition } from '@angular/material/tooltip';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarsComponent } from '../snackbars/snackbars.component';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { TaskServiceComponent } from '../../services/task-service/task-service.component';
+import { MascotComponent } from '../../services/mascot/mascot.component';
 
 interface Task {
   id: number;
@@ -24,8 +25,9 @@ interface Task {
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
+  
 })
-export class BoardComponent implements OnInit, AfterViewInit  {
+export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
   showFiller = false;
   currentTheme: string = 'default';
   hideWelcomeOverlay = false;
@@ -36,6 +38,16 @@ export class BoardComponent implements OnInit, AfterViewInit  {
   todoCount$: BehaviorSubject<number>;
   overdueCount$: BehaviorSubject<number>;
   @ViewChild('contentTextarea') contentTextarea?: ElementRef;
+  mascotTexts: any[] = [];
+  currentText: string = '';
+  private intervalId: any;
+  private subscriptions: Subscription[] = [];
+  allTasksLeft: number = 0;
+  showMascotDialog: boolean = false;
+
+  checked = false;
+  disabled = false;
+  
 
   constructor(
     private themesComponent: ThemesComponent,
@@ -43,7 +55,8 @@ export class BoardComponent implements OnInit, AfterViewInit  {
     public dialog: MatDialog,
     private snackbarsComponent: SnackbarsComponent,
     private cdr: ChangeDetectorRef,
-    public taskService: TaskServiceComponent
+    public taskService: TaskServiceComponent,
+    private mascotService: MascotComponent,
   ) {
     this.doneCount$ = this.taskService.doneCount$;
     this.urgentCount$ = this.taskService.urgentCount$;
@@ -52,9 +65,11 @@ export class BoardComponent implements OnInit, AfterViewInit  {
     this.overdueCount$ = this.taskService.overdueCount$;
   }
 
+  // tooltip positions
   positionOptions: TooltipPosition[] = ['below', 'above', 'left', 'right'];
   position = new FormControl(this.positionOptions[0]);
 
+  // onload functions
   ngOnInit() {
     this.themesComponent.currentTheme$.subscribe((theme) => {
       this.currentTheme = theme;
@@ -69,7 +84,104 @@ export class BoardComponent implements OnInit, AfterViewInit  {
     // Show welcome overlay when the user logs in
     this.showWelcomeOverlay();
     this.adjustTextareaHeight();
+
+    // update function for mascot texts
+   
+
+    // Subscribe to changes in counts and update mascot texts accordingly
+    this.subscriptions.push(this.taskService.doneCount$.subscribe(() => this.updateMascotTexts()));
+    this.subscriptions.push(this.taskService.urgentCount$.subscribe(() => this.updateMascotTexts()));
+    this.subscriptions.push(this.taskService.inProgressCount$.subscribe(() => this.updateMascotTexts()));
+    this.subscriptions.push(this.taskService.todoCount$.subscribe(() => this.updateMascotTexts()));
+    this.subscriptions.push(this.taskService.overdueCount$.subscribe(() => this.updateMascotTexts()));
+
+    // Change the message every minute
+    this.intervalId = setInterval(() => {
+      this.changeMessage();
+      this.showMascotDialog = true; // shows the mascotDialog
+      setTimeout(() => {
+        this.showMascotDialog = false; // hide the mascotDialog after 5 seconds
+        this.cdr.detectChanges(); // detect texts changes
+      }, 10000);
+    }, 60000); // 60000 ms = 1 minute
+
+    // initialize first message and mascotDialog
+    this.changeMessage();
+    setTimeout(() => {
+      this.showMascotDialog = true; // shows the mascotDialog
+      setTimeout(() => {
+        this.showMascotDialog = false; // hide the mascotDialog after 5 seconds
+        this.cdr.detectChanges(); // detect texts changes
+      }, 10000);
+    }, 15000); // 15000 ms = 15 Sekunden
   }
+
+  ngOnDestroy(): void {
+    // Clear interval when component is destroyed
+    clearInterval(this.intervalId);
+
+    // Unsubscribe from all subscriptions
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+  /**
+   * updates the texts from mascot array
+   */
+  updateMascotTexts(): void {
+    const counts = {
+      doneCount: this.taskService.doneCount$.value,
+      urgentCount: this.taskService.urgentCount$.value,
+      inProgressCount: this.taskService.inProgressCount$.value,
+      todoCount: this.taskService.todoCount$.value,
+      overdueCount: this.taskService.overdueCount$.value,
+      allTasksLeft: this.calculateAllTasksLeft()
+    };
+    this.mascotTexts = this.mascotService.getMascotTexts(counts);
+  }
+
+  /**
+   * change the text of the mascotDialog
+   */
+  changeMessage(): void {
+    if (this.mascotTexts.length > 0) {
+      const randomIndex = Math.floor(Math.random() * this.mascotTexts.length);
+      this.currentText = this.mascotTexts[randomIndex].text;
+      this.cdr.detectChanges();
+    }
+  }
+
+  /**
+   * hepl function to return the sum of all left over tasks
+   * @returns 
+   */
+  calculateAllTasksLeft(): number {
+    return this.taskService.urgentCount$.value +
+           this.taskService.todoCount$.value +
+           this.taskService.inProgressCount$.value;
+  }
+
+  /**
+   * hides the textbox
+   */
+  hideMascotDialog(): void {
+    this.showMascotDialog = false;
+    this.cdr.detectChanges(); // forces an update to the view
+  }  
+
+  /**
+   * toogles on/off for the mascot
+   */
+  toggleMascotDialog(): void {
+    if (this.checked) {
+      this.showMascotDialog = true;
+      this.changeMessage();
+      setTimeout(() => {
+        this.hideMascotDialog();
+      }, 5000);
+    } else {
+      this.showMascotDialog = false;
+    }
+  }  
 
   /**
    * calls the adjustTextareaHeight function
@@ -198,5 +310,4 @@ export class BoardComponent implements OnInit, AfterViewInit  {
     this.taskService.updateCounts();
     setTimeout(() => this.adjustTextareaHeight(), 0);
   }
-
 }

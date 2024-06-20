@@ -145,6 +145,12 @@ mat-card {
     align-items: center;
 }
 
+.flex-fl-c {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 .flex-col {
     display: flex;
     flex-direction: column;
@@ -156,6 +162,10 @@ mat-card {
 
 .overflow-hidden{
     overflow: hidden !important;
+}
+
+.hidden{
+    display: none;
 }
 
 /*

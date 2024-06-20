@@ -7,11 +7,13 @@ import { RouterOutlet } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCardModule } from '@angular/material/card';
@@ -34,6 +36,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_NATIVE_DATE_FORMATS, NativeDateAdapt
 import { CountPipe } from './components/board/count.pipe';
 import { TaskServiceComponent } from './services/task-service/task-service.component';
 import { AddTaskDialogComponent } from './components/add-task-dialog/add-task-dialog.component';
+import { MascotComponent } from './services/mascot/mascot.component';
 
 
 @NgModule({
@@ -55,6 +58,8 @@ import { AddTaskDialogComponent } from './components/add-task-dialog/add-task-di
     RouterOutlet,
     MatFormFieldModule,
     MatInputModule,
+    MatCheckboxModule,
+    MatSlideToggleModule,
     MatSelectModule,
     MatToolbarModule,
     MatButtonModule,
@@ -82,6 +87,7 @@ import { AddTaskDialogComponent } from './components/add-task-dialog/add-task-di
     { provide: MAT_DATE_FORMATS, useValue: MAT_NATIVE_DATE_FORMATS },
     SnackbarsComponent,
     TaskServiceComponent,
+    MascotComponent,
   ],
   bootstrap: [AppComponent],
 })

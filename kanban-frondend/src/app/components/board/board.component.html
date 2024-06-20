@@ -18,8 +18,6 @@
     Logging out
 </div>
 
-
-
 <mat-drawer-container class="mat-drawer-container" autosize>
     <!-- SIDENAV START -->
     <mat-drawer id="sideNav" #drawer [ngClass]="{
@@ -36,6 +34,17 @@
                     <mat-option value="light-theme">Light</mat-option>
                     <mat-option value="dark-theme">Dark</mat-option>
                 </mat-select>
+            </li>
+            <li class="flex-btw-c"><div class="flex-fl-c"><mat-icon>pets</mat-icon>Carly</div>
+                <section class="example-section">
+                    <mat-slide-toggle
+                        (change)="toggleMascotDialog()"
+                        class="example-margin"
+                        [checked]="checked"
+                        [disabled]="disabled"
+                        [(ngModel)]="checked">
+                    </mat-slide-toggle>
+                </section>
             </li>
             <li (click)="onLogout()" class="log-out"><mat-icon>logout</mat-icon>Logout</li>
         </ul>
@@ -494,19 +503,26 @@
         </div><!-- BOARD CONTENT INNER END -->
     </div><!-- BOARD CONTENT END -->
 
-    <div class="overflow-hidden cat-container">
-        <div class="cat">
+    <div [ngClass]="{'hidden': !checked}" class="carly-wrapper" id="carlyWrapper">
+        <div class="overflow-hidden cat-container">
+          <div class="cat">
             <div class="ear ear--left"></div>
             <div class="ear ear--right"></div>
             <div class="face">
-                <div class="eye eye--left">
-                    <div class="eye-pupil"></div>
-                </div>
-                <div class="eye eye--right">
-                    <div class="eye-pupil"></div>
-                </div>
-                <div class="muzzle"></div>
+              <div class="eye eye--left">
+                <div class="eye-pupil"></div>
+              </div>
+              <div class="eye eye--right">
+                <div class="eye-pupil"></div>
+              </div>
+              <div class="muzzle"></div>
             </div>
+          </div>
         </div>
-    </div>
+      
+        <div *ngIf="showMascotDialog" class="mascot-dialog" id="mascotDialog" [ngClass]="{'bounce-enter': showMascotDialog}">
+          <p>{{ currentText }}</p>
+        </div>
+      </div>
+      
 </mat-drawer-container>
