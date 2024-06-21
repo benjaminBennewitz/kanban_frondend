@@ -1,12 +1,11 @@
-// src/app/services/task/task.service.ts
-
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { SnackbarsComponent } from '../../components/snackbars/snackbars.component';
 import { AddTaskDialogComponent } from '../../components/add-task-dialog/add-task-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { TimerClickerComponent } from '../timer-clicker/timer-clicker.component';
 
-interface Task {
+export interface Task {
   id: number;
   title: string;
   subtitle: string;
@@ -17,6 +16,7 @@ interface Task {
   status: 'urgent' | 'todo' | 'inProgress' | 'done';
   showDatePicker?: boolean;
   isEditMode?: boolean;
+  doTime: number;
 }
 
 @Injectable({
@@ -24,9 +24,21 @@ interface Task {
 })
 
 export class TaskServiceComponent {
-
+  // variables for the timer
+  private tasksSubject = new BehaviorSubject<Task[]>([]);
+  tasks$ = this.tasksSubject.asObservable();
   // toogle between true and fals for the calendar icon
   showDatePicker: boolean = false;
+
+   /**
+   * @param snackbarsComponent 
+   * @param dialog 
+   */
+   constructor(
+    private snackbarsComponent: SnackbarsComponent,
+    private dialog: MatDialog,
+    private timerService: TimerClickerComponent) {}
+
 
   // default tasks for testing
   urgent: Task[] = [];
@@ -41,6 +53,7 @@ export class TaskServiceComponent {
       prio: 'urgent',
       done: false,
       status: 'todo',
+      doTime: 0,
     },
     {
       id: 2,
@@ -51,6 +64,7 @@ export class TaskServiceComponent {
       prio: 'medium',
       done: false,
       status: 'todo',
+      doTime: 0,
     },
     {
       id: 3,
@@ -61,6 +75,7 @@ export class TaskServiceComponent {
       prio: 'low',
       done: false,
       status: 'todo',
+      doTime: 0,
     },
   ];
 
@@ -74,6 +89,7 @@ export class TaskServiceComponent {
       prio: '',
       done: false,
       status: 'inProgress',
+      doTime: 0,
     },
     {
       id: 5,
@@ -84,6 +100,7 @@ export class TaskServiceComponent {
       prio: 'low',
       done: false,
       status: 'inProgress',
+      doTime: 0,
     },
   ];
 
@@ -97,6 +114,7 @@ export class TaskServiceComponent {
       prio: 'medium',
       done: false,
       status: 'done',
+      doTime: 0,
     },
   ];
 
@@ -108,15 +126,6 @@ export class TaskServiceComponent {
   inProgressCount$ = new BehaviorSubject<number>(this.inProgress.length);
   todoCount$ = new BehaviorSubject<number>(this.todo.length);
   overdueCount$ = new BehaviorSubject<number>(this.getOverdueCount());
-
-  /**
-   * 
-   * @param snackbarsComponent 
-   * @param dialog 
-   */
-  constructor(
-    private snackbarsComponent: SnackbarsComponent,
-    private dialog: MatDialog) {}
 
   /**
    * main funciton for calculating the past date
@@ -210,7 +219,8 @@ export class TaskServiceComponent {
           prio: result.prio || '',
           done: false,
           status: result.status,
-          isEditMode: false
+          isEditMode: false,
+          doTime:0,
         };
         this.addTaskToCorrectArray(newTask);
         this.snackbarsComponent.openSnackBar('Task created', true, false);
@@ -277,10 +287,14 @@ export class TaskServiceComponent {
    * @param taskId ID of the task to be marked as done
    */
   taskDone(taskId: number): void {
-    // Finde den Task, der verschoben werden soll
     const taskToMove = this.findTaskById(taskId);
 
-    if (taskToMove) {
+    if (taskToMove && taskToMove.status !== 'done') {
+      const elapsedTimeInMinutes = this.timerService.currentMinutes + this.timerService.currentSeconds / 60;
+
+      taskToMove.doTime = elapsedTimeInMinutes;
+      taskToMove.status = 'done';
+
       this.removeFromCurrentArray(taskToMove);
       this.done.push(taskToMove);
       this.updateCounts();

@@ -6,7 +6,7 @@ import { TooltipPosition } from '@angular/material/tooltip';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { TaskServiceComponent } from '../../services/task-service/task-service.component';
+import { Task, TaskServiceComponent } from '../../services/task-service/task-service.component';
 import { MascotComponent } from '../../services/mascot/mascot.component';
 import { TimerClickerComponent } from '../../services/timer-clicker/timer-clicker.component';
 
@@ -56,7 +56,7 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
     private cdr: ChangeDetectorRef,
     public taskService: TaskServiceComponent,
     private mascotService: MascotComponent,
-    private timerService: TimerClickerComponent,
+    public timerService: TimerClickerComponent,
   ) {
     this.doneCount$ = this.taskService.doneCount$;
     this.urgentCount$ = this.taskService.urgentCount$;
@@ -113,11 +113,11 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
       }, 10000);
     }, 15000); // 15000 ms = 15 Sekunden
 
-    // TIMER
-    this.timerSubscription = this.timerService.seconds$.subscribe(seconds => this.seconds = seconds);
-    this.isRunningSubscription = this.timerService.isRunning$.subscribe(isRunning => this.isRunning = isRunning);
-    this.millisecondsSubscription = this.timerService.milliseconds$.subscribe(milliseconds => this.milliseconds = milliseconds);
-  }
+     // TIMER
+     this.timerSubscription = this.timerService.seconds$.subscribe(seconds => this.seconds = seconds);
+     this.isRunningSubscription = this.timerService.isRunning$.subscribe(isRunning => this.isRunning = isRunning);
+     this.millisecondsSubscription = this.timerService.milliseconds$.subscribe(milliseconds => this.milliseconds = milliseconds);
+   }
 
   /**
    * unsubscribe from carly texts interval and timer

@@ -1,22 +1,45 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-timer-clicker',
   templateUrl: './timer-clicker.component.html',
-  styleUrl: './timer-clicker.component.scss'
+  styleUrls: ['./timer-clicker.component.scss']
 })
-export class TimerClickerComponent {
+export class TimerClickerComponent implements OnDestroy {
   private millisecondsSubject = new BehaviorSubject<number>(0);
   private secondsSubject = new BehaviorSubject<number>(0);
   private minutesSubject = new BehaviorSubject<number>(0);
   private isRunning = new BehaviorSubject<boolean>(false);
   private intervalId: any;
+  private alive = true; // Flag to control the timer
 
   milliseconds$ = this.millisecondsSubject.asObservable();
   seconds$ = this.secondsSubject.asObservable();
   minutes$ = this.minutesSubject.asObservable();
   isRunning$ = this.isRunning.asObservable();
+
+  constructor() {}
+
+  ngOnDestroy(): void {
+    this.pauseTimer();
+  }
+
+  get currentMilliseconds() {
+    return this.millisecondsSubject.value;
+  }
+
+  get currentSeconds() {
+    return this.secondsSubject.value;
+  }
+
+  get currentMinutes() {
+    return this.minutesSubject.value;
+  }
+
+  get running() {
+    return this.isRunning.value;
+  }
 
   /**
    * starts the timer
@@ -37,6 +60,7 @@ export class TimerClickerComponent {
         seconds = 0;
         minutes++;
         this.minutesSubject.next(minutes);
+        this.secondsSubject.next(0);
       }
       this.millisecondsSubject.next(milliseconds);
     }, 10);
