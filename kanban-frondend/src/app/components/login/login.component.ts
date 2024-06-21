@@ -1,8 +1,7 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ThemesComponent } from '../../services/themes/themes.component';
-import { MatSnackBarRef } from '@angular/material/snack-bar';
 import { DialogRegisterComponent } from '../dialog-register/dialog-register.component';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { SnackbarsComponent } from '../snackbars/snackbars.component';
 import { Router } from '@angular/router';
 
@@ -11,6 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
+
 export class LoginComponent implements OnInit {
 
   constructor(

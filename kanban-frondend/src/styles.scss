@@ -194,13 +194,6 @@ html {
     --mat-minimal-pseudo-checkbox-selected-checkmark-color: hsl(355, 100%, 58%) !important;
 }
 
-/* STYLES FOR SCROLLBARS*/
-/* {
-    scrollbar-width: none;
-    border: none;
-}*/
-
-
 /* STYLES FOR DRAG n DROP*/
 .cdk-drag {
     /* User-defined styles for drawing the card */
@@ -273,6 +266,7 @@ html {
     }
   }
 
+/* STYLES FOR SCROLLBARS */
 /* Chrome specific styles */
 .chrome{
     ::-webkit-scrollbar {

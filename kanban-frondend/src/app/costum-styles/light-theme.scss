@@ -225,8 +225,9 @@ $accent-light: hsl(232, 72%, 21%);
 
     .hud {
         display: flex;
-        align-items: first baseline;
-        justify-content: flex-start;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
         width: 90%;
         margin: 0 16px;
         padding: 0 8px;
@@ -236,10 +237,20 @@ $accent-light: hsl(232, 72%, 21%);
 
         h1 {
             font-size: 20px;
+            margin: 0;
         }
 
         p {
-            font-size: 14px;
+            font-size: 16px;
+        }
+
+        .play-btn{
+            color:$text-light;
+            cursor: pointer;
+            font-size: 25px;
+            &:hover{
+                color:$link-light;
+            }
         }
     }
 }

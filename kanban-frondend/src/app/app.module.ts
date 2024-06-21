@@ -37,6 +37,7 @@ import { CountPipe } from './components/board/count.pipe';
 import { TaskServiceComponent } from './services/task-service/task-service.component';
 import { AddTaskDialogComponent } from './components/add-task-dialog/add-task-dialog.component';
 import { MascotComponent } from './services/mascot/mascot.component';
+import { TimerClickerComponent } from './services/timer-clicker/timer-clicker.component';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { MascotComponent } from './services/mascot/mascot.component';
     DialogRegisterComponent,
     CountPipe,
     AddTaskDialogComponent,
+    TimerClickerComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,6 +90,7 @@ import { MascotComponent } from './services/mascot/mascot.component';
     SnackbarsComponent,
     TaskServiceComponent,
     MascotComponent,
+    TimerClickerComponent,
   ],
   bootstrap: [AppComponent],
 })

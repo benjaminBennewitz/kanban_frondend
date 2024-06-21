@@ -226,11 +226,13 @@ $accent-dark: hsl(192, 69%, 36%);
     display: flex;
     justify-content: flex-start;
     overflow: hidden;
+    transition: all 150ms;
 
     .hud {
         display: flex;
-        align-items: first baseline;
-        justify-content: flex-start;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
         width: 90%;
         margin: 0 16px;
         padding: 0 8px;
@@ -240,10 +242,20 @@ $accent-dark: hsl(192, 69%, 36%);
 
         h1 {
             font-size: 20px;
+            margin: 0;
         }
 
         p {
-            font-size: 14px;
+            font-size: 16px;
+        }
+
+        .play-btn{
+            color:$text-dark;
+            cursor: pointer;
+            font-size: 25px;
+            &:hover{
+                color:$link-dark;
+            }
         }
     }
 }

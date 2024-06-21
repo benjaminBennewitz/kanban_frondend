@@ -164,11 +164,13 @@ mat-icon {
     display: flex;
     justify-content: flex-start;
     overflow: hidden;
+    transition: all 150ms;
 
     .hud {
         display: flex;
+        flex-direction: row;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: space-between;
         width: 90%;
         margin: 0 16px;
         padding: 0 8px;
@@ -182,11 +184,16 @@ mat-icon {
         }
 
         p {
-            font-size: 14px;
+            font-size: 16px;
         }
 
-        mat-icon{
+        .play-btn{
             color:$text;
+            cursor: pointer;
+            font-size: 25px;
+            &:hover{
+                color:$link;
+            }
         }
     }
 }
@@ -197,7 +204,36 @@ mat-icon {
     align-items: center;
     p{
         line-height: 0;
-        margin: 0;
+        margin-bottom: 0;
+        margin-left: 8px;
+    }
+
+    .reset-timer-btn{
+        background-color: $primary;
+        color:$secondary;
+        transition: all 150ms;
+        cursor: pointer;
+        height: 32px;
+
+        font-size: 12px;
+
+        margin-left: 16px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        border-radius: 20px;
+        padding:8px 12px;
+
+        &:hover{
+            background-color:$link;
+        }
+
+        mat-icon{
+            color:$secondary;
+            margin-right: 8px;
+        }
     }
 }
 

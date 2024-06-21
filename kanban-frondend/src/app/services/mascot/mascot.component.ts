@@ -13,7 +13,7 @@ export class MascotComponent {
 
   private mascotTexts: Mascot[] = [
     { id: 1, text: 'Don\'t forget, you have {{todoCount}} tasks in todo' },
-    { id: 2, text: 'Meow! You still need to do {{todoCount}} tasks!' },
+    { id: 2, text: 'Meow! You still need to do {{allTasksLeft}} tasks!' },
     { id: 3, text: 'Purrfect! You have {{inProgressCount}} tasks in progress.' },
     { id: 4, text: 'You\'re doing great! Only {{allTasksLeft}} tasks left to complete.' },
     { id: 5, text: 'My name is Carly, and I love helping you with your tasks!' },

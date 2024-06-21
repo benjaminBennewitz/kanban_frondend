@@ -22,6 +22,7 @@ interface Task {
 @Injectable({
   providedIn: 'root',
 })
+
 export class TaskServiceComponent {
 
   // toogle between true and fals for the calendar icon

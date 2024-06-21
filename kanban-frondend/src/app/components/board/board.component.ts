@@ -5,10 +5,10 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { TooltipPosition } from '@angular/material/tooltip';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { SnackbarsComponent } from '../snackbars/snackbars.component';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { TaskServiceComponent } from '../../services/task-service/task-service.component';
 import { MascotComponent } from '../../services/mascot/mascot.component';
+import { TimerClickerComponent } from '../../services/timer-clicker/timer-clicker.component';
 
 @Component({
   selector: 'app-board',
@@ -19,33 +19,44 @@ import { MascotComponent } from '../../services/mascot/mascot.component';
 export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
   showFiller = false;
   currentTheme: string = 'default';
+  /* OVERLAY ANIMATIONS VARIABLES*/
   hideWelcomeOverlay = false;
   hideLogOutOverlay = true;
+  /* TASK OVERWIEV VARIABLES (HUD)*/
   doneCount$: BehaviorSubject<number>;
   urgentCount$: BehaviorSubject<number>;
   inProgressCount$: BehaviorSubject<number>;
   todoCount$: BehaviorSubject<number>;
   overdueCount$: BehaviorSubject<number>;
+  /* CHANGE THE HEIGHT FOR TEXTAREA VARIABLE */
   @ViewChild('contentTextarea') contentTextarea?: ElementRef;
+  /* MASCOT CARLY VARIABLES */
   mascotTexts: any[] = [];
   currentText: string = '';
   private intervalId: any;
   private subscriptions: Subscription[] = [];
   allTasksLeft: number = 0;
   showMascotDialog: boolean = false;
-
+  /* TIMER VARIABLES */
+  minutes: number = 0;
+  seconds: number = 0;
+  milliseconds: number = 0;
+  isRunning: boolean = false;
+  private timerSubscription: Subscription = new Subscription();
+  private isRunningSubscription: Subscription = new Subscription();
+  private millisecondsSubscription: Subscription = new Subscription();
+  /* CARLY TOOGLE VARIABLES*/
   checked = true;
   disabled = false;
-  
 
   constructor(
     private themesComponent: ThemesComponent,
     private router: Router,
     public dialog: MatDialog,
-    private snackbarsComponent: SnackbarsComponent,
     private cdr: ChangeDetectorRef,
     public taskService: TaskServiceComponent,
     private mascotService: MascotComponent,
+    private timerService: TimerClickerComponent,
   ) {
     this.doneCount$ = this.taskService.doneCount$;
     this.urgentCount$ = this.taskService.urgentCount$;
@@ -60,6 +71,7 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
 
   // onload functions
   ngOnInit() {
+    // get the current theme
     this.themesComponent.currentTheme$.subscribe((theme) => {
       this.currentTheme = theme;
     });
@@ -73,7 +85,6 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
     // Show welcome overlay when the user logs in
     this.showWelcomeOverlay();
     this.adjustTextareaHeight();
-   
 
     // Subscribe to changes in counts and update mascot texts accordingly
     this.subscriptions.push(this.taskService.doneCount$.subscribe(() => this.updateMascotTexts()));
@@ -101,12 +112,19 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
         this.cdr.detectChanges(); // detect texts changes
       }, 10000);
     }, 15000); // 15000 ms = 15 Sekunden
+
+    // TIMER
+    this.timerSubscription = this.timerService.seconds$.subscribe(seconds => this.seconds = seconds);
+    this.isRunningSubscription = this.timerService.isRunning$.subscribe(isRunning => this.isRunning = isRunning);
+    this.millisecondsSubscription = this.timerService.milliseconds$.subscribe(milliseconds => this.milliseconds = milliseconds);
   }
 
+  /**
+   * unsubscribe from carly texts interval and timer
+   */
   ngOnDestroy(): void {
     // Clear interval when component is destroyed
     clearInterval(this.intervalId);
-
     // Unsubscribe from all subscriptions
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
@@ -314,5 +332,23 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
       default:
         return `${baseClass}`;
     }
+  }
+
+  /**
+   * play and pause toogle of timer
+   */
+  toggleTimer() {
+    if (this.isRunning) {
+      this.timerService.pauseTimer();
+    } else {
+      this.timerService.startTimer();
+    }
+  }
+
+  /**
+   * resets the timer
+   */
+  resetTimer() {
+    this.timerService.resetTimer();
   }
 }

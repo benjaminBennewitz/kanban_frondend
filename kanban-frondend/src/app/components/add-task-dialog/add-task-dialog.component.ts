@@ -6,6 +6,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   selector: 'app-add-task-dialog',
   templateUrl: './add-task-dialog.component.html',
 })
+
 export class AddTaskDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<AddTaskDialogComponent>,

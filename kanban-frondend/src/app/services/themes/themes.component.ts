@@ -8,20 +8,37 @@ interface ThemeConfig {
 @Injectable({
   providedIn: 'root',
 })
+
 @Component({
   selector: 'app-themes',
   templateUrl: './themes.component.html',
   styleUrls: ['./themes.component.scss'],
 })
+
 export class ThemesComponent {
   private currentThemeSubject = new BehaviorSubject<string>('default');
   currentTheme$ = this.currentThemeSubject.asObservable();
   private localStorageKey = 'selectedTheme';
 
+  constructor(private renderer: Renderer2) {
+    const savedTheme = localStorage.getItem(this.localStorageKey);
+    if (savedTheme) {
+      this.currentThemeSubject.next(savedTheme);
+      this.applyTheme(savedTheme);
+    }
+  }
+
+  /**
+   * gets theme selection from local storage
+   * @returns 
+   */
   public getLocalStorageKey(): string {
     return this.localStorageKey;
   }
 
+  /**
+   * help function to set the right theme classes on login.component
+   */
   private themeClassMapping: { [key: string]: ThemeConfig } = {
     'light-theme': {
       mainWrapper: 'main-wrapper-light',
@@ -33,14 +50,6 @@ export class ThemesComponent {
       mainWrapper: 'main-wrapper',
     },
   };
-
-  constructor(private renderer: Renderer2) {
-    const savedTheme = localStorage.getItem(this.localStorageKey);
-    if (savedTheme) {
-      this.currentThemeSubject.next(savedTheme);
-      this.applyTheme(savedTheme);
-    }
-  }
 
   /**
    * Function called when theme is changed
@@ -55,7 +64,6 @@ export class ThemesComponent {
       this.removeOldClasses(mainWrapper);
       this.addNewClass(mainWrapper, selectedTheme);
     }
-
     // Apply theme to body for scrollbar styling
     this.applyTheme(selectedTheme);
   }
