@@ -42,11 +42,13 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
   seconds: number = 0;
   milliseconds: number = 0;
   isRunning: boolean = false;
+  showClicker: boolean = true;
   private timerSubscription: Subscription = new Subscription();
   private isRunningSubscription: Subscription = new Subscription();
   private millisecondsSubscription: Subscription = new Subscription();
   /* CARLY TOOGLE VARIABLES*/
-  checked = true;
+  checkedCarly = true;
+  checkedClicker = true;
   disabled = false;
 
   constructor(
@@ -177,7 +179,7 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
    * toogles on/off for the mascot
    */
   toggleMascotDialog(): void {
-    if (this.checked) {
+    if (this.checkedCarly) {
       this.showMascotDialog = true;
       this.changeMessage();
       setTimeout(() => {
@@ -187,6 +189,17 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
       this.showMascotDialog = false;
     }
   }  
+
+  /**
+   * toogles on/off for the clicker
+   */
+  toggleClickerVisibility(): void {
+    if (this.checkedClicker) {
+      this.showClicker = true;
+    } else {
+      this.showClicker = false;
+    }
+  } 
 
   /**
    * calls the adjustTextareaHeight function

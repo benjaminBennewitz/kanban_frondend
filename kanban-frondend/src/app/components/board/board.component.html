@@ -19,34 +19,40 @@
 </div>
 
 <mat-drawer-container class="mat-drawer-container" autosize>
+
     <!-- SIDENAV START -->
     <mat-drawer id="sideNav" #drawer [ngClass]="getThemeClass('board-sidenav')" mode="over" [opened]="false">
-        <div class="logo-container">B² TICKETEER</div>
-        <ul class="menu-items">
-            <li><mat-icon>dashboard</mat-icon>Board</li>
-            <li>
-                <div class="flex-c-c"><mat-icon>settings</mat-icon><mat-label>Theme</mat-label></div>
-                <mat-select (selectionChange)="onThemeChange($event.value)">
-                    <mat-option value="default">Default</mat-option>
-                    <mat-option value="light-theme">Light</mat-option>
-                    <mat-option value="dark-theme">Dark</mat-option>
-                </mat-select>
-            </li>
-            <li class="flex-btw-c"><div class="flex-fl-c"><mat-icon>pets</mat-icon>Carly</div>
-                <section class="example-section">
-                    <mat-slide-toggle
-                        (change)="toggleMascotDialog()"
-                        class="example-margin"
-                        [checked]="checked"
-                        [disabled]="disabled"
-                        [(ngModel)]="checked">
-                    </mat-slide-toggle>
-                </section>
-            </li>
-            <li (click)="onLogout()" class="log-out"><mat-icon>logout</mat-icon>Logout</li>
-        </ul>
-    </mat-drawer>
-    <!-- SIDENAV END -->
+      <div class="logo-container">B² TICKETEER</div>
+      <ul class="menu-items">
+          <li><mat-icon>dashboard</mat-icon>Board</li>
+          <li>
+              <div class="flex-c-c"><mat-icon>settings</mat-icon><mat-label>Theme</mat-label></div>
+              <mat-select (selectionChange)="onThemeChange($event.value)">
+                  <mat-option value="default">Default</mat-option>
+                  <mat-option value="light-theme">Light</mat-option>
+                  <mat-option value="dark-theme">Dark</mat-option>
+              </mat-select>
+          </li>
+          <li class="flex-btw-c">
+              <div class="flex-fl-c"><mat-icon>pets</mat-icon>Carly</div>
+              <section class="example-section">
+                  <mat-slide-toggle (change)="toggleMascotDialog()" [checked]="checkedCarly" [disabled]="disabled"
+                      [(ngModel)]="checkedCarly">
+                  </mat-slide-toggle>
+              </section>
+          </li>
+          <li class="flex-btw-c">
+              <div class="flex-fl-c"><mat-icon>timer</mat-icon>Clicker</div>
+              <section class="example-section">
+                  <mat-slide-toggle (change)="toggleClickerVisibility()" [checked]="checkedClicker"
+                      [disabled]="disabled" [(ngModel)]="checkedClicker">
+                  </mat-slide-toggle>
+              </section>
+          </li>
+          <li (click)="onLogout()" class="log-out"><mat-icon>logout</mat-icon>Logout</li>
+      </ul>
+  </mat-drawer>
+  <!-- SIDENAV END -->
 
     <!-- HEADER START -->
     <mat-toolbar id="navToolbar" [ngClass]="getThemeClass('board-toolbar')">
@@ -67,8 +73,8 @@
           <div class="flex-btw-c">{{ taskService.todoCount$ | async }} To-Do</div>
           <div class="flex-btw-c">{{ taskService.inProgressCount$ | async }} In Progress</div>
           <div class="flex-btw-c">{{ taskService.overdueCount$ | async }} Overdue</div>
-          <div class="board-clicker-wrapper">
-            <div class="flex-c-c">
+          <div class="board-clicker-wrapper" id="showClicker">
+            <div class="flex-c-c" [ngClass]="{'hidden': !checkedClicker}">
               <mat-icon class="play-btn" (click)="toggleTimer()">{{ (timerService.isRunning$ | async) ? 'pause_circle' : 'play_circle' }}</mat-icon>
               <p>{{ (timerService.minutes$ | async) | number: '2.0' }}:{{ (timerService.seconds$ | async) | number: '2.0' }}:{{ (timerService.milliseconds$ | async) | number: '3.0' }}</p>
               <button class="reset-timer-btn" (click)="resetTimer()"><mat-icon>history</mat-icon> RESET</button>
@@ -444,7 +450,7 @@
         </div><!-- BOARD CONTENT INNER END -->
     </div><!-- BOARD CONTENT END -->
 
-    <div [ngClass]="{'hidden': !checked}" class="carly-wrapper" id="carlyWrapper">
+    <div [ngClass]="{'hidden': !checkedCarly}" class="carly-wrapper" id="carlyWrapper">
         <div class="overflow-hidden cat-container">
           <div [ngClass]="getThemeClass('cat')">
             <div class="ear ear--left"></div>
