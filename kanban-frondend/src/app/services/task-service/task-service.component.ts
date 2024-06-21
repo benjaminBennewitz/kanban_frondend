@@ -298,6 +298,7 @@ export class TaskServiceComponent {
       this.removeFromCurrentArray(taskToMove);
       this.done.push(taskToMove);
       this.updateCounts();
+      this.timerService.pauseTimer();
       this.snackbarsComponent.openSnackBar('Task finished - moved to done!', true, false);
     }
   }
