@@ -20,21 +20,20 @@
         var isFirefox = typeof InstallTrigger !== 'undefined';
         var savedTheme = localStorage.getItem('selectedTheme') || 'default';
 
-        console.log("isFirefox: ", isFirefox);
+        /*console.log("isFirefox: ", isFirefox);
         console.log("userAgent: ", userAgent);
-        console.log("Saved Theme: ", savedTheme);
+        console.log("Saved Theme: ", savedTheme);*/
 
         if (/Chrome/.test(userAgent) && !/Chromium/.test(userAgent)) {
             document.body.classList.add('chrome');
-            console.log("Chrome erkannt, Klasse hinzugefügt.");
+            //console.log("Chrome erkannt, Klasse hinzugefügt.");
         }
 
         if (isFirefox) {
             document.body.classList.add('firefox');
-            console.log("Firefox erkannt, Klasse hinzugefügt.");
+            //console.log("Firefox erkannt, Klasse hinzugefügt.");
         }
 
-        // Fügen Sie hier die Theme-Klasse hinzu
         if (savedTheme === 'light-theme') {
             document.body.classList.add('light-theme');
         } else if (savedTheme === 'dark-theme') {

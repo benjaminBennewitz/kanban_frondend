@@ -14,8 +14,8 @@ import { AuthComponent } from '../../services/auth/auth.component';
 
 export class LoginComponent implements OnInit {
 
-  username: String = '';
-  password: String = '';
+  username: string = '';
+  password: string = '';
 
   constructor(
     private themesComponent: ThemesComponent,
@@ -29,24 +29,6 @@ export class LoginComponent implements OnInit {
     const savedTheme = localStorage.getItem(this.themesComponent.getLocalStorageKey());
     if (savedTheme) {
       this.themesComponent.onThemeChange(savedTheme);
-    }
-  }
-
-  /**
-   * 
-   * @returns 
-   */
-  async login() {
-    try {
-      let resp: any = await this.as.loginWithUserAndPassword(this.username, this.password);
-
-      console.log(resp);
-      localStorage.setItem('token', resp['token']);
-      this.router.navigateByUrl('/todos');
-      
-    } catch (e) {
-      alert('Login declined');
-      console.error(e);
     }
   }
 
@@ -67,6 +49,31 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/board']);
     }, 1500); // Delay of 1.5 seconds
   }
+
+    /**
+   * 
+   * @returns 
+   */
+    async login() {
+      try {
+        let resp: any = await this.as.loginWithUserAndPassword(this.username, this.password);
+  
+        console.log(resp);
+        localStorage.setItem('token', resp['token']);
+  
+        this.snackbarsComponent.openSnackBar('Login successful!', true, true);
+  
+        // delay of 1,5 sec before redirect to /board
+        setTimeout(() => {
+          this.router.navigateByUrl('/board');
+        }, 1500);
+        
+      } catch (e) {
+        this.snackbarsComponent.openSnackBar('Login denied!', false, false);
+        console.error(e);
+      }
+    }
+  
 
   /**
    * calls the registration form
