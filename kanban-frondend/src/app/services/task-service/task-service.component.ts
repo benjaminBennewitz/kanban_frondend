@@ -41,7 +41,19 @@ export class TaskServiceComponent {
 
 
   // default tasks for testing
-  urgent: Task[] = [];
+  urgent: Task[] = [
+    {
+      id: 3,
+      title: 'Testing theming',
+      subtitle: 'Check all themes: light, dark and default',
+      content: 'very fiddly thing to make work',
+      date: new Date('2024-06-23'),
+      prio: 'low',
+      done: false,
+      status: 'todo',
+      doTime: 0,
+    },
+  ];
   todo: Task[] = [
     {
       id: 1,
@@ -62,17 +74,6 @@ export class TaskServiceComponent {
       content: 'Install REST framework, set up venv, check requirements',
       date: new Date('2024-08-06'),
       prio: 'medium',
-      done: false,
-      status: 'todo',
-      doTime: 0,
-    },
-    {
-      id: 3,
-      title: 'Testing theming',
-      subtitle: 'Check all themes: light, dark and default',
-      content: 'very fiddly thing to make work',
-      date: new Date('2024-06-23'),
-      prio: 'low',
       done: false,
       status: 'todo',
       doTime: 0,
