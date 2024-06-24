@@ -3,12 +3,12 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { RouterOutlet } from '@angular/router';
-import { AppRoutingModule } from './app-routing.module';
+import { RouterOutlet, provideRouter } from '@angular/router';
+import { AppRoutingModule, routes } from './app-routing.module';
 import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -38,12 +38,13 @@ import { TaskServiceComponent } from './services/task-service/task-service.compo
 import { AddTaskDialogComponent } from './components/add-task-dialog/add-task-dialog.component';
 import { MascotComponent } from './services/mascot/mascot.component';
 import { TimerClickerComponent } from './services/timer-clicker/timer-clicker.component';
+import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
+import { AuthInterceptorService } from './services/auth/auth-interceptor.service';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    AuthComponent,
     LoginComponent,
     BoardComponent,
     ThemesComponent,
@@ -83,6 +84,13 @@ import { TimerClickerComponent } from './services/timer-clicker/timer-clicker.co
   providers: [
     provideAnimationsAsync(), 
     ThemesComponent,
+    provideRouter(routes),
+    provideHttpClient(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+    },
     { provide: MAT_DIALOG_DATA, useValue: {} },
     { provide: MatDialogRef, useValue: {} },
     { provide: DateAdapter, useClass: NativeDateAdapter },
@@ -91,6 +99,7 @@ import { TimerClickerComponent } from './services/timer-clicker/timer-clicker.co
     TaskServiceComponent,
     MascotComponent,
     TimerClickerComponent,
+    AuthComponent,
   ],
   bootstrap: [AppComponent],
 })
