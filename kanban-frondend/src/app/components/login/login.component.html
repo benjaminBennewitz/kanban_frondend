@@ -2,39 +2,40 @@
     <div class="outer-wrapper--login">
         <h1>Login to Board</h1>
 
-        <mat-form-field>
-            <mat-label>Username</mat-label>
-            <input matInput>
-        </mat-form-field>
+        <form (ngSubmit)="login()">
+            <mat-form-field>
+                <mat-label>Username</mat-label><input matInput type="text" name="username" [(ngModel)]="username">
+            </mat-form-field>
 
-        <mat-form-field>
-            <mat-label>Password</mat-label>
-            <input matInput>
-        </mat-form-field>
+            <mat-form-field>
+                <mat-label>Password</mat-label><input matInput type="password" name="password" [(ngModel)]="password">
+            </mat-form-field>
 
-        <mat-form-field>
-            <mat-label>Select theme</mat-label>
-            <mat-select (selectionChange)="onThemeChange($event.value)">
-                <mat-option value="default-theme">Default</mat-option>
-                <mat-option value="light-theme">Light</mat-option>
-                <mat-option value="dark-theme">Dark</mat-option>
-            </mat-select>
-        </mat-form-field>
+            <mat-form-field>
+                <mat-label>Select theme</mat-label>
+                <mat-select (selectionChange)="onThemeChange($event.value)">
+                    <mat-option value="default-theme">Default</mat-option>
+                    <mat-option value="light-theme">Light</mat-option>
+                    <mat-option value="dark-theme">Dark</mat-option>
+                </mat-select>
+            </mat-form-field>
 
-        <div class="flex-c-c gap-32">
-            <button class="login-btn" mat-raised-button (click)="registerDialog()">
-              <mat-icon>how_to_reg</mat-icon>Register
-            </button>
-            <button class="login-btn" mat-raised-button (click)="loginDialog()">
-                <mat-icon>login</mat-icon>Login
-            </button>
-        </div>
+            <div class="flex-c-c gap-32">
+                <button class="login-btn" mat-raised-button (click)="registerDialog()">
+                <mat-icon>how_to_reg</mat-icon>Register
+                </button>
+                <button class="login-btn" mat-raised-button (click)="loginDialog()">
+                    <mat-icon>login</mat-icon>Login
+                </button>
+            </div>
+        </form>
     </div>
 
+    <!-- ANIMATED BACKGROUND START -->
     <div class='box'>
         <div class='wave -one'></div>
         <div class='wave -two'></div>
         <div class='wave -three'></div>
     </div>
-    
+    <!-- ANIMATED BACKGROUND END -->
 </section>

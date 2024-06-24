@@ -4,6 +4,7 @@ import { DialogRegisterComponent } from '../dialog-register/dialog-register.comp
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarsComponent } from '../snackbars/snackbars.component';
 import { Router } from '@angular/router';
+import { AuthComponent } from '../../services/auth/auth.component';
 
 @Component({
   selector: 'app-login',
@@ -13,17 +14,39 @@ import { Router } from '@angular/router';
 
 export class LoginComponent implements OnInit {
 
+  username: String = '';
+  password: String = '';
+
   constructor(
     private themesComponent: ThemesComponent,
     public dialog: MatDialog,
     private snackbarsComponent: SnackbarsComponent,
     private router: Router,
+    private as: AuthComponent,
   ) { }
 
   ngOnInit(): void {
     const savedTheme = localStorage.getItem(this.themesComponent.getLocalStorageKey());
     if (savedTheme) {
       this.themesComponent.onThemeChange(savedTheme);
+    }
+  }
+
+  /**
+   * 
+   * @returns 
+   */
+  async login() {
+    try {
+      let resp: any = await this.as.loginWithUserAndPassword(this.username, this.password);
+
+      console.log(resp);
+      localStorage.setItem('token', resp['token']);
+      this.router.navigateByUrl('/todos');
+      
+    } catch (e) {
+      alert('Login declined');
+      console.error(e);
     }
   }
 
