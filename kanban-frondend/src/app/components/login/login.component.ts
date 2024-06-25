@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // saves the selected theme to local storage
     const savedTheme = localStorage.getItem(this.themesComponent.getLocalStorageKey());
     if (savedTheme) {
       this.themesComponent.onThemeChange(savedTheme);
@@ -51,40 +52,33 @@ export class LoginComponent implements OnInit {
   }
 
     /**
-   * 
+   * login function
    * @returns 
    */
     async login() {
       try {
         let resp: any = await this.as.loginWithUserAndPassword(this.username, this.password);
-  
         console.log(resp);
         localStorage.setItem('token', resp['token']);
-  
+        this.as.setUsername(this.username); // saves the username in auth.component
         this.snackbarsComponent.openSnackBar('Login successful!', true, true);
-  
-        // delay of 1,5 sec before redirect to /board
         setTimeout(() => {
           this.router.navigateByUrl('/board');
         }, 1500);
-        
       } catch (e) {
-        this.snackbarsComponent.openSnackBar('Login denied!', false, false);
+        alert('Login declined');
         console.error(e);
       }
     }
   
-
   /**
    * calls the registration form
    */
   registerDialog() {
     const dialogRef = this.dialog.open(DialogRegisterComponent);
-
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'registered') {
         this.snackbarsComponent.openSnackBar('Registration successful! - Please log in', true, true);
-        // No navigation here
       }
     });
   }

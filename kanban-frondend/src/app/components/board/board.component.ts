@@ -9,6 +9,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { Task, TaskServiceComponent } from '../../services/task-service/task-service.component';
 import { MascotComponent } from '../../services/mascot/mascot.component';
 import { TimerClickerComponent } from '../../services/timer-clicker/timer-clicker.component';
+import { AuthComponent } from '../../services/auth/auth.component';
 
 @Component({
   selector: 'app-board',
@@ -50,6 +51,8 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
   checkedCarly = true;
   checkedClicker = true;
   disabled = false;
+  /* USERNAME VARIABLE FOR WELCOME MESSAGE */
+  username: string = '';
 
   constructor(
     private themesComponent: ThemesComponent,
@@ -59,6 +62,7 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
     public taskService: TaskServiceComponent,
     private mascotService: MascotComponent,
     public timerService: TimerClickerComponent,
+    private as: AuthComponent,
   ) {
     this.doneCount$ = this.taskService.doneCount$;
     this.urgentCount$ = this.taskService.urgentCount$;
@@ -73,6 +77,12 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
 
   // onload functions
   ngOnInit() {
+
+    // get username and use in board.html
+    this.as.currentUsername.subscribe(username => {
+      this.username = username;
+    });
+
     // get the current theme
     this.themesComponent.currentTheme$.subscribe((theme) => {
       this.currentTheme = theme;
