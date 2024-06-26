@@ -30,6 +30,11 @@ export class TaskServiceComponent {
   // toogle between true and fals for the calendar icon
   showDatePicker: boolean = false;
 
+  urgent: Task[] = [];
+  todo: Task[] = [];
+  inProgress: Task[] = [];
+  done: Task[] = [];
+
    /**
    * @param snackbarsComponent 
    * @param dialog 
@@ -41,7 +46,7 @@ export class TaskServiceComponent {
 
 
   // default tasks for testing
-  urgent: Task[] = [
+  /*urgent: Task[] = [
     {
       id: 3,
       title: 'Testing theming',
@@ -117,7 +122,7 @@ export class TaskServiceComponent {
       status: 'done',
       doTime: 0,
     },
-  ];
+  ];*/
 
   /**
    * BehaviorSubjects for tracking task counts

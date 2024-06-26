@@ -38,7 +38,7 @@ import { TaskServiceComponent } from './services/task-service/task-service.compo
 import { AddTaskDialogComponent } from './components/add-task-dialog/add-task-dialog.component';
 import { MascotComponent } from './services/mascot/mascot.component';
 import { TimerClickerComponent } from './services/timer-clicker/timer-clicker.component';
-import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptorService } from './services/auth/auth-interceptor.service';
 
 
@@ -80,6 +80,7 @@ import { AuthInterceptorService } from './services/auth/auth-interceptor.service
     MatDialogModule,
     MatDatepickerModule,
     MatTooltipModule,
+    HttpClientModule,
   ],
   providers: [
     provideAnimationsAsync(), 

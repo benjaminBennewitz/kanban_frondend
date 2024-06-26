@@ -36,4 +36,12 @@ export class AuthComponent {
   setUsername(username: string) {
     this.usernameSource.next(username);
   }
+
+  /**
+   * help function to check if user is logged in, if true then returns the token
+   * @returns 
+   */
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token');
+  }
 }

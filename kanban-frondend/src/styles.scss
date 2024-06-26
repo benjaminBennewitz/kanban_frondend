@@ -238,6 +238,14 @@ html {
     }
 }
 
+.login-btn-disabled {
+    background-color: $secondary !important;
+    color: $text !important;
+    transition: all 250ms !important;
+    box-shadow: none !important;
+    opacity: 0.3;
+}
+
 .login-btn.register {
     min-width: 120px;
 }

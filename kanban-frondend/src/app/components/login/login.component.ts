@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ThemesComponent } from '../../services/themes/themes.component';
 import { DialogRegisterComponent } from '../dialog-register/dialog-register.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarsComponent } from '../snackbars/snackbars.component';
 import { Router } from '@angular/router';
 import { AuthComponent } from '../../services/auth/auth.component';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,8 @@ export class LoginComponent implements OnInit {
 
   username: string = '';
   password: string = '';
+
+  @ViewChild('loginForm') loginForm!: NgForm;
 
   constructor(
     private themesComponent: ThemesComponent,
@@ -66,7 +69,7 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl('/board');
         }, 1500);
       } catch (e) {
-        alert('Login declined');
+        this.snackbarsComponent.openSnackBar('Login denied!', false, false);
         console.error(e);
       }
     }
