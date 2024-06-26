@@ -9,6 +9,14 @@ import { catchError, throwError, Observable } from 'rxjs';
 export class AuthInterceptorService implements HttpInterceptor {
 
   constructor(private router: Router) { }
+
+  /**
+   * Intercepts HTTP requests and adds an Authorization header with a token from local storage,
+   * if available. Handles HTTP error responses, specifically redirecting to '/login' on 401 Unauthorized.
+   * @param request The HTTP request to intercept and modify headers.
+   * @param next The HTTP handler to pass the modified request to.
+   * @returns An Observable of the HTTP event stream with error handling.
+   */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('token');
     if (token) {
@@ -25,6 +33,5 @@ export class AuthInterceptorService implements HttpInterceptor {
       }
       return throwError(() => err);
     }));
-
   }
 }

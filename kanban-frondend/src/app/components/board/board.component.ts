@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChildren, ElementRef, AfterViewInit, OnDestroy, QueryList } from '@angular/core';
 import { Router } from '@angular/router';
 import { ThemesComponent } from '../../services/themes/themes.component';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
@@ -18,6 +18,14 @@ import { AuthComponent } from '../../services/auth/auth.component';
   
 })
 export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
+  
+  urgentTasks: Task[] = [];
+  todoTasks: Task[] = [];
+  inProgressTasks: Task[] = [];
+  doneTasks: Task[] = [];
+
+  tasks: Task[] = [];
+
   showFiller = false;
   currentTheme: string = 'default';
   /* OVERLAY ANIMATIONS VARIABLES*/
@@ -30,7 +38,7 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
   todoCount$: BehaviorSubject<number>;
   overdueCount$: BehaviorSubject<number>;
   /* CHANGE THE HEIGHT FOR TEXTAREA VARIABLE */
-  @ViewChild('contentTextarea') contentTextarea?: ElementRef;
+  @ViewChildren('contentTextarea') contentTextareas!: QueryList<ElementRef>;
   /* MASCOT CARLY VARIABLES */
   mascotTexts: any[] = [];
   currentText: string = '';
@@ -76,7 +84,9 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
   position = new FormControl(this.positionOptions[0]);
 
   // onload functions
-  ngOnInit() {
+  ngOnInit() :void{
+    // load tasks from backend
+    this.taskService.loadTasksFromBackend();
 
     // get username and use in board.html
     this.as.currentUsername.subscribe(username => {
@@ -96,7 +106,6 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
 
     // Show welcome overlay when the user logs in
     this.showWelcomeOverlay();
-    this.adjustTextareaHeight();
 
     // Subscribe to changes in counts and update mascot texts accordingly
     this.subscriptions.push(this.taskService.doneCount$.subscribe(() => this.updateMascotTexts()));
@@ -168,7 +177,7 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
   }
 
   /**
-   * hepl function to return the sum of all left over tasks
+   * helper function to return the sum of all left over tasks
    * @returns 
    */
   calculateAllTasksLeft(): number {
@@ -219,14 +228,21 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
   }
 
   /**
+   * calls the adjustTextareaHeight function
+   */
+  ngAfterViewChecked(): void {
+    this.adjustTextareaHeight();
+  }
+
+  /**
    * changes the height of the textareas of the tasks
    */
   adjustTextareaHeight(): void {
-    if (this.contentTextarea) {
-      const textarea = this.contentTextarea.nativeElement;
+    this.contentTextareas.forEach((textareaRef: ElementRef) => {
+      const textarea = textareaRef.nativeElement;
       textarea.style.height = 'auto';
       textarea.style.height = textarea.scrollHeight + 'px';
-    }
+    });
   }
 
   /**

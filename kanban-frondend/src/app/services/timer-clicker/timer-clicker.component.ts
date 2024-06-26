@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-timer-clicker',
   templateUrl: './timer-clicker.component.html',
-  styleUrls: ['./timer-clicker.component.scss']
+  styleUrls: ['./timer-clicker.component.scss'],
 })
 export class TimerClickerComponent implements OnDestroy {
   private millisecondsSubject = new BehaviorSubject<number>(0);
@@ -25,18 +25,34 @@ export class TimerClickerComponent implements OnDestroy {
     this.pauseTimer();
   }
 
+  /**
+   * Getter property to retrieve the current value of milliseconds.
+   * @returns The current value of milliseconds.
+   */
   get currentMilliseconds() {
     return this.millisecondsSubject.value;
   }
 
+  /**
+   * Getter property to retrieve the current value of seconds.
+   * @returns The current value of seconds.
+   */
   get currentSeconds() {
     return this.secondsSubject.value;
   }
 
+  /**
+   * Getter property to retrieve the current value of minutes.
+   * @returns The current value of minutes.
+   */
   get currentMinutes() {
     return this.minutesSubject.value;
   }
 
+  /**
+   * Getter property to retrieve the current running state.
+   * @returns The current running state (true if running, false otherwise).
+   */
   get running() {
     return this.isRunning.value;
   }

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { SnackbarsComponent } from '../../components/snackbars/snackbars.component';
 import { AddTaskDialogComponent } from '../../components/add-task-dialog/add-task-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { TimerClickerComponent } from '../timer-clicker/timer-clicker.component';
+import { HttpClient } from '@angular/common/http';
 
 export interface Task {
   id: number;
@@ -22,131 +22,146 @@ export interface Task {
 @Injectable({
   providedIn: 'root',
 })
-
 export class TaskServiceComponent {
-  // variables for the timer
+  // variable for the url
+  private apiUrl = 'http://localhost:8000/tasks/';
+  // variables for the task counts
   private tasksSubject = new BehaviorSubject<Task[]>([]);
   tasks$ = this.tasksSubject.asObservable();
   // toogle between true and fals for the calendar icon
   showDatePicker: boolean = false;
-
+  // see default arrays in tests.ts
   urgent: Task[] = [];
   todo: Task[] = [];
   inProgress: Task[] = [];
   done: Task[] = [];
 
-   /**
-   * @param snackbarsComponent 
-   * @param dialog 
-   */
-   constructor(
+  // BehaviorSubjects for tracking task counts
+  doneCount$ = new BehaviorSubject<number>(0);
+  urgentCount$ = new BehaviorSubject<number>(0);
+  inProgressCount$ = new BehaviorSubject<number>(0);
+  todoCount$ = new BehaviorSubject<number>(0);
+  overdueCount$ = new BehaviorSubject<number>(0);
+
+  constructor(
     private snackbarsComponent: SnackbarsComponent,
     private dialog: MatDialog,
-    private timerService: TimerClickerComponent) {}
-
-
-  // default tasks for testing
-  /*urgent: Task[] = [
-    {
-      id: 3,
-      title: 'Testing theming',
-      subtitle: 'Check all themes: light, dark and default',
-      content: 'very fiddly thing to make work',
-      date: new Date('2024-06-23'),
-      prio: 'low',
-      done: false,
-      status: 'todo',
-      doTime: 0,
-    },
-  ];
-  todo: Task[] = [
-    {
-      id: 1,
-      title: 'Start with Angular',
-      subtitle: 'Read documentation and differences',
-      content:
-        'Many new functions on Angular 18: Material 3, deferrable views and built-in controls flows are now officially stable and bring a number of improvements',
-      date: new Date('2024-07-22'),
-      prio: 'urgent',
-      done: false,
-      status: 'todo',
-      doTime: 0,
-    },
-    {
-      id: 2,
-      title: 'Start with Django',
-      subtitle: 'Install and prepare',
-      content: 'Install REST framework, set up venv, check requirements',
-      date: new Date('2024-08-06'),
-      prio: 'medium',
-      done: false,
-      status: 'todo',
-      doTime: 0,
-    },
-  ];
-
-  inProgress: Task[] = [
-    {
-      id: 4,
-      title: 'Make Drag and Drop work',
-      subtitle: 'Check docs',
-      content: 'N/A',
-      date: new Date('2024-05-15'),
-      prio: '',
-      done: false,
-      status: 'inProgress',
-      doTime: 0,
-    },
-    {
-      id: 5,
-      title: 'Check classes on dragging',
-      subtitle: 'Classes are wrong by drag n drop',
-      content: 'Check functions and classes',
-      date: new Date('2024-06-01'),
-      prio: 'low',
-      done: false,
-      status: 'inProgress',
-      doTime: 0,
-    },
-  ];
-
-  done: Task[] = [
-    {
-      id: 6,
-      title: 'Design Board',
-      subtitle: 'Make the Layout and css classes',
-      content: 'Pay attention to class naming',
-      date: new Date('2024-07-19'),
-      prio: 'medium',
-      done: false,
-      status: 'done',
-      doTime: 0,
-    },
-  ];*/
+    private http: HttpClient
+  ) {}
 
   /**
-   * BehaviorSubjects for tracking task counts
+   * load the tasks from backend
+   * sorts the tasks into the right arrays
+   * updates the tasks counts
    */
-  doneCount$ = new BehaviorSubject<number>(this.done.length);
-  urgentCount$ = new BehaviorSubject<number>(this.urgent.length);
-  inProgressCount$ = new BehaviorSubject<number>(this.inProgress.length);
-  todoCount$ = new BehaviorSubject<number>(this.todo.length);
-  overdueCount$ = new BehaviorSubject<number>(this.getOverdueCount());
-
-  /**
-   * main funciton for calculating the past date
-   * @param date 
-   * @returns 
-   */
-  isDatePast(date: Date): boolean {
-    const today = new Date();
-    return date < today;
+  loadTasksFromBackend(): void {
+    this.http.get<Task[]>(this.apiUrl).subscribe(
+      (tasks) => {
+        this.tasksSubject.next(tasks);
+        this.sortTasksIntoArrays(tasks);
+        this.updateTaskCounts();
+      },
+      (error) => {
+        console.error('Error while loading tasks:', error);
+        this.snackbarsComponent.openSnackBar(
+          'Error while loading tasks',
+          false,
+          false
+        );
+      }
+    );
   }
 
   /**
-   * help funciton to return the past date
-   * @param date 
-   * @returns 
+   * sorts the tasks into the right array
+   * @param tasks
+   */
+  private sortTasksIntoArrays(tasks: Task[]): void {
+    this.urgent = tasks.filter((task) => task.status === 'urgent');
+    this.todo = tasks.filter((task) => task.status === 'todo');
+    this.inProgress = tasks.filter((task) => task.status === 'inProgress');
+    this.done = tasks.filter((task) => task.status === 'done');
+    this.updateOverdueCount();
+    this.updateTaskCounts();
+  }
+
+  updateTaskCounts(): void {
+    this.doneCount$.next(this.done.length);
+    this.urgentCount$.next(this.urgent.length);
+    this.inProgressCount$.next(this.inProgress.length);
+    this.todoCount$.next(this.todo.length);
+  }
+
+  updateOverdueCount(): void {
+    const overdueCount = this.getOverdueCount();
+    this.overdueCount$.next(overdueCount);
+  }
+
+  createTask(task: Task): Observable<Task> {
+    return this.http.post<Task>(this.apiUrl, task);
+  }
+
+
+
+  /* ################################### */
+  /* ######   CRUD OPERATIONS   ####### */
+  /* ################################# */
+
+
+  updateTask(task: Task): Observable<Task> {
+    const url = `${this.apiUrl}${task.id}/`;
+    return this.http.put<Task>(url, task);
+  }  
+
+  /**
+   * deletes a task
+   * @param taskId
+   */
+  deleteTask(taskId: number): void {
+    const url = `${this.apiUrl}${taskId}/`;
+
+    this.http.delete<void>(url).subscribe(
+      () => {
+        this.removeFromAllArrays(taskId);
+        this.updateTaskCounts();
+        this.updateOverdueCount();
+        this.snackbarsComponent.openSnackBar('Task deleted', true, false);
+      },
+      (error) => {
+        console.error('Error deleting task:', error);
+        this.snackbarsComponent.openSnackBar('Error deleting task', false, false);
+      }
+    );
+  }
+
+  /**
+   * Helper function to remove a task from all arrays.
+   * @param taskId The ID of the task to remove.
+   */
+  private removeFromAllArrays(taskId: number): void {
+    this.urgent = this.urgent.filter((task) => task.id !== taskId);
+    this.todo = this.todo.filter((task) => task.id !== taskId);
+    this.inProgress = this.inProgress.filter((task) => task.id !== taskId);
+    this.done = this.done.filter((task) => task.id !== taskId);
+  }
+
+  /**
+   * main function for calculating the past date
+   * @param date
+   * @returns
+   */
+  isDatePast(date: Date | string): boolean {
+    const today = new Date();
+    const taskDate = new Date(date);
+    // Set the time of today's date to 00:00:00 to compare only the date part
+    today.setHours(0, 0, 0, 0);
+    return taskDate < today;
+  }
+
+  /**
+   * help function to return the past date
+   * @param date
+   * @returns
    */
   isDateOverdue(date: Date): boolean {
     return this.isDatePast(date);
@@ -154,21 +169,22 @@ export class TaskServiceComponent {
 
   /**
    * date function when input value is change
-   * @param event 
-   * @param task 
+   * @param event
+   * @param task
    */
   onDateChange(event: Event, task: Task): void {
     const input = event.target as HTMLInputElement;
     if (input.value) {
       task.date = new Date(input.value);
+      this.updateOverdueCount();
     }
   }
 
   /**
    * count the tasks state
-   * @returns 
+   * @returns
    */
-  getOverdueCount(): number {
+  private getOverdueCount(): number {
     return (
       this.urgent.filter((task) => this.isDateOverdue(task.date)).length +
       this.todo.filter((task) => this.isDateOverdue(task.date)).length +
@@ -179,19 +195,27 @@ export class TaskServiceComponent {
 
   /**
    * toogles the edit mode for each task
-   * @param task 
+   * @param task
    */
   toggleEditMode(task: Task) {
     task.isEditMode = !task.isEditMode;
     if (!task.isEditMode) {
-      this.snackbarsComponent.openSnackBar('Task edited', false, false);
+      this.updateTask(task).subscribe(
+        () => {
+          this.snackbarsComponent.openSnackBar('Task edited', true, false);
+        },
+        (error) => {
+          console.error('Error while updating task:', error);
+          this.snackbarsComponent.openSnackBar('Error while updating task', false, false);
+        }
+      );
     }
-  }
+  }  
 
   /**
    * checks the prio state and returns it
-   * @param prio 
-   * @returns 
+   * @param prio
+   * @returns
    */
   getPriorityClass(prio: string): string {
     switch (prio) {
@@ -209,12 +233,19 @@ export class TaskServiceComponent {
   /**
    * opens the add Task dialog
    */
-  addTaskDialog(state:string): void {
+  addTaskDialog(state: string): void {
     const dialogRef = this.dialog.open(AddTaskDialogComponent, {
       width: '400px',
-      data: { title: '', subtitle: '', content: '', date: new Date(), prio:'low', status: state }
+      data: {
+        title: '',
+        subtitle: '',
+        content: '',
+        date: new Date(),
+        prio: 'low',
+        status: state,
+      },
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const newTask: Task = {
           id: this.generateUniqueId(),
@@ -226,7 +257,7 @@ export class TaskServiceComponent {
           done: false,
           status: result.status,
           isEditMode: false,
-          doTime:0,
+          doTime: 0,
         };
         this.addTaskToCorrectArray(newTask);
         this.snackbarsComponent.openSnackBar('Task created', true, false);
@@ -236,16 +267,21 @@ export class TaskServiceComponent {
 
   /**
    * generate and returns a unique id for each new task
-   * @returns 
+   * @returns
    */
   generateUniqueId(): number {
-    const allTasks = [...this.urgent, ...this.todo, ...this.inProgress, ...this.done];
-    return Math.max(...allTasks.map(task => task.id)) + 1;
+    const allTasks = [
+      ...this.urgent,
+      ...this.todo,
+      ...this.inProgress,
+      ...this.done,
+    ];
+    return Math.max(...allTasks.map((task) => task.id)) + 1;
   }
 
   /**
    * pushes the task in the right array, checks the value of input from add task dialog
-   * @param task 
+   * @param task
    */
   addTaskToCorrectArray(task: Task): void {
     switch (task.status) {
@@ -276,19 +312,6 @@ export class TaskServiceComponent {
   }
 
   /**
-   * Deletes a task from the respective list
-   * @param taskId ID of the task to be deleted
-   */
-  deleteTask(taskId: number): void {
-    this.urgent = this.urgent.filter(task => task.id !== taskId);
-    this.todo = this.todo.filter(task => task.id !== taskId);
-    this.inProgress = this.inProgress.filter(task => task.id !== taskId);
-    this.done = this.done.filter(task => task.id !== taskId);
-    this.updateCounts();
-    this.snackbarsComponent.openSnackBar('Task deleted', false, false);
-  }
-
-  /**
    * Marks a task as done and moves it to the 'done' array
    * @param taskId ID of the task to be marked as done
    */
@@ -296,47 +319,51 @@ export class TaskServiceComponent {
     const taskToMove = this.findTaskById(taskId);
 
     if (taskToMove && taskToMove.status !== 'done') {
-      const elapsedTimeInMinutes = this.timerService.currentMinutes + this.timerService.currentSeconds / 60;
-
-      taskToMove.doTime = elapsedTimeInMinutes;
       taskToMove.status = 'done';
-
       this.removeFromCurrentArray(taskToMove);
       this.done.push(taskToMove);
       this.updateCounts();
-      this.timerService.pauseTimer();
-      this.snackbarsComponent.openSnackBar('Task finished - moved to done!', true, false);
+      this.snackbarsComponent.openSnackBar(
+        'GREAT! - Task is done',
+        true,
+        false
+      );
     }
-  }
-  
-  /**
-   * Hilfsfunktion, um einen Task anhand seiner ID zu finden
-   * @param taskId ID des gesuchten Tasks
-   * @returns Der gefundene Task oder null, wenn nicht gefunden
-   */
-  private findTaskById(taskId: number): Task | null {
-    const allTasks = [...this.urgent, ...this.todo, ...this.inProgress, ...this.done];
-    return allTasks.find(task => task.id === taskId) || null;
   }
 
   /**
-   * Hilfsfunktion, um einen Task aus dem aktuellen Array zu entfernen
-   * @param taskToRemove Der Task, der entfernt werden soll
+   * Helper function to find a task by its ID.
+   * @param taskId The ID of the task to find.
+   * @returns The found task or null if not found.
+   */
+  private findTaskById(taskId: number): Task | null {
+    const allTasks = [
+      ...this.urgent,
+      ...this.todo,
+      ...this.inProgress,
+      ...this.done,
+    ];
+    return allTasks.find((task) => task.id === taskId) || null;
+  }
+
+  /**
+   * Helper function to remove a task from the current array.
+   * @param taskToRemove The task to be removed.
    */
   private removeFromCurrentArray(taskToRemove: Task): void {
     this.urgent = this.removeFromTaskArray(this.urgent, taskToRemove);
     this.todo = this.removeFromTaskArray(this.todo, taskToRemove);
     this.inProgress = this.removeFromTaskArray(this.inProgress, taskToRemove);
-    // Der Task wird aus dem aktuellen Array entfernt, daher ist keine Aktion erforderlich
+    this.done = this.removeFromTaskArray(this.done, taskToRemove);
   }
 
   /**
-   * Hilfsfunktion, um einen Task aus einem Array zu entfernen
-   * @param array Das Array, aus dem der Task entfernt werden soll
-   * @param taskToRemove Der Task, der entfernt werden soll
-   * @returns Ein neues Array ohne den entfernten Task
+   * Helper function to remove a task from an array.
+   * @param {Array<any>} array The array from which the task should be removed.
+   * @param {*} taskToRemove The task to be removed from the array.
+   * @returns {Array<any>} A new array without the removed task.
    */
   private removeFromTaskArray(array: Task[], taskToRemove: Task): Task[] {
-    return array.filter(task => task.id !== taskToRemove.id);
+    return array.filter((task) => task.id !== taskToRemove.id);
   }
 }
