@@ -159,8 +159,7 @@
                                 'board-card-date-dark': currentTheme === 'dark-theme',
                                 'overdue-date': taskService.isDatePast(task.date)
                               }" class="board-card-date">
-                              <input type="date" [(ngModel)]="task.date" [disabled]="!task.isEditMode"
-                              (change)="taskService.onDateChange($event, task)">                            
+                              <input type="date" [(ngModel)]="task.date" [disabled]="!task.isEditMode" (change)="taskService.onDateChange($event, task)">                        
                       </div>
                     </mat-card-content>
                     <mat-card-actions class="board-col-tools">

@@ -116,13 +116,15 @@ export class TaskServiceComponent {
   }
 
   /**
-   * updates the tasks
-   * @param task
-   * @returns
+   * Updates a task.
+   * Converts the date to a string format before sending it to the backend.
+   * @param task - The task to be updated.
+   * @returns An Observable of the updated task.
    */
   updateTask(task: Task): Observable<Task> {
     const url = `${this.apiUrl}${task.id}/`;
-    return this.http.put<Task>(url, task);
+    const taskToSend = { ...task, date: task.date.toISOString().split('T')[0] };
+    return this.http.put<Task>(url, taskToSend);
   }
 
   /**
@@ -214,13 +216,14 @@ export class TaskServiceComponent {
     if (!task.isEditMode) {
       this.updateTask(task).subscribe(
         () => {
+          this.loadTasksFromBackend();
           this.snackbarsComponent.openSnackBar('Task edited', true, false);
         },
         (error) => {
           console.error('Error while updating task:', error);
           this.snackbarsComponent.openSnackBar('Error while updating task', false, false);
         }
-      );
+      );  
     }
   }
 
