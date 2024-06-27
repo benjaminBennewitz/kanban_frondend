@@ -85,6 +85,10 @@ export class TaskServiceComponent {
     this.updateTaskCounts();
   }
 
+  /**
+   * Updates the counts for done, urgent, in-progress, and to-do tasks.
+   * This method updates the respective observables with the current lengths of each task array.
+   */
   updateTaskCounts(): void {
     this.doneCount$.next(this.done.length);
     this.urgentCount$.next(this.urgent.length);
@@ -92,26 +96,38 @@ export class TaskServiceComponent {
     this.todoCount$.next(this.todo.length);
   }
 
+  /**
+   * Updates the count of overdue tasks.
+   * This method calculates the overdue tasks and updates the overdueCount$ observable.
+   */
   updateOverdueCount(): void {
     const overdueCount = this.getOverdueCount();
     this.overdueCount$.next(overdueCount);
   }
 
-  createTask(task: Task): Observable<Task> {
-    return this.http.post<Task>(this.apiUrl, task);
-  }
-
-
-
   /* ################################### */
   /* ######   CRUD OPERATIONS   ####### */
   /* ################################# */
 
+  /**
+   * Creates a new task.
+   * Sends a POST request to the API to create a new task and returns an observable of the created task.
+   * @param {Task} task - The task to be created.
+   * @returns {Observable<Task>} An observable of the created task.
+   */
+  createTask(task: Task): Observable<Task> {
+    return this.http.post<Task>(this.apiUrl, task);
+  }
 
+  /**
+   * updates the tasks
+   * @param task
+   * @returns
+   */
   updateTask(task: Task): Observable<Task> {
     const url = `${this.apiUrl}${task.id}/`;
     return this.http.put<Task>(url, task);
-  }  
+  }
 
   /**
    * deletes a task
@@ -129,7 +145,11 @@ export class TaskServiceComponent {
       },
       (error) => {
         console.error('Error deleting task:', error);
-        this.snackbarsComponent.openSnackBar('Error deleting task', false, false);
+        this.snackbarsComponent.openSnackBar(
+          'Error deleting task',
+          false,
+          false
+        );
       }
     );
   }
@@ -206,11 +226,15 @@ export class TaskServiceComponent {
         },
         (error) => {
           console.error('Error while updating task:', error);
-          this.snackbarsComponent.openSnackBar('Error while updating task', false, false);
+          this.snackbarsComponent.openSnackBar(
+            'Error while updating task',
+            false,
+            false
+          );
         }
       );
     }
-  }  
+  }
 
   /**
    * checks the prio state and returns it
@@ -245,6 +269,7 @@ export class TaskServiceComponent {
         status: state,
       },
     });
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const newTask: Task = {
@@ -252,15 +277,23 @@ export class TaskServiceComponent {
           title: result.title,
           subtitle: result.subtitle,
           content: result.content,
-          date: new Date(result.date),
-          prio: result.prio || '',
+          date: result.date.toISOString().split('T')[0],
+          prio: result.prio || 'low',
           done: false,
           status: result.status,
-          isEditMode: false,
           doTime: 0,
+          // Annahme: Das author-Feld sollte automatisch vom Backend gesetzt werden
         };
-        this.addTaskToCorrectArray(newTask);
-        this.snackbarsComponent.openSnackBar('Task created', true, false);
+
+        this.createTask(newTask).subscribe(
+          (createdTask) => {
+            console.log('Task erstellt:', createdTask);
+            // Hier kannst du weitere Aktionen ausführen, z.B. die Liste aktualisieren
+          },
+          (error) => {
+            console.error('Fehler beim Erstellen der Aufgabe:', error);
+          }
+        );
       }
     });
   }

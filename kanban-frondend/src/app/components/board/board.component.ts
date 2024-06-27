@@ -314,8 +314,10 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
 
   /**
    * cals the triggerLogOutOverlay() function
+   * removes token by log out
    */
   onLogout() {
+    localStorage.removeItem('token');
     this.triggerLogOutOverlay();
   }
 
