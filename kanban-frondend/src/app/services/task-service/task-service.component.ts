@@ -59,15 +59,10 @@ export class TaskServiceComponent {
       (tasks) => {
         this.tasksSubject.next(tasks);
         this.sortTasksIntoArrays(tasks);
-        this.updateTaskCounts();
-      },
+        this.updateTaskCounts();},
       (error) => {
         console.error('Error while loading tasks:', error);
-        this.snackbarsComponent.openSnackBar(
-          'Error while loading tasks',
-          false,
-          false
-        );
+        this.snackbarsComponent.openSnackBar('Error while loading tasks', false, false);
       }
     );
   }
@@ -223,11 +218,7 @@ export class TaskServiceComponent {
         },
         (error) => {
           console.error('Error while updating task:', error);
-          this.snackbarsComponent.openSnackBar(
-            'Error while updating task',
-            false,
-            false
-          );
+          this.snackbarsComponent.openSnackBar('Error while updating task', false, false);
         }
       );
     }
@@ -270,7 +261,7 @@ export class TaskServiceComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const newTask: Task = {
-          id: result.id,
+          id: this.generateUniqueId(),
           title: result.title,
           subtitle: result.subtitle,
           content: result.content,
@@ -284,6 +275,7 @@ export class TaskServiceComponent {
         this.createTask(newTask).subscribe(
           (createdTask) => {
             console.log('Task erstellt:', createdTask);
+            this.snackbarsComponent.openSnackBar('Error while updating task', false, false);
           },
           (error) => {
             console.error('Fehler beim Erstellen der Aufgabe:', error);
@@ -291,6 +283,20 @@ export class TaskServiceComponent {
         );
       }
     });
+  }
+
+  /**
+   * generate and returns a unique id for each new task
+   * @returns
+   */
+  generateUniqueId(): number {
+    const allTasks = [
+      ...this.urgent,
+      ...this.todo,
+      ...this.inProgress,
+      ...this.done,
+    ];
+    return Math.max(...allTasks.map((task) => task.id)) + 1;
   }
 
   /**
@@ -337,11 +343,7 @@ export class TaskServiceComponent {
       this.removeFromCurrentArray(taskToMove);
       this.done.push(taskToMove);
       this.updateCounts();
-      this.snackbarsComponent.openSnackBar(
-        'GREAT! - Task is done',
-        true,
-        false
-      );
+      this.snackbarsComponent.openSnackBar('GREAT! - Task is done', true,  false);
     }
   }
 
