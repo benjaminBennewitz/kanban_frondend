@@ -89,9 +89,7 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
     this.taskService.loadTasksFromBackend();
 
     // get username and use in board.html
-    this.as.currentUsername.subscribe(username => {
-      this.username = username;
-    });
+    this.username = localStorage.getItem('username') || '';
 
     // get the current theme
     this.themesComponent.currentTheme$.subscribe((theme) => {
@@ -318,6 +316,7 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
    */
   onLogout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
     this.triggerLogOutOverlay();
   }
 

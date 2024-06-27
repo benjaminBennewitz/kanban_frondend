@@ -30,14 +30,6 @@ export class AuthComponent {
   }
 
   /**
-   * Sets the current username in the authentication service.
-   * @param username 
-   */
-  setUsername(username: string) {
-    this.usernameSource.next(username);
-  }
-
-  /**
    * help function to check if user is logged in, if true then returns the token
    * @returns 
    */

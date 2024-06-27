@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
         let resp: any = await this.as.loginWithUserAndPassword(this.username, this.password);
         console.log(resp);
         localStorage.setItem('token', resp['token']);
-        this.as.setUsername(this.username); // saves the username in auth.component
+        localStorage.setItem('username', this.username);
         this.snackbarsComponent.openSnackBar('Login successful!', true, true);
         setTimeout(() => {
           this.router.navigateByUrl('/board');
