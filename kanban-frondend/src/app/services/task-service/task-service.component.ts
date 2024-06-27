@@ -116,7 +116,8 @@ export class TaskServiceComponent {
    * @returns {Observable<Task>} An observable of the created task.
    */
   createTask(task: Task): Observable<Task> {
-    return this.http.post<Task>(this.apiUrl, task);
+    const url = `${this.apiUrl}${task.id}/`;
+    return this.http.post<Task>(url, task);
   }
 
   /**
@@ -145,11 +146,7 @@ export class TaskServiceComponent {
       },
       (error) => {
         console.error('Error deleting task:', error);
-        this.snackbarsComponent.openSnackBar(
-          'Error deleting task',
-          false,
-          false
-        );
+        this.snackbarsComponent.openSnackBar('Error deleting task', false, false);
       }
     );
   }
@@ -273,7 +270,7 @@ export class TaskServiceComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const newTask: Task = {
-          id: this.generateUniqueId(),
+          id: result.id,
           title: result.title,
           subtitle: result.subtitle,
           content: result.content,
@@ -282,13 +279,11 @@ export class TaskServiceComponent {
           done: false,
           status: result.status,
           doTime: 0,
-          // Annahme: Das author-Feld sollte automatisch vom Backend gesetzt werden
         };
 
         this.createTask(newTask).subscribe(
           (createdTask) => {
             console.log('Task erstellt:', createdTask);
-            // Hier kannst du weitere Aktionen ausführen, z.B. die Liste aktualisieren
           },
           (error) => {
             console.error('Fehler beim Erstellen der Aufgabe:', error);
@@ -296,20 +291,6 @@ export class TaskServiceComponent {
         );
       }
     });
-  }
-
-  /**
-   * generate and returns a unique id for each new task
-   * @returns
-   */
-  generateUniqueId(): number {
-    const allTasks = [
-      ...this.urgent,
-      ...this.todo,
-      ...this.inProgress,
-      ...this.done,
-    ];
-    return Math.max(...allTasks.map((task) => task.id)) + 1;
   }
 
   /**
