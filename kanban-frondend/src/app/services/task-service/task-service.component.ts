@@ -188,9 +188,14 @@ export class TaskServiceComponent {
    */
   onDateChange(event: Event, task: Task): void {
     const input = event.target as HTMLInputElement;
-    if (input.value) {
-      task.date = new Date(input.value);
-      this.updateOverdueCount();
+    const newDate = input.value;
+
+    if (newDate) {
+      const parsedDate = new Date(newDate);
+      if (!isNaN(parsedDate.getTime())) {
+        task.date = parsedDate;
+        this.updateOverdueCount();
+      }
     }
   }
 
