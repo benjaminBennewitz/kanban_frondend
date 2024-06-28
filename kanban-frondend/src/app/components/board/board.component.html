@@ -419,15 +419,14 @@
                     class="board-card doneIt" cdkDragPreview>
                     <mat-card-header>
                       <div class="flex-col">
-                        <mat-card-title><input autocorrect="off" spellcheck="false"
-                            value="{{task.title}}"></mat-card-title>
+                        <mat-card-title><input disabled autocorrect="off" spellcheck="false"value="{{task.title}}"></mat-card-title>
                         <mat-card-subtitle [ngClass]="getThemeClass('board-card-subtitle')">
-                          <input autocorrect="off" spellcheck="false" value="{{task.subtitle}}"></mat-card-subtitle>
+                          <input disabled autocorrect="off" spellcheck="false" value="{{task.subtitle}}"></mat-card-subtitle>
                         <div [ngClass]="taskService.getPriorityClass(task.prio)"></div>
                       </div>
                     </mat-card-header>
                     <mat-card-content>
-                      <textarea #contentTextarea autocorrect="off" spellcheck="false"
+                      <textarea disabled #contentTextarea autocorrect="off" spellcheck="false"
                         (input)="onInput()">{{task.content}}</textarea>
                       <div [ngClass]="{
                                               'board-card-date': currentTheme === 'default',
@@ -444,7 +443,7 @@
                       <ng-container *ngIf="task.doTime > 0">
                         {{ task.doTime | number: '1.1-2' }} min
                       </ng-container>
-                      <mat-icon *ngIf="task.id !== undefined"  class="board-col-icons" matTooltip="Delete" [matTooltipPosition]="position.value!"
+                      <mat-icon *ngIf="task.id !== undefined" class="board-col-icons" matTooltip="Delete" [matTooltipPosition]="position.value!"
                         matTooltipShowDelay="750" (click)="taskService.deleteTask(task.id)">delete</mat-icon>
                     </mat-card-actions>
                   </mat-card>

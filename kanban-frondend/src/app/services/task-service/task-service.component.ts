@@ -4,6 +4,7 @@ import { SnackbarsComponent } from '../../components/snackbars/snackbars.compone
 import { AddTaskDialogComponent } from '../../components/add-task-dialog/add-task-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { TimerClickerComponent } from '../timer-clicker/timer-clicker.component';
 
 export interface Task {
   id?: number;
@@ -45,7 +46,8 @@ export class TaskServiceComponent {
   constructor(
     private snackbarsComponent: SnackbarsComponent,
     private dialog: MatDialog,
-    private http: HttpClient
+    private http: HttpClient,
+    private timerService: TimerClickerComponent,
   ) {}
 
   /**
@@ -58,7 +60,8 @@ export class TaskServiceComponent {
       (tasks) => {
         this.tasksSubject.next(tasks);
         this.sortTasksIntoArrays(tasks);
-        this.updateTaskCounts();},
+        this.updateTaskCounts();
+      },
       (error) => {
         console.error('Error while loading tasks:', error);
         this.snackbarsComponent.openSnackBar('Error while loading tasks', false, false);
@@ -106,14 +109,14 @@ export class TaskServiceComponent {
   /**
    * Creates a new task.
    * Sends a POST request to the API to create a new task and returns an observable of the created task.
+   * see also the addTaskDialog() method LoC 276
    * @returns {Observable<Task>} An observable of the created task.
    */
   createTask(newTask: Task): Observable<Task> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Token ${localStorage.getItem('token')}`  // Beispiel für Token-basierte Authentifizierung
+      Authorization: `Token ${localStorage.getItem('token')}`,
     });
-  
     return this.http.post<Task>(`${this.apiUrl}create/`, newTask, { headers });
   }
 
@@ -129,7 +132,7 @@ export class TaskServiceComponent {
     // Ensure task.date is a Date object
     let taskDate = task.date;
     if (!(taskDate instanceof Date)) {
-        taskDate = new Date(taskDate);
+      taskDate = new Date(taskDate);
     }
     // Format the date as ISO string (YYYY-MM-DD)
     const taskToSend = { ...task, date: taskDate.toISOString().split('T')[0] };
@@ -144,8 +147,19 @@ export class TaskServiceComponent {
     const url = `${this.apiUrl}${taskId}/status/`;
     const body = { status: status };
     return this.http.put<Task>(url, body);
-  }  
-  
+  }
+
+   /**
+   * helper function for update only the doTime
+   */
+  updateTaskWithTime(taskId: number, status: string, doTime: number): Observable<Task> {
+    const updateData = {
+      status: status,
+      doTime: doTime
+    };
+    return this.http.patch<Task>(`${this.apiUrl}${taskId}/status/`, updateData);
+  }
+
   /**
    * deletes a task
    * @param taskId
@@ -167,16 +181,9 @@ export class TaskServiceComponent {
     );
   }
 
-  /**
-   * Helper function to remove a task from all arrays.
-   * @param taskId The ID of the task to remove.
-   */
-  private removeFromAllArrays(taskId: number): void {
-    this.urgent = this.urgent.filter((task) => task.id !== taskId);
-    this.todo = this.todo.filter((task) => task.id !== taskId);
-    this.inProgress = this.inProgress.filter((task) => task.id !== taskId);
-    this.done = this.done.filter((task) => task.id !== taskId);
-  }
+  /* ################################### */
+  /* ######   HELPER FUNCTIONS  ####### */
+  /* ################################# */
 
   /**
    * main function for calculating the past date
@@ -232,6 +239,17 @@ export class TaskServiceComponent {
   }
 
   /**
+   * updates the correct count when tasks change the column
+   */
+  updateCounts() {
+    this.doneCount$.next(this.done.length);
+    this.urgentCount$.next(this.urgent.length);
+    this.todoCount$.next(this.todo.length);
+    this.inProgressCount$.next(this.inProgress.length);
+    this.overdueCount$.next(this.getOverdueCount());
+  }
+
+  /**
    * toogles the edit mode for each task
    * @param task
    */
@@ -247,10 +265,38 @@ export class TaskServiceComponent {
           console.error('Error while updating task:', error);
           this.snackbarsComponent.openSnackBar('Error while updating task', false, false);
         }
-      );  
+      );
     }
   }
 
+  /**
+   * Marks a task as done and moves it to the 'done' array
+   * @param taskId ID of the task to be marked as done
+   */
+  moveTaskToDone(taskId: number): void {
+    const taskToMove = this.findTaskById(taskId);
+  
+    if (taskToMove && taskToMove.status !== 'done') {
+      taskToMove.status = 'done';
+  
+      const doTimeInMinutes = this.timerService.getCurrentTimeInMinutes();
+      taskToMove.doTime = Math.ceil(doTimeInMinutes);
+  
+      this.removeFromCurrentArray(taskToMove);
+      this.done.push(taskToMove);
+      this.updateCounts();
+  
+      this.updateTaskWithTime(taskId, 'done', taskToMove.doTime).subscribe(
+        (updatedTask) => {
+          this.snackbarsComponent.openSnackBar('GREAT! - Task is done', true, false);
+        },
+        (error) => {
+          console.error('Failed to update task status - clicked on checked:', error);
+        }
+      );
+    }
+  }
+  
   /**
    * checks the prio state and returns it
    * @param prio
@@ -299,6 +345,7 @@ export class TaskServiceComponent {
           (createdTask) => {
             console.log('Task erstellt:', createdTask);
             this.snackbarsComponent.openSnackBar('Task created', true, false);
+            this.loadTasksFromBackend();
           },
           (error) => {
             console.error('Fehler beim Erstellen der Aufgabe:', error);
@@ -331,41 +378,6 @@ export class TaskServiceComponent {
   }
 
   /**
-   * updates the correct count when tasks change the column
-   */
-  updateCounts() {
-    this.doneCount$.next(this.done.length);
-    this.urgentCount$.next(this.urgent.length);
-    this.todoCount$.next(this.todo.length);
-    this.inProgressCount$.next(this.inProgress.length);
-    this.overdueCount$.next(this.getOverdueCount());
-  }
-
-  /**
-   * Marks a task as done and moves it to the 'done' array
-   * @param taskId ID of the task to be marked as done
-   */
-  moveTaskToDone(taskId: number): void {
-    const taskToMove = this.findTaskById(taskId);
-  
-    if (taskToMove && taskToMove.status !== 'done') {
-      taskToMove.status = 'done';
-      this.removeFromCurrentArray(taskToMove);
-      this.done.push(taskToMove);
-      this.updateCounts();
-      this.updateTaskStatus(taskId, 'done').subscribe(
-        updatedTask => {
-          this.snackbarsComponent.openSnackBar('GREAT! - Task is done', true, false);
-        },
-        error => {
-          // Optional: Handle error response if needed
-          console.error('Failed to update task status - clicked on checked:', error);
-        }
-      );
-    }
-  }
-
-  /**
    * Helper function to find a task by its ID.
    * @param taskId The ID of the task to find.
    * @returns The found task or null if not found.
@@ -378,6 +390,17 @@ export class TaskServiceComponent {
       ...this.done,
     ];
     return allTasks.find((task) => task.id === taskId) || null;
+  }
+
+  /**
+   * Helper function to remove a task from all arrays.
+   * @param taskId The ID of the task to remove.
+   */
+  private removeFromAllArrays(taskId: number): void {
+    this.urgent = this.urgent.filter((task) => task.id !== taskId);
+    this.todo = this.todo.filter((task) => task.id !== taskId);
+    this.inProgress = this.inProgress.filter((task) => task.id !== taskId);
+    this.done = this.done.filter((task) => task.id !== taskId);
   }
 
   /**

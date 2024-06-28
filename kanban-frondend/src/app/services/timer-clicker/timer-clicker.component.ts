@@ -49,6 +49,16 @@ export class TimerClickerComponent implements OnDestroy {
     return this.minutesSubject.value;
   }
 
+  getCurrentTimeInMinutes(): number {
+    const milliseconds = this.millisecondsSubject.value;
+    const seconds = this.secondsSubject.value;
+    const minutes = this.minutesSubject.value;
+  
+    // Hier könntest du die Zeit in Minuten berechnen und zurückgeben
+    return minutes + seconds / 60 + milliseconds / 60000;
+  }
+  
+
   /**
    * Getter property to retrieve the current running state.
    * @returns The current running state (true if running, false otherwise).

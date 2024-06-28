@@ -266,7 +266,6 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
 
     setTimeout(() => {
       this.hideWelcomeOverlay = true;
-
       setTimeout(() => {
         const boardOverlay = document.getElementById('boardOverlay');
         if (boardOverlay) {
@@ -287,10 +286,8 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
     if (boardOverlayLogOut) {
       boardOverlayLogOut.style.display = 'flex';
     }
-
     setTimeout(() => {
       this.hideLogOutOverlay = true;
-
       setTimeout(() => {
         if (boardOverlayLogOut) {
           boardOverlayLogOut.style.display = 'none';
@@ -348,38 +345,52 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
         console.error('Container data is undefined');
         return;
       }
-      
+  
       const task = event.previousContainer.data[event.previousIndex];
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
   
-      let newStatus = '';
-      if (event.container.id === 'urgentList') {
-        newStatus = 'urgent';
-      } else if (event.container.id === 'todoList') {
-        newStatus = 'todo';
-      } else if (event.container.id === 'inProgressList') {
-        newStatus = 'inProgress';
-      } else if (event.container.id === 'doneList') {
-        newStatus = 'done';
-      }
-  
+      const newStatus = this.getStatusFromContainerId(event.container.id);
       if (task && task.id) {
-        this.taskService.updateTaskStatus(task.id, newStatus).subscribe(
-          response => {
-            task.status = newStatus;
-          },
-          error => {
-            console.error('Error updating task status:', error);
-          }
-        );
+        if (newStatus !== 'done') {
+          this.taskService.updateTaskWithTime(task.id, newStatus, 0).subscribe(
+            response => {
+              task.status = newStatus;
+              task.doTime = 0;
+            }, error => {console.error('Error updating task status and time:', error); }
+          );
+        } else {
+          this.taskService.updateTaskStatus(task.id, newStatus).subscribe(
+            response => {task.status = newStatus;}, error => {console.error('Error updating task status:', error);}
+          );
+        }
       } else {
         console.error('Task ID is undefined');
       }
     }
     this.taskService.updateCounts();
     setTimeout(() => this.adjustTextareaHeight(), 0);
+  }   
+
+  /**
+   * helper function for getting the right status of a tasks
+   * @param containerId 
+   * @returns 
+   */
+private getStatusFromContainerId(containerId: string): string {
+  switch (containerId) {
+    case 'urgentList':
+      return 'urgent';
+    case 'todoList':
+      return 'todo';
+    case 'inProgressList':
+      return 'inProgress';
+    case 'doneList':
+      return 'done';
+    default:
+      console.error('Unknown container ID:', containerId);
+      return '';
   }
-  
+}  
   
 /**
  * help function to set ngClasses for themeing
