@@ -3,10 +3,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { SnackbarsComponent } from '../../components/snackbars/snackbars.component';
 import { AddTaskDialogComponent } from '../../components/add-task-dialog/add-task-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export interface Task {
-  id: number;
+  id?: number;
   title: string;
   subtitle: string;
   content: string;
@@ -106,12 +106,15 @@ export class TaskServiceComponent {
   /**
    * Creates a new task.
    * Sends a POST request to the API to create a new task and returns an observable of the created task.
-   * @param {Task} task - The task to be created.
    * @returns {Observable<Task>} An observable of the created task.
    */
-  createTask(task: Task): Observable<Task> {
-    const url = `${this.apiUrl}${task.id}/`;
-    return this.http.post<Task>(url, task);
+  createTask(newTask: Task): Observable<Task> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${localStorage.getItem('token')}`  // Beispiel für Token-basierte Authentifizierung
+    });
+  
+    return this.http.post<Task>(`${this.apiUrl}create/`, newTask, { headers });
   }
 
   /**
@@ -284,7 +287,6 @@ export class TaskServiceComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const newTask: Task = {
-          id: this.generateUniqueId(),
           title: result.title,
           subtitle: result.subtitle,
           content: result.content,
@@ -305,20 +307,6 @@ export class TaskServiceComponent {
         );
       }
     });
-  }
-
-  /**
-   * generate and returns a unique id for each new task
-   * @returns
-   */
-  generateUniqueId(): number {
-    const allTasks = [
-      ...this.urgent,
-      ...this.todo,
-      ...this.inProgress,
-      ...this.done,
-    ];
-    return Math.max(...allTasks.map((task) => task.id)) + 1;
   }
 
   /**
@@ -367,18 +355,15 @@ export class TaskServiceComponent {
       this.updateCounts();
       this.updateTaskStatus(taskId, 'done').subscribe(
         updatedTask => {
-          // Optional: Handle success response if needed
           this.snackbarsComponent.openSnackBar('GREAT! - Task is done', true, false);
         },
         error => {
           // Optional: Handle error response if needed
-          console.error('Failed to update task status:', error);
-          // Rollback changes in frontend if necessary
+          console.error('Failed to update task status - clicked on checked:', error);
         }
       );
     }
   }
-  
 
   /**
    * Helper function to find a task by its ID.

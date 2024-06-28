@@ -163,7 +163,7 @@
                       </div>
                     </mat-card-content>
                     <mat-card-actions class="board-col-tools">
-                      <mat-icon [ngClass]="getThemeClass('board-done-icon')" matTooltip="mark as done!" [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
+                      <mat-icon *ngIf="task.id !== undefined" [ngClass]="getThemeClass('board-done-icon')" matTooltip="mark as done!" [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
                                 (click)="taskService.moveTaskToDone(task.id)">check</mat-icon>
                       <mat-icon [ngClass]="{
                                 'board-col-icons': true,
@@ -173,7 +173,7 @@
                                 'edit-mode-dark': task.isEditMode && currentTheme === 'dark-theme'
                               }" class="board-col-icons edit" matTooltip="Edit" [matTooltipPosition]="position.value!"
                         matTooltipShowDelay="750" (click)="taskService.toggleEditMode(task)">edit</mat-icon>
-                      <mat-icon class="board-col-icons" matTooltip="Delete" [matTooltipPosition]="position.value!"
+                      <mat-icon *ngIf="task.id !== undefined"  class="board-col-icons" matTooltip="Delete" [matTooltipPosition]="position.value!"
                         matTooltipShowDelay="750" (click)="taskService.deleteTask(task.id)">delete</mat-icon>
                     </mat-card-actions>
                   </mat-card>
@@ -257,7 +257,7 @@
                       </div>
                     </mat-card-content>
                     <mat-card-actions class="board-col-tools">
-                      <mat-icon [ngClass]="getThemeClass('board-done-icon')" matTooltip="mark as done!" [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
+                      <mat-icon *ngIf="task.id !== undefined" [ngClass]="getThemeClass('board-done-icon')" matTooltip="mark as done!" [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
                                 (click)="taskService.moveTaskToDone(task.id)">check</mat-icon>
                       <mat-icon [ngClass]="{
                                       'board-col-icons': true,
@@ -268,7 +268,7 @@
                                     }" class="board-col-icons edit" matTooltip="Edit"
                         [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
                         (click)="taskService.toggleEditMode(task)">edit</mat-icon>
-                      <mat-icon class="board-col-icons" matTooltip="Delete" [matTooltipPosition]="position.value!"
+                      <mat-icon *ngIf="task.id !== undefined"  class="board-col-icons" matTooltip="Delete" [matTooltipPosition]="position.value!"
                         matTooltipShowDelay="750" (click)="taskService.deleteTask(task.id)">delete</mat-icon>
                     </mat-card-actions>
                   </mat-card>
@@ -353,7 +353,7 @@
                       </div>
                     </mat-card-content>
                     <mat-card-actions class="board-col-tools">
-                      <mat-icon [ngClass]="getThemeClass('board-done-icon')" matTooltip="mark as done!" [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
+                      <mat-icon *ngIf="task.id !== undefined"  [ngClass]="getThemeClass('board-done-icon')" matTooltip="mark as done!" [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
                                 (click)="taskService.moveTaskToDone(task.id)">check</mat-icon>
                       <mat-icon [ngClass]="{
                                     'board-col-icons': true,
@@ -363,7 +363,7 @@
                                     'edit-mode-dark': task.isEditMode && currentTheme === 'dark-theme'
                                   }" class="board-col-icons edit" matTooltip="Edit" [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
                         (click)="taskService.toggleEditMode(task)">edit</mat-icon>
-                      <mat-icon class="board-col-icons" matTooltip="Delete" [matTooltipPosition]="position.value!"
+                      <mat-icon *ngIf="task.id !== undefined"  class="board-col-icons" matTooltip="Delete" [matTooltipPosition]="position.value!"
                         matTooltipShowDelay="750" (click)="taskService.deleteTask(task.id)">delete</mat-icon>
                     </mat-card-actions>
                   </mat-card>
@@ -444,7 +444,7 @@
                       <ng-container *ngIf="task.doTime > 0">
                         {{ task.doTime | number: '1.1-2' }} min
                       </ng-container>
-                      <mat-icon class="board-col-icons" matTooltip="Delete" [matTooltipPosition]="position.value!"
+                      <mat-icon *ngIf="task.id !== undefined"  class="board-col-icons" matTooltip="Delete" [matTooltipPosition]="position.value!"
                         matTooltipShowDelay="750" (click)="taskService.deleteTask(task.id)">delete</mat-icon>
                     </mat-card-actions>
                   </mat-card>
