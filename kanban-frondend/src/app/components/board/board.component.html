@@ -117,7 +117,7 @@
                               'board-card-wrapper-empty': taskService.urgent.length === 0 && currentTheme === 'default',
                               'board-card-wrapper-empty-light': taskService.urgent.length === 0 && currentTheme === 'light-theme',
                               'board-card-wrapper-empty-dark': taskService.urgent.length === 0 && currentTheme === 'dark-theme'}"
-              class="1003" cdkDropList #urgentList="cdkDropList" [cdkDropListData]="taskService.urgent"
+              class="1003" cdkDropList id="urgentList" #urgentList="cdkDropList" [cdkDropListData]="taskService.urgent"
               [cdkDropListConnectedTo]="[todoList, inProgressList, doneList]" (cdkDropListDropped)="drop($event)">
               <div class="flex-c-c add" *ngIf="taskService.urgent.length === 0" matTooltip="New task"
                 [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
@@ -163,9 +163,8 @@
                       </div>
                     </mat-card-content>
                     <mat-card-actions class="board-col-tools">
-                      <mat-icon [ngClass]="getThemeClass('board-card-icon')" matTooltip="mark as done!"
-                        [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
-                        (click)="taskService.taskDone(task.id)">check</mat-icon>
+                      <mat-icon [ngClass]="getThemeClass('board-done-icon')" matTooltip="mark as done!" [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
+                                (click)="taskService.moveTaskToDone(task.id)">check</mat-icon>
                       <mat-icon [ngClass]="{
                                 'board-col-icons': true,
                                 'edit': task.isEditMode,
@@ -212,7 +211,7 @@
                     'board-card-wrapper-empty': taskService.todo.length === 0 && currentTheme === 'default',
                     'board-card-wrapper-empty-light': taskService.todo.length === 0 && currentTheme === 'light-theme',
                     'board-card-wrapper-empty-dark': taskService.todo.length === 0 && currentTheme === 'dark-theme'}"
-              class="1003" cdkDropList #todoList="cdkDropList" [cdkDropListData]="taskService.todo"
+              class="1003" id="todoList" cdkDropList #todoList="cdkDropList" [cdkDropListData]="taskService.todo"
               [cdkDropListConnectedTo]="[urgentList, inProgressList, doneList]" (cdkDropListDropped)="drop($event)">
               <div class="flex-c-c add" *ngIf="taskService.todo.length === 0" matTooltip="New task"
                 [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
@@ -258,9 +257,8 @@
                       </div>
                     </mat-card-content>
                     <mat-card-actions class="board-col-tools">
-                      <mat-icon [ngClass]="getThemeClass('board-done-icon')" matTooltip="mark as done!"
-                        [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
-                        (click)="taskService.taskDone(task.id)">check</mat-icon>
+                      <mat-icon [ngClass]="getThemeClass('board-done-icon')" matTooltip="mark as done!" [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
+                                (click)="taskService.moveTaskToDone(task.id)">check</mat-icon>
                       <mat-icon [ngClass]="{
                                       'board-col-icons': true,
                                       'edit': task.isEditMode,
@@ -309,7 +307,7 @@
                               'board-card-wrapper-empty': taskService.inProgress.length === 0 && currentTheme === 'default',
                               'board-card-wrapper-empty-light': taskService.inProgress.length === 0 && currentTheme === 'light-theme',
                               'board-card-wrapper-empty-dark': taskService.inProgress.length === 0 && currentTheme === 'dark-theme'}"
-              class="1003" cdkDropList #inProgressList="cdkDropList" [cdkDropListData]="taskService.inProgress"
+              class="1003" id="inProgressList" cdkDropList #inProgressList="cdkDropList" [cdkDropListData]="taskService.inProgress"
               [cdkDropListConnectedTo]="[urgentList, todoList, doneList]" (cdkDropListDropped)="drop($event)">
               <div class="flex-c-c add" *ngIf="taskService.inProgress.length === 0" matTooltip="New task"
                 [matTooltipPosition]="position.value!" matTooltipShowDelay="750">
@@ -355,9 +353,8 @@
                       </div>
                     </mat-card-content>
                     <mat-card-actions class="board-col-tools">
-                      <mat-icon [ngClass]="getThemeClass('board-done-icon')" matTooltip="mark as done!"
-                        [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
-                        (click)="taskService.taskDone(task.id)">check</mat-icon>
+                      <mat-icon [ngClass]="getThemeClass('board-done-icon')" matTooltip="mark as done!" [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
+                                (click)="taskService.moveTaskToDone(task.id)">check</mat-icon>
                       <mat-icon [ngClass]="{
                                     'board-col-icons': true,
                                     'edit': task.isEditMode,
@@ -407,7 +404,7 @@
                               'board-card-wrapper-empty': taskService.done.length === 0 && currentTheme === 'default',
                               'board-card-wrapper-empty-light': taskService.done.length === 0 && currentTheme === 'light-theme',
                               'board-card-wrapper-empty-dark': taskService.done.length === 0 && currentTheme === 'dark-theme'}"
-              class="1003" cdkDropList #doneList="cdkDropList" [cdkDropListData]="taskService.done"
+              class="1003" id="doneList" cdkDropList #doneList="cdkDropList" [cdkDropListData]="taskService.done"
               [cdkDropListConnectedTo]="[urgentList, todoList, inProgressList]" (cdkDropListDropped)="drop($event)">
               <div class="flex-c-c" *ngIf="taskService.done.length === 0">
                 <div class="mr-t-16 flex-c-c">Nothing done<mat-icon class="sad">mood_bad</mat-icon></div>

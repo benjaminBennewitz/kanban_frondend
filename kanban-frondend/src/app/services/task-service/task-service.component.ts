@@ -12,7 +12,6 @@ export interface Task {
   content: string;
   date: Date;
   prio: string;
-  done: Boolean;
   status: 'urgent' | 'todo' | 'inProgress' | 'done';
   showDatePicker?: boolean;
   isEditMode?: boolean;
@@ -117,16 +116,33 @@ export class TaskServiceComponent {
 
   /**
    * Updates a task.
+   * checks the date is an object
    * Converts the date to a string format before sending it to the backend.
    * @param task - The task to be updated.
    * @returns An Observable of the updated task.
    */
   updateTask(task: Task): Observable<Task> {
     const url = `${this.apiUrl}${task.id}/`;
-    const taskToSend = { ...task, date: task.date.toISOString().split('T')[0] };
+    // Ensure task.date is a Date object
+    let taskDate = task.date;
+    if (!(taskDate instanceof Date)) {
+        taskDate = new Date(taskDate);
+    }
+    // Format the date as ISO string (YYYY-MM-DD)
+    const taskToSend = { ...task, date: taskDate.toISOString().split('T')[0] };
     return this.http.put<Task>(url, taskToSend);
   }
 
+  /**
+   * helper function for update only the status by drag n drop
+   * has its own view, serializer and url
+   */
+  updateTaskStatus(taskId: number, status: string): Observable<any> {
+    const url = `${this.apiUrl}${taskId}/status/`;
+    const body = { status: status };
+    return this.http.put<Task>(url, body);
+  }  
+  
   /**
    * deletes a task
    * @param taskId
@@ -265,7 +281,6 @@ export class TaskServiceComponent {
         status: state,
       },
     });
-
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const newTask: Task = {
@@ -275,18 +290,17 @@ export class TaskServiceComponent {
           content: result.content,
           date: result.date.toISOString().split('T')[0],
           prio: result.prio || 'low',
-          done: false,
           status: result.status,
           doTime: 0,
         };
-
         this.createTask(newTask).subscribe(
           (createdTask) => {
             console.log('Task erstellt:', createdTask);
-            this.snackbarsComponent.openSnackBar('Error while updating task', false, false);
+            this.snackbarsComponent.openSnackBar('Task created', true, false);
           },
           (error) => {
             console.error('Fehler beim Erstellen der Aufgabe:', error);
+            this.snackbarsComponent.openSnackBar('Error while creating the task', false, false);
           }
         );
       }
@@ -343,17 +357,28 @@ export class TaskServiceComponent {
    * Marks a task as done and moves it to the 'done' array
    * @param taskId ID of the task to be marked as done
    */
-  taskDone(taskId: number): void {
+  moveTaskToDone(taskId: number): void {
     const taskToMove = this.findTaskById(taskId);
-
+  
     if (taskToMove && taskToMove.status !== 'done') {
       taskToMove.status = 'done';
       this.removeFromCurrentArray(taskToMove);
       this.done.push(taskToMove);
       this.updateCounts();
-      this.snackbarsComponent.openSnackBar('GREAT! - Task is done', true,  false);
+      this.updateTaskStatus(taskId, 'done').subscribe(
+        updatedTask => {
+          // Optional: Handle success response if needed
+          this.snackbarsComponent.openSnackBar('GREAT! - Task is done', true, false);
+        },
+        error => {
+          // Optional: Handle error response if needed
+          console.error('Failed to update task status:', error);
+          // Rollback changes in frontend if necessary
+        }
+      );
     }
   }
+  
 
   /**
    * Helper function to find a task by its ID.

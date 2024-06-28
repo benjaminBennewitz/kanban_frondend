@@ -26,6 +26,13 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
 
   tasks: Task[] = [];
 
+  columns = {
+    urgent: [],
+    todo: [],
+    inProgress: [],
+    done: []
+  };
+
   showFiller = false;
   currentTheme: string = 'default';
   /* OVERLAY ANIMATIONS VARIABLES*/
@@ -335,27 +342,45 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
    */
   drop(event: CdkDragDrop<any[]>) {
     if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       if (!event.previousContainer.data || !event.container.data) {
         console.error('Container data is undefined');
         return;
       }
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
+      
+      const task = event.previousContainer.data[event.previousIndex];
+      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+  
+      let newStatus = '';
+      if (event.container.id === 'urgentList') {
+        newStatus = 'urgent';
+      } else if (event.container.id === 'todoList') {
+        newStatus = 'todo';
+      } else if (event.container.id === 'inProgressList') {
+        newStatus = 'inProgress';
+      } else if (event.container.id === 'doneList') {
+        newStatus = 'done';
+      }
+  
+      if (task && task.id) {
+        this.taskService.updateTaskStatus(task.id, newStatus).subscribe(
+          response => {
+            task.status = newStatus;
+          },
+          error => {
+            console.error('Error updating task status:', error);
+          }
+        );
+      } else {
+        console.error('Task ID is undefined');
+      }
     }
     this.taskService.updateCounts();
     setTimeout(() => this.adjustTextareaHeight(), 0);
   }
-
+  
+  
 /**
  * help function to set ngClasses for themeing
  * @param baseClass 
