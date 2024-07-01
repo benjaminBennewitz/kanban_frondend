@@ -5,7 +5,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { SnackbarsComponent } from '../snackbars/snackbars.component';
 import { Router } from '@angular/router';
 import { AuthComponent } from '../../services/auth/auth.component';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormValidationComponent } from '../../services/form-validation/form-validation.component'; 
 
 @Component({
   selector: 'app-login',
@@ -15,18 +16,22 @@ import { NgForm } from '@angular/forms';
 
 export class LoginComponent implements OnInit {
 
-  username: string = '';
-  password: string = '';
-
-  @ViewChild('loginForm') loginForm!: NgForm;
+  loginForm: FormGroup;
 
   constructor(
+    private fb: FormBuilder,
     private themesComponent: ThemesComponent,
     public dialog: MatDialog,
     private snackbarsComponent: SnackbarsComponent,
     private router: Router,
     private as: AuthComponent,
-  ) { }
+    private validatorsService: FormValidationComponent
+  ) {
+    this.loginForm = this.fb.group({
+      username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(12), this.validatorsService.forbiddenCharactersValidator()]],
+      password: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(12)]]
+    });
+  }
 
   ngOnInit(): void {
     // saves the selected theme to local storage
@@ -54,16 +59,20 @@ export class LoginComponent implements OnInit {
     }, 1500); // Delay of 1.5 seconds
   }
 
-    /**
+  /**
    * login function
    * @returns 
    */
     async login() {
+      if (this.loginForm.invalid) {
+        return;
+      }
+      const { username, password } = this.loginForm.value;
       try {
-        let resp: any = await this.as.loginWithUserAndPassword(this.username, this.password);
+        let resp: any = await this.as.loginWithUserAndPassword(username, password);
         console.log(resp);
         localStorage.setItem('token', resp['token']);
-        localStorage.setItem('username', this.username);
+        localStorage.setItem('username', username);
         this.snackbarsComponent.openSnackBar('Login successful!', true, true);
         setTimeout(() => {
           this.router.navigateByUrl('/board');

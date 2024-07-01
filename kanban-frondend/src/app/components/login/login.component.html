@@ -2,33 +2,51 @@
     <div class="outer-wrapper--login">
         <h1>Login to Board</h1>
 
-        <form (ngSubmit)="login()" #loginForm="ngForm">
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
             <mat-form-field>
-                <mat-label>Username</mat-label><input matInput type="text" name="username" [(ngModel)]="username" required>
+              <mat-label>Username</mat-label>
+              <input matInput formControlName="username" type="text" required minlength="3" maxlength="12">
+              <mat-error *ngIf="loginForm.get('username')?.hasError('minlength')">
+                Username must be at least 3 characters long.
+              </mat-error>
+              <mat-error *ngIf="loginForm.get('username')?.hasError('maxlength')">
+                Username cannot be more than 12 characters long.
+              </mat-error>
+              <mat-error *ngIf="loginForm.get('username')?.hasError('forbiddenCharacters')">
+                Username contains forbidden characters.
+              </mat-error>
             </mat-form-field>
-
+          
             <mat-form-field>
-                <mat-label>Password</mat-label><input matInput type="password" name="password" [(ngModel)]="password" required>
+              <mat-label>Password</mat-label>
+              <input matInput formControlName="password" type="password" required minlength="3" maxlength="12">
+              <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
+                Password must be at least 3 characters long.
+              </mat-error>
+              <mat-error *ngIf="loginForm.get('password')?.hasError('maxlength')">
+                Password cannot be more than 12 characters long.
+              </mat-error>
             </mat-form-field>
-
+          
             <mat-form-field>
-                <mat-label>Select theme</mat-label>
-                <mat-select (selectionChange)="onThemeChange($event.value)">
-                    <mat-option value="default-theme">Default</mat-option>
-                    <mat-option value="light-theme">Light</mat-option>
-                    <mat-option value="dark-theme">Dark</mat-option>
-                </mat-select>
+              <mat-label>Select theme</mat-label>
+              <mat-select (selectionChange)="onThemeChange($event.value)">
+                <mat-option value="default-theme">Default</mat-option>
+                <mat-option value="light-theme">Light</mat-option>
+                <mat-option value="dark-theme">Dark</mat-option>
+              </mat-select>
             </mat-form-field>
-
+          
             <div class="flex-c-c gap-32">
-                <button class="login-btn" mat-raised-button (click)="registerDialog()" type="button">
+              <button class="login-btn" mat-raised-button (click)="registerDialog()" type="button">
                 <mat-icon>how_to_reg</mat-icon>Register
-                </button>
-                <button class="login-btn" mat-raised-button type="submit" [disabled]="!loginForm.valid" [class.login-btn-disabled]="!loginForm.valid">
-                    <mat-icon>login</mat-icon>Login
-                </button>
+              </button>
+              <button class="login-btn" mat-raised-button type="submit" [disabled]="!loginForm.valid" [class.login-btn-disabled]="!loginForm.valid">
+                <mat-icon>login</mat-icon>Login
+              </button>
             </div>
-        </form>
+          </form>
+          
     </div>
 
     <!-- ANIMATED BACKGROUND START -->

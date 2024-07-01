@@ -23,6 +23,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 import { AuthComponent } from './services/auth/auth.component';
 import { LoginComponent } from './components/login/login.component';
@@ -40,6 +42,7 @@ import { MascotComponent } from './services/mascot/mascot.component';
 import { TimerClickerComponent } from './services/timer-clicker/timer-clicker.component';
 import { HTTP_INTERCEPTORS, provideHttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptorService } from './services/auth/auth-interceptor.service';
+import { FormValidationComponent } from './services/form-validation/form-validation.component';
 
 
 @NgModule({
@@ -54,6 +57,7 @@ import { AuthInterceptorService } from './services/auth/auth-interceptor.service
     CountPipe,
     AddTaskDialogComponent,
     TimerClickerComponent,
+    FormValidationComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,6 +77,7 @@ import { AuthInterceptorService } from './services/auth/auth-interceptor.service
     DragDropModule,
     CdkDropList,
     CdkDrag,
+    ReactiveFormsModule,
     MatSnackBarModule,
     FormsModule,
     BrowserAnimationsModule,

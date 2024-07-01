@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment.development'; // oder environment.production
+import { environment } from '../../../environments/environment.development';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormValidationComponent } from '../../services/form-validation/form-validation.component';
 
 @Component({
   selector: 'app-dialog-register',
@@ -9,16 +11,22 @@ import { environment } from '../../../environments/environment.development'; // 
   styleUrls: ['./dialog-register.component.scss']
 })
 export class DialogRegisterComponent {
-  firstName: string = '';
-  lastName: string = '';
-  email: string = '';
-  username: string = '';
-  password: string = '';
+  registerForm: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<DialogRegisterComponent>,
-    private http: HttpClient
-  ) {}
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private validatorsService: FormValidationComponent,
+  ) {
+    this.registerForm = this.fb.group({
+      firstName: ['', [Validators.required, Validators.minLength(3), this.validatorsService.forbiddenCharactersValidator()]],
+      lastName: ['', [Validators.required, Validators.minLength(3), this.validatorsService.forbiddenCharactersValidator()]],
+      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required, Validators.minLength(3), this.validatorsService.forbiddenCharactersValidator()]],
+      password: ['', [Validators.required, Validators.minLength(3)]]
+    });
+  }
 
   /**
     * Function for registering a new user.
@@ -27,16 +35,20 @@ export class DialogRegisterComponent {
     * Displays an error message if the request fails.
     */
   register() {
+    if (this.registerForm.invalid) {
+      return;
+    }
+
     const body = {
-      first_name: this.firstName,
-      last_name: this.lastName,
-      email: this.email,
-      username: this.username,
-      password: this.password
+      first_name: this.registerForm.value.firstName,
+      last_name: this.registerForm.value.lastName,
+      email: this.registerForm.value.email,
+      username: this.registerForm.value.username,
+      password: this.registerForm.value.password
     };
 
     this.http.post(`${environment.baseUrl}/register/`, body).subscribe({
-      next: (response: any) => {
+      next: (_response: any) => {
         this.dialogRef.close('registered');
       },
       error: (error: any) => {
