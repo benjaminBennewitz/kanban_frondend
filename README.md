@@ -41,6 +41,7 @@ Ensure the backend API URL is correctly set in your environment configuration fi
 To build the project for production, run:
 ```bash
 ng build --prod
+```
 
 ## How Users Can Get Involved
 Users can contribute to the project in several ways:
@@ -54,7 +55,7 @@ If you have questions or run into problems, you can:
 
 ## Project Maintainers and Contributors
 The TICKETEER Frontend project is managed by the following individuals:
-- **[Your Name](https://github.com/benjaminBennewitz)** - Lead Developer
+- **Benjamin Bennewitz (https://github.com/benjaminBennewitz)** - Lead Developer
 
 
 ## License
