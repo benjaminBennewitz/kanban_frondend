@@ -43,6 +43,7 @@ import { TimerClickerComponent } from './services/timer-clicker/timer-clicker.co
 import { HTTP_INTERCEPTORS, provideHttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptorService } from './services/auth/auth-interceptor.service';
 import { FormValidationComponent } from './services/form-validation/form-validation.component';
+import { TutorialComponent } from './components/tutorial/tutorial.component';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { FormValidationComponent } from './services/form-validation/form-validat
     AddTaskDialogComponent,
     TimerClickerComponent,
     FormValidationComponent,
+    TutorialComponent,
   ],
   imports: [
     BrowserModule,

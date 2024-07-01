@@ -65,6 +65,12 @@ mat-icon {
     animation: slideOutRight 1s forwards;
 }
 
+.log-out {
+    position: absolute;
+    bottom: 24px;
+    left: 8px;
+}
+
 .board-bg {
     background-color: $secondary;
     transition: all 550ms;
@@ -137,12 +143,6 @@ mat-icon {
             }
         }
     }
-}
-
-.log-out {
-    position: absolute;
-    bottom: 24px;
-    left: 8px;
 }
 
 .board-wrapper {

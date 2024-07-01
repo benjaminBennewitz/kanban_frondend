@@ -69,6 +69,8 @@ export class BoardComponent implements OnInit, AfterViewInit, OnDestroy   {
   /* USERNAME VARIABLE FOR WELCOME MESSAGE */
   username: string = '';
 
+  showTutorial = false;
+
   constructor(
     private themesComponent: ThemesComponent,
     private router: Router,

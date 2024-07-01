@@ -21,7 +21,7 @@ export class MascotComponent {
     { id: 7, text: 'Remember to take breaks while working on {{inProgressCount}} tasks.' },
     { id: 8, text: 'Keep going! You can finish those {{todoCount}} todos!' },
     { id: 9, text: 'I believe in you! Only {{allTasksLeft}} tasks left!' },
-    { id: 10, text: 'Don\'t let the {{urgentCount}} tasks stress you out!' },
+    { id: 10, text: 'Don\'t let the {{urgentCount}} urgent task(s) stress you out!' },
     { id: 11, text: 'I\'m here to remind you about your {{todoCount}} todos!' },
     { id: 12, text: 'Almost there! Just {{inProgressCount}} tasks still in progress!' },
     { id: 13, text: 'Well done! You\'ve completed {{doneCount}} tasks!' },

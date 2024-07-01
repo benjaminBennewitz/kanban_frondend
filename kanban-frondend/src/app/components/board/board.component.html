@@ -18,6 +18,8 @@
   Logging out
 </div>
 
+<app-tutorial *ngIf="showTutorial"></app-tutorial>
+
 <mat-drawer-container class="mat-drawer-container" autosize>
 
   <!-- SIDENAV START -->
@@ -386,7 +388,7 @@
             <div class="board-col-headline pad-l-24">Done</div>
             <div class="flex-c-c board-done" *ngIf="taskService.done.length > 0">
               <mat-icon class="check">check_small</mat-icon>
-              <div>{{ taskService.doneCount$ | async }} Task finished</div>
+              <div>{{ taskService.doneCount$ | async }} Task(s) finished</div>
             </div>
             <div class="pad-r-24">
               <mat-icon matTooltip="More" [matTooltipPosition]="position.value!" matTooltipShowDelay="750"
